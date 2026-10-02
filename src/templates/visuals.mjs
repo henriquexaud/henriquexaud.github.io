@@ -31,31 +31,87 @@ function pulseDot(cx, cy, r = 5) {
     <circle class="vz-acc" cx="${cx}" cy="${cy}" r="${r}"/>`;
 }
 
+// Stores: one business selling everywhere. Today's sales across every channel,
+// a single stock shared by all of them and an abandoned cart won back.
 function ecommerce(v, label) {
-  const steps = [
-    [v.paid, '14:02:11', true],
-    [v.invoice, '14:02:19', true],
-    [v.label, '14:02:24', true],
-    [v.transit, v.waiting, false],
-  ];
-  const bars = [38, 52, 44, 70, 58, 86, 74, 112];
+  // Sales rhythm through the day (0..1), drawn as a smooth area.
+  const values = [0.16, 0.22, 0.3, 0.46, 0.6, 0.5, 0.44, 0.52, 0.62, 0.74, 0.66, 0.82, 0.94];
+  const cx0 = 24;
+  const cx1 = 332;
+  const top = 140;
+  const base = 244;
+  const pts = values.map((val, i) => [cx0 + ((cx1 - cx0) * i) / (values.length - 1), base - (base - top) * val]);
+  const r = (n) => Math.round(n * 10) / 10;
+  const curve = pts
+    .map((p, i) => {
+      if (i === 0) return `M${r(p[0])} ${r(p[1])}`;
+      const p0 = pts[i - 2] || pts[i - 1];
+      const p1 = pts[i - 1];
+      const p3 = pts[i + 1] || p;
+      const c1 = [p1[0] + (p[0] - p0[0]) / 6, p1[1] + (p[1] - p0[1]) / 6];
+      const c2 = [p[0] - (p3[0] - p1[0]) / 6, p[1] - (p3[1] - p1[1]) / 6];
+      return `C${r(c1[0])} ${r(c1[1])} ${r(c2[0])} ${r(c2[1])} ${r(p[0])} ${r(p[1])}`;
+    })
+    .join(' ');
+  const last = pts[pts.length - 1];
+
+  // Share of today's sales per channel; the online store is the highlight.
+  const shares = [0.46, 0.36, 0.18];
+  const tones = ['vz-acc', 'vz-light', 'vz-mid'];
+  const legendX = [24, 124, 224];
+  const gap = 3;
+  const barW = cx1 - cx0 - gap * (shares.length - 1);
+  let x = cx0;
+  const segments = shares.map((share, i) => {
+    const w = barW * share;
+    const seg = html`<rect class="${tones[i]} vz-grow-x" style="--i:${i}" x="${r(x)}" y="268" width="${r(w)}" height="8" rx="2"/>`;
+    x += w + gap;
+    return seg;
+  });
+
   return frame(
     label,
     html`
-    ${header(v.order, '')}
-    <line class="vz-line" x1="40" y1="98" x2="40" y2="262"/>
-    ${steps.map(([name, time, done], i) => {
-      const y = 98 + i * 55;
-      return html`
-        ${done ? check(40, y) : pulseDot(40, y, 6)}
-        <text class="vz-t1" x="62" y="${y + 4}">${name}</text>
-        <text class="${done ? 'vz-t3' : 'vz-ta'}" x="62" y="${y + 22}">${time}</text>`;
-    })}
-    <rect class="vz-card" x="312" y="78" width="224" height="230" rx="10"/>
-    <text class="vz-t3" x="332" y="106">${v.sales}</text>
-    <text class="vz-big" x="332" y="138">${v.amount}</text>
-    <line class="vz-line" x1="332" y1="284.5" x2="516" y2="284.5"/>
-    ${bars.map((h, i) => html`<rect class="vz-bar ${i === bars.length - 1 ? 'vz-acc' : 'vz-dim'}" style="--i:${i}" x="${334 + i * 23}" y="${284 - h}" width="15" height="${h}" rx="3"/>`)}`,
+    <defs>
+      <linearGradient id="vz-area" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#00c853" stop-opacity="0.22"/>
+        <stop offset="1" stop-color="#00c853" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    ${header(v.title, v.when)}
+    <text class="vz-big" x="24" y="100">${v.amount}</text>
+    <text class="vz-ta" x="24" y="122">${v.delta}</text>
+    <path class="vz-area vz-pop" d="${curve} L${cx1} ${base} L${cx0} ${base} Z"/>
+    <path class="vz-spark vz-draw-line" pathLength="1" d="${curve}"/>
+    <line class="vz-line" x1="${cx0}" y1="${base + 0.5}" x2="${cx1}" y2="${base + 0.5}"/>
+    <g class="vz-pop" style="--i:8">${pulseDot(last[0], r(last[1]), 4)}</g>
+    ${segments}
+    ${v.channels.map(([name, pct], i) => html`<g class="vz-pop" style="--i:${i + 2}">
+      <rect class="${tones[i]}" x="${legendX[i]}" y="293" width="8" height="8" rx="2"/>
+      <text class="vz-t3" x="${legendX[i] + 14}" y="301">${name}</text>
+      <text class="vz-t1 vz-sm" x="${legendX[i] + 14}" y="320">${pct}</text>
+    </g>`)}
+
+    <rect class="vz-card" x="356" y="78" width="180" height="182" rx="12"/>
+    <text class="vz-t3 vz-caps" x="374" y="104">${v.stock}</text>
+    <rect class="vz-chip" x="374" y="118" width="44" height="44" rx="9"/>
+    <path class="vz-glyph" d="M384 135 h24 l-2 18 h-20 z M390 135 v-2.5 a6 6 0 0 1 12 0 v2.5"/>
+    <text class="vz-t1 vz-sm" x="430" y="137">${v.product}</text>
+    <text class="vz-t3" x="430" y="153">${v.variant}</text>
+    <line class="vz-line" x1="374" y1="178" x2="518" y2="178"/>
+    <text class="vz-big" x="374" y="216">12</text>
+    <text class="vz-t3" x="412" y="216">${v.units}</text>
+    <circle class="vz-acc" cx="380" cy="238" r="6"/>
+    <path class="vz-check-dark" d="M377.6 238 l1.7 1.9 l3.2 -3.6"/>
+    <text class="vz-ta" x="393" y="242">${v.synced}</text>
+
+    <g class="vz-toast">
+      <rect class="vz-card vz-raised" x="356" y="276" width="180" height="58" rx="12"/>
+      <circle class="vz-acc" cx="378" cy="305" r="9"/>
+      <path class="vz-check-dark" d="M374 305 l2.6 2.7 l5 -5.6"/>
+      <text class="vz-t1 vz-sm" x="396" y="300">${v.toast}</text>
+      <text class="vz-t3" x="396" y="317">${v.toastNote}</text>
+    </g>`,
   );
 }
 

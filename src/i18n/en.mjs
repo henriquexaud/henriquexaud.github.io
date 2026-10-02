@@ -49,7 +49,7 @@ export default {
     lead: 'Every company faces a different challenge. We start with yours.',
     tabsLabel: 'Industries',
     items: {
-      ecommerce: { tab: 'Retail and e-commerce', title: 'Sell online without the manual work.', benefits: ['Card and wallet checkout in a few clicks', 'An invoice issued with every sale', 'One inventory across store, website and marketplaces'] },
+      ecommerce: { tab: 'Retail and e-commerce', title: 'One store, selling everywhere.', benefits: ['Your own online store, with fast checkout', 'One inventory for counter, website and marketplaces', 'Abandoned carts turned into sales'] },
       logistics: { tab: 'Logistics and delivery', title: 'From packed order to the customer’s door.', benefits: ['Every delivery visible on the map', 'Delays spotted before customers complain', 'Digital proof of delivery'] },
       restaurants: { tab: 'Restaurants', title: 'Every order right, the kitchen in sync.', benefits: ['Digital tickets straight to the kitchen', 'The real cost of every dish', 'Register closed in minutes'] },
       hospitality: { tab: 'Hotels and inns', title: 'Guests welcomed, rooms always ready.', benefits: ['Direct bookings on your own website', 'Every room’s occupancy on one map', 'Digital check-in and organized housekeeping'] },
@@ -126,7 +126,7 @@ export default {
   },
 
   visuals: {
-    ecommerce: { order: 'Order #4821', paid: 'Payment approved', invoice: 'Invoice issued', label: 'Stock updated', transit: 'Ready to ship', waiting: 'awaiting pickup', sales: 'Sales today', amount: '$12,480' },
+    ecommerce: { title: 'Sales today', when: 'all channels', amount: '$12,480', delta: '+18% vs. yesterday', channels: [['Website', '46%'], ['In-store', '36%'], ['Marketplaces', '18%']], stock: 'Single inventory', product: 'Lisbon Bag', variant: 'Leather · Black', units: 'in stock', synced: 'In sync', toast: 'Cart recovered', toastNote: 'WhatsApp · $412.00' },
     restaurants: { title: 'Kitchen', count: '14 orders', cols: ['New', 'Cooking', 'Ready'], table: 'Table', delivery: 'Delivery', counter: 'Counter', items: ['2× Risotto', '1× Salad', '3× Burger', '1× Fries', '2× Juice', '1× Daily special'] },
     hospitality: { title: 'Occupancy', week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], rooms: [['Room 101', 'Standard'], ['Room 102', 'Standard'], ['Room 201', 'Deluxe'], ['Room 202', 'Suite'], ['Room 301', 'Family']], occupied: 'Occupied', reserved: 'Booked', cleaning: 'Cleaning' },
     appointments: { title: 'Schedule', week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], blocks: ['Visit · Ana', 'Follow-up · John', 'Assessment · Bea', 'Therapy · Cai', 'Orthodontics · Lia', 'Physio · Leo', 'Visit · Ray'], toast: 'Reminder sent', confirmed: 'Confirmed' },
