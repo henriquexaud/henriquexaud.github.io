@@ -27,13 +27,9 @@ function check(cx, cy) {
     <path class="vz-check" d="M${cx - 3} ${cy} l2.2 2.3 l4 -4.6"/>`;
 }
 
-function pulseDot(cx, cy, r = 5) {
-  return html`<circle class="vz-acc vz-ping" cx="${cx}" cy="${cy}" r="${r}"/>
-    <circle class="vz-acc" cx="${cx}" cy="${cy}" r="${r}"/>`;
-}
-
-// Stores: one business selling everywhere. Today's sales across every channel,
-// a single stock shared by all of them and an abandoned cart won back.
+// Stores: one business selling everywhere. A single sequence plays once when the
+// drawing appears: a recovered cart turns into a sale, today's total goes up and the
+// shared stock drops by one on every channel at the same time.
 function ecommerce(v, label) {
   // Sales rhythm through the day (0..1), drawn as a smooth area.
   const values = [0.16, 0.22, 0.3, 0.46, 0.6, 0.5, 0.44, 0.52, 0.62, 0.74, 0.66, 0.82, 0.94];
@@ -54,7 +50,13 @@ function ecommerce(v, label) {
       return `C${r(c1[0])} ${r(c1[1])} ${r(c2[0])} ${r(c2[1])} ${r(p[0])} ${r(p[1])}`;
     })
     .join(' ');
-  const last = pts[pts.length - 1];
+  const [lx, ly] = [r(pts[pts.length - 1][0]), r(pts[pts.length - 1][1])];
+
+  // Timeline (seconds): the sale lands once the chart has drawn itself.
+  const sale = 1.7;
+  const fade = (from, to, at, dur = 0.35) =>
+    raw(`<animate attributeName="opacity" from="${from}" to="${to}" begin="${at}s" dur="${dur}s" fill="freeze"/>`);
+  const rowsY = [166, 190, 214];
 
   return frame(
     label,
@@ -66,31 +68,44 @@ function ecommerce(v, label) {
       </linearGradient>
     </defs>
     ${header(v.title, v.when)}
-    <text class="vz-big" x="24" y="100">${v.amount}</text>
+    <text class="vz-big" x="24" y="100">${v.amountBefore}${fade(1, 0, sale + 0.2, 0.25)}</text>
+    <text class="vz-big" x="24" y="100" opacity="0">${v.amount}${fade(0, 1, sale + 0.3, 0.3)}</text>
     <text class="vz-ta" x="24" y="122">${v.delta}</text>
     <path class="vz-area vz-pop" d="${curve} L${cx1} ${base} L${cx0} ${base} Z"/>
     <path class="vz-spark vz-draw-line" pathLength="1" d="${curve}"/>
     <line class="vz-line" x1="${cx0}" y1="${base + 0.5}" x2="${cx1}" y2="${base + 0.5}"/>
-    <g class="vz-pop" style="--i:8">${pulseDot(last[0], r(last[1]), 4)}</g>
+    <circle class="vz-arrival" cx="${lx}" cy="${ly}" r="4" opacity="0">
+      <animate attributeName="r" from="4" to="16" begin="${sale + 0.2}s" dur="0.9s" fill="freeze"/>
+      <animate attributeName="opacity" values="0.6;0" begin="${sale + 0.2}s" dur="0.9s" fill="freeze"/>
+    </circle>
+    <circle class="vz-car" cx="${lx}" cy="${ly}" r="4.5"/>
 
-    <rect class="vz-card" x="356" y="78" width="180" height="172" rx="12"/>
-    <text class="vz-t3 vz-caps" x="374" y="104">${v.stock}</text>
-    <rect class="vz-chip" x="374" y="118" width="44" height="44" rx="9"/>
-    <path class="vz-glyph" d="M384 135 h24 l-2 18 h-20 z M390 135 v-2.5 a6 6 0 0 1 12 0 v2.5"/>
-    <text class="vz-t1 vz-sm" x="430" y="145">${v.product}</text>
-    <text class="vz-big" x="374" y="206">12</text>
-    <text class="vz-t3" x="412" y="206">${v.units}</text>
-    <circle class="vz-acc" cx="380" cy="228" r="6"/>
-    <path class="vz-check-dark" d="M377.6 228 l1.7 1.9 l3.2 -3.6"/>
-    <text class="vz-ta" x="393" y="232">${v.synced}</text>
+    <rect class="vz-card" x="356" y="68" width="180" height="168" rx="12"/>
+    <text class="vz-t3 vz-caps" x="374" y="94">${v.stock}</text>
+    <rect class="vz-chip" x="374" y="106" width="36" height="36" rx="8"/>
+    <path class="vz-glyph" d="M383 118 h18 l-1.5 14 h-15 z M387.5 118 v-2 a4.5 4.5 0 0 1 9 0 v2"/>
+    <text class="vz-t1 vz-sm" x="422" y="128">${v.product}</text>
+    <line class="vz-line" x1="374" y1="150" x2="518" y2="150"/>
+    ${v.channels.map((name, i) => {
+      const y = rowsY[i];
+      const at = sale + 0.45 + i * 0.1;
+      return html`<text class="vz-t2 vz-sm" x="374" y="${y}">${name}</text>
+        <text class="vz-t1 vz-sm" x="518" y="${y}" text-anchor="end">12${fade(1, 0, at, 0.2)}</text>
+        <text class="vz-ta vz-sm" x="518" y="${y}" text-anchor="end" opacity="0">11${fade(0, 1, at + 0.1, 0.25)}${fade(1, 0, at + 1.6, 0.6)}</text>
+        <text class="vz-t1 vz-sm" x="518" y="${y}" text-anchor="end" opacity="0">11${fade(0, 1, at + 1.6, 0.6)}</text>`;
+    })}
 
-    <g class="vz-toast">
-      <rect class="vz-card vz-raised" x="356" y="268" width="180" height="58" rx="12"/>
-      <circle class="vz-acc" cx="378" cy="297" r="9"/>
-      <path class="vz-check-dark" d="M374 297 l2.6 2.7 l5 -5.6"/>
-      <text class="vz-t1 vz-sm" x="396" y="292">${v.toast}</text>
-      <text class="vz-t3" x="396" y="309">${v.toastNote}</text>
+    <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="${sale}s" dur="0.4s" fill="freeze"/>
+      <animateTransform attributeName="transform" type="translate" from="0 8" to="0 0" begin="${sale}s" dur="0.5s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.2 0 0.2 1"/>
+      <rect class="vz-card vz-raised" x="356" y="252" width="180" height="62" rx="12"/>
+      <circle class="vz-acc" cx="378" cy="283" r="9"/>
+      <path class="vz-check-dark" d="M374 283 l2.6 2.7 l5 -5.6"/>
+      <text class="vz-t1 vz-sm" x="396" y="278">${v.toast}</text>
+      <text class="vz-t3" x="396" y="295">${v.toastNote}</text>
     </g>`,
+    '',
+    6,
   );
 }
 
