@@ -38,8 +38,8 @@ function ecommerce(v, label) {
   const values = [0.16, 0.22, 0.3, 0.46, 0.6, 0.5, 0.44, 0.52, 0.62, 0.74, 0.66, 0.82, 0.94];
   const cx0 = 24;
   const cx1 = 332;
-  const top = 140;
-  const base = 244;
+  const top = 160;
+  const base = 320;
   const pts = values.map((val, i) => [cx0 + ((cx1 - cx0) * i) / (values.length - 1), base - (base - top) * val]);
   const r = (n) => Math.round(n * 10) / 10;
   const curve = pts
@@ -54,20 +54,6 @@ function ecommerce(v, label) {
     })
     .join(' ');
   const last = pts[pts.length - 1];
-
-  // Share of today's sales per channel; the online store is the highlight.
-  const shares = [0.46, 0.36, 0.18];
-  const tones = ['vz-acc', 'vz-light', 'vz-mid'];
-  const legendX = [24, 124, 224];
-  const gap = 3;
-  const barW = cx1 - cx0 - gap * (shares.length - 1);
-  let x = cx0;
-  const segments = shares.map((share, i) => {
-    const w = barW * share;
-    const seg = html`<rect class="${tones[i]} vz-grow-x" style="--i:${i}" x="${r(x)}" y="268" width="${r(w)}" height="8" rx="2"/>`;
-    x += w + gap;
-    return seg;
-  });
 
   return frame(
     label,
@@ -85,32 +71,24 @@ function ecommerce(v, label) {
     <path class="vz-spark vz-draw-line" pathLength="1" d="${curve}"/>
     <line class="vz-line" x1="${cx0}" y1="${base + 0.5}" x2="${cx1}" y2="${base + 0.5}"/>
     <g class="vz-pop" style="--i:8">${pulseDot(last[0], r(last[1]), 4)}</g>
-    ${segments}
-    ${v.channels.map(([name, pct], i) => html`<g class="vz-pop" style="--i:${i + 2}">
-      <rect class="${tones[i]}" x="${legendX[i]}" y="293" width="8" height="8" rx="2"/>
-      <text class="vz-t3" x="${legendX[i] + 14}" y="301">${name}</text>
-      <text class="vz-t1 vz-sm" x="${legendX[i] + 14}" y="320">${pct}</text>
-    </g>`)}
 
-    <rect class="vz-card" x="356" y="78" width="180" height="182" rx="12"/>
+    <rect class="vz-card" x="356" y="78" width="180" height="172" rx="12"/>
     <text class="vz-t3 vz-caps" x="374" y="104">${v.stock}</text>
     <rect class="vz-chip" x="374" y="118" width="44" height="44" rx="9"/>
     <path class="vz-glyph" d="M384 135 h24 l-2 18 h-20 z M390 135 v-2.5 a6 6 0 0 1 12 0 v2.5"/>
-    <text class="vz-t1 vz-sm" x="430" y="137">${v.product}</text>
-    <text class="vz-t3" x="430" y="153">${v.variant}</text>
-    <line class="vz-line" x1="374" y1="178" x2="518" y2="178"/>
-    <text class="vz-big" x="374" y="216">12</text>
-    <text class="vz-t3" x="412" y="216">${v.units}</text>
-    <circle class="vz-acc" cx="380" cy="238" r="6"/>
-    <path class="vz-check-dark" d="M377.6 238 l1.7 1.9 l3.2 -3.6"/>
-    <text class="vz-ta" x="393" y="242">${v.synced}</text>
+    <text class="vz-t1 vz-sm" x="430" y="145">${v.product}</text>
+    <text class="vz-big" x="374" y="206">12</text>
+    <text class="vz-t3" x="412" y="206">${v.units}</text>
+    <circle class="vz-acc" cx="380" cy="228" r="6"/>
+    <path class="vz-check-dark" d="M377.6 228 l1.7 1.9 l3.2 -3.6"/>
+    <text class="vz-ta" x="393" y="232">${v.synced}</text>
 
     <g class="vz-toast">
-      <rect class="vz-card vz-raised" x="356" y="276" width="180" height="58" rx="12"/>
-      <circle class="vz-acc" cx="378" cy="305" r="9"/>
-      <path class="vz-check-dark" d="M374 305 l2.6 2.7 l5 -5.6"/>
-      <text class="vz-t1 vz-sm" x="396" y="300">${v.toast}</text>
-      <text class="vz-t3" x="396" y="317">${v.toastNote}</text>
+      <rect class="vz-card vz-raised" x="356" y="268" width="180" height="58" rx="12"/>
+      <circle class="vz-acc" cx="378" cy="297" r="9"/>
+      <path class="vz-check-dark" d="M374 297 l2.6 2.7 l5 -5.6"/>
+      <text class="vz-t1 vz-sm" x="396" y="292">${v.toast}</text>
+      <text class="vz-t3" x="396" y="309">${v.toastNote}</text>
     </g>`,
   );
 }

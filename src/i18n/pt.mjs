@@ -126,7 +126,7 @@ export default {
   },
 
   visuals: {
-    ecommerce: { title: 'Vendas de hoje', when: 'todos os canais', amount: 'R$ 12.480', delta: '+18% em relação a ontem', channels: [['Site', '46%'], ['Loja física', '36%'], ['Marketplaces', '18%']], stock: 'Estoque único', product: 'Bolsa Lisboa', variant: 'Couro · Preta', units: 'unidades', synced: 'Sincronizado', toast: 'Carrinho recuperado', toastNote: 'WhatsApp · R$ 412,00' },
+    ecommerce: { title: 'Vendas de hoje', when: 'todos os canais', amount: 'R$ 12.480', delta: '+18% em relação a ontem', stock: 'Estoque único', product: 'Bolsa Lisboa', units: 'unidades', synced: 'Sincronizado', toast: 'Carrinho recuperado', toastNote: 'WhatsApp · R$ 412,00' },
     restaurants: { title: 'Cozinha', count: '14 pedidos', cols: ['Novos', 'Preparando', 'Prontos'], table: 'Mesa', delivery: 'Delivery', counter: 'Balcão', items: ['2× Risoto', '1× Salada', '3× Burger', '1× Fritas', '2× Suco', '1× Prato do dia'] },
     hospitality: { title: 'Ocupação', week: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], rooms: [['Quarto 101', 'Standard'], ['Quarto 102', 'Standard'], ['Quarto 201', 'Luxo'], ['Quarto 202', 'Suíte'], ['Quarto 301', 'Família']], occupied: 'Ocupado', reserved: 'Reservado', cleaning: 'Limpeza' },
     appointments: { title: 'Agenda', week: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'], blocks: ['Consulta · Ana', 'Retorno · João', 'Avaliação · Bia', 'Terapia · Caio', 'Ortodontia · Lia', 'Fisioterapia · Leo', 'Consulta · Rui'], toast: 'Lembrete enviado', confirmed: 'Confirmado' },
