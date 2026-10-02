@@ -232,13 +232,13 @@ function logistics(v, label) {
     <text class="vz-t1" x="516" y="262" text-anchor="end">3/5</text>
     <rect class="vz-track" x="374" y="278" width="142" height="5" rx="2.5"/>
     <rect class="vz-acc vz-grow-x" x="374" y="278" width="85" height="5" rx="2.5"/>
-    <text class="vz-t3" x="374" y="310">ETA 14:35</text>`,
+    <text class="vz-t3" x="374" y="310">${v.eta}</text>`,
   );
 }
 
 function automation(v, label) {
   const ys = [76, 140, 204, 268];
-  const times = ['07:00:01', '07:00:02', '07:00:04'];
+  const times = ['07:00', '07:01', '07:03'];
   return frame(
     label,
     html`
@@ -255,16 +255,16 @@ function automation(v, label) {
         ${check(238, y + 22)}`;
     })}
     <rect class="vz-card" x="280" y="76" width="256" height="236" rx="10"/>
-    <text class="vz-t3 vz-caps" x="300" y="104">log</text>
+    <text class="vz-t3 vz-caps" x="300" y="104">${v.activity}</text>
     <line class="vz-line" x1="280" y1="118" x2="536" y2="118"/>
     ${v.log.map((l, i) => {
       const y = 148 + i * 48;
       return html`<g class="vz-pop" style="--i:${i + 1}">
         <text class="vz-t3" x="300" y="${y}">${times[i]}</text>
-        <text class="${i === 2 ? 'vz-ta' : 'vz-t2'} vz-sm" x="300" y="${y + 18}">${i === 2 ? '! ' : '✓ '}${l}</text>
+        <text class="${i === 2 ? 'vz-ta' : 'vz-t2'} vz-sm" x="300" y="${y + 18}">${l}</text>
       </g>`;
     })}
-    <rect class="vz-acc vz-caret" x="300" y="286" width="7" height="13"/>`,
+`,
   );
 }
 

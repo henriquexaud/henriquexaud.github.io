@@ -24,8 +24,7 @@ const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
 writeFileSync(join(img, 'favicon.svg'), faviconSvg);
 
 const fonts = `
-@font-face { font-family: 'Instrument Sans'; src: url('${fontUrl('instrument-sans-latin.woff2')}') format('woff2'); font-weight: 400 700; }
-@font-face { font-family: 'JetBrains Mono'; src: url('${fontUrl('jetbrains-mono-latin.woff2')}') format('woff2'); font-weight: 400 500; }`;
+@font-face { font-family: 'Instrument Sans'; src: url('${fontUrl('instrument-sans-latin.woff2')}') format('woff2'); font-weight: 400 700; }`;
 
 const tmp = mkdtempSync(join(tmpdir(), 'duatech-'));
 const browser = await chromium.launch();
@@ -73,9 +72,9 @@ for (const code of locales) {
     <div style="position:absolute;left:0;right:0;top:120px;border-top:1px solid rgb(255 255 255/.08)"></div>
     <div style="position:absolute;left:0;right:0;bottom:120px;border-top:1px solid rgb(255 255 255/.08)"></div>
     <div style="position:absolute;left:112px;top:44px;display:flex;align-items:center;gap:14px;font-size:30px;font-weight:600;letter-spacing:-.02em">${mark(32)}${site.name}</div>
-    <div style="position:absolute;right:112px;top:56px;font-family:'JetBrains Mono';font-size:17px;letter-spacing:.08em;text-transform:uppercase;color:#a3a6ad;display:flex;align-items:center;gap:12px"><span style="width:10px;height:10px;border-radius:2px;background:#c8f169"></span>${escape(t.hero.eyebrow)}</div>
+    <div style="position:absolute;right:112px;top:56px;font-size:17px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#a3a6ad;display:flex;align-items:center;gap:12px"><span style="width:8px;height:8px;border-radius:50%;background:#c8f169"></span>${escape(t.hero.eyebrow)}</div>
     <div style="position:absolute;left:112px;right:112px;top:168px;font-size:76px;font-weight:600;line-height:1;letter-spacing:-.045em">${escape(t.hero.title)} <span style="color:#80848d">${escape(t.hero.titleMuted)}</span></div>
-    <div style="position:absolute;left:112px;right:112px;bottom:46px;display:flex;justify-content:space-between;font-family:'JetBrains Mono';font-size:16px;color:#80848d">
+    <div style="position:absolute;left:112px;right:112px;bottom:46px;display:flex;justify-content:space-between;font-size:18px;color:#80848d">
       <span>${escape(solutions.slice(0, 3).join(' · '))}</span><span>${site.url.replace('https://', '')}</span>
     </div>
   </div>`;
