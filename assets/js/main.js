@@ -58,16 +58,6 @@
   syncSvgAnimations();
   reducedMotion.addEventListener('change', syncSvgAnimations);
 
-  // Visuals scroll sideways on phones; make them keyboard-reachable only then.
-  const visuals = document.querySelectorAll('[data-visual]');
-  const syncScrollable = () => {
-    visuals.forEach((figure) => {
-      if (figure.scrollWidth > figure.clientWidth + 1) figure.tabIndex = 0;
-      else figure.removeAttribute('tabindex');
-    });
-  };
-  window.addEventListener('resize', syncScrollable, { passive: true });
-
   // Active section in the navigation ---------------------------------------------
   const navLinks = new Map();
   document.querySelectorAll('[data-nav]').forEach((link) => navLinks.set(link.dataset.nav, link));
@@ -116,7 +106,6 @@
         panels[i].hidden = !selected;
         panels[i].classList.toggle('is-entering', selected);
       });
-      syncScrollable();
       const tab = tabs[index];
       if (focus) tab.focus();
       tab.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: reducedMotion.matches ? 'auto' : 'smooth' });
@@ -143,26 +132,6 @@
         history.replaceState(null, '', '#solutions');
       });
     });
-  }
-
-  syncScrollable();
-
-  // Local clock in the hero ---------------------------------------------------------
-  const clock = document.querySelector('[data-clock]');
-  if (clock) {
-    const format = new Intl.DateTimeFormat(clock.dataset.locale || 'pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-      timeZone: clock.dataset.tz,
-    });
-    const tick = () => {
-      const now = new Date();
-      clock.textContent = format.format(now);
-      clock.setAttribute('datetime', now.toISOString());
-    };
-    tick();
-    setInterval(tick, 15000);
   }
 
   root.classList.add('is-ready');

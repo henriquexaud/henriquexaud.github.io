@@ -5,9 +5,6 @@ export const site = {
   name: 'DuaTech',
   url: 'https://henriquexaud.github.io',
   foundingYear: 2021,
-  timeZone: 'America/Sao_Paulo',
-  // Shown in the hero. Set to false when the schedule is full.
-  acceptingProjects: true,
 };
 
 export const contact = {
