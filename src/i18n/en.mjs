@@ -37,7 +37,7 @@ export default {
     eyebrow: 'Software studio',
     title: 'We design and build software',
     titleMuted: 'that solves real problems.',
-    lead: 'Custom systems, online stores and apps for companies that want to grow with less effort.',
+    lead: 'Built around how your company works: systems, online stores and apps that make day-to-day operations simpler.',
     primary: 'Start a project',
     layers: ['Interface', 'Processes', 'Data'],
     secondary: 'See solutions',
