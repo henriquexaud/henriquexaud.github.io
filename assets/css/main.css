@@ -1481,7 +1481,11 @@ body::after {
 .vz-check,
 .vz-check-dark { fill: none; stroke: #0b0c0f; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .vz-map { fill: #0e1013; stroke: rgb(255 255 255 / 0.06); }
-.vz-street { fill: none; stroke: rgb(255 255 255 / 0.055); stroke-width: 7; stroke-linecap: round; }
+.vz-street { fill: none; stroke: rgb(255 255 255 / 0.05); stroke-width: 5; stroke-linecap: round; }
+.vz-avenue { stroke: rgb(255 255 255 / 0.08); stroke-width: 9; }
+.vz-block { fill: rgb(255 255 255 / 0.018); }
+.vz-park { fill: rgb(0 200 83 / 0.06); }
+.vz-hole { fill: #0b0c0f; }
 .vz-route { fill: none; stroke: var(--accent); stroke-width: 2; stroke-dasharray: 5 5; stroke-linejoin: round; }
 .vz-route-done { fill: none; stroke: var(--fg-2); stroke-width: 2; stroke-linejoin: round; }
 .vz-stop { fill: #0b0c0f; stroke: var(--fg-2); stroke-width: 1.5; }

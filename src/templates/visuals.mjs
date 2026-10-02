@@ -234,44 +234,88 @@ function appointments(v, label) {
   );
 }
 
+// Logistics: the day's route on a map, with the vehicle heading to its next stop,
+// a delay flagged early and a delivery confirmed with proof.
 function logistics(v, label) {
-  const route = 'M186 160 L232 160 L232 104 L316 104';
-  const stops = [
-    [60, 236, true],
-    [140, 196, true],
-    [186, 160, true],
-    [232, 104, false],
-    [316, 104, false],
-  ];
-  const streets = [
-    'M24 236 H340', 'M24 160 H340', 'M24 104 H340', 'M24 290 H340',
-    'M60 64 V336', 'M140 64 V336', 'M232 64 V336', 'M316 64 V336',
+  const done = 'M60 300 L60 236 L140 236 L140 160 L186 160';
+  const ahead = 'M186 160 L232 160 L232 104 L316 104';
+  // The vehicle drives from the last delivered stop to the next one, waits, then loops.
+  const drive = 'M186 160 L232 160 L232 104';
+  // Streets on a grid; the two avenues are wider. City blocks fill the gaps.
+  const xs = [60, 140, 232, 316];
+  const ys = [104, 160, 236, 290];
+  const avenues = ['M24 160 H340', 'M232 64 V336'];
+  const streets = [...ys.filter((y) => y !== 160).map((y) => `M24 ${y} H340`), ...xs.filter((x) => x !== 232).map((x) => `M${x} 64 V336`)];
+  const edgesX = [24, ...xs, 340];
+  const edgesY = [68, ...ys, 336];
+  const blocks = [];
+  for (let i = 0; i < edgesX.length - 1; i++) {
+    for (let j = 0; j < edgesY.length - 1; j++) {
+      const x0 = edgesX[i] + (i ? 7 : 0);
+      const x1 = edgesX[i + 1] - (i < edgesX.length - 2 ? 7 : 0);
+      const y0 = edgesY[j] + (j ? 7 : 0);
+      const y1 = edgesY[j + 1] - (j < edgesY.length - 2 ? 7 : 0);
+      if (x1 - x0 > 8 && y1 - y0 > 8) blocks.push({ x: x0, y: y0, w: x1 - x0, h: y1 - y0, park: i === 3 && j === 2 });
+    }
+  }
+  const delivered = [
+    [60, 236],
+    [140, 196],
+    [186, 160],
   ];
   return frame(
     label,
     html`
-    ${header(v.title, '')}
+    ${header(v.title, v.when)}
     <clipPath id="vz-map"><rect x="24" y="68" width="316" height="268" rx="10"/></clipPath>
     <rect class="vz-map" x="24" y="68" width="316" height="268" rx="10"/>
     <g clip-path="url(#vz-map)">
+      ${blocks.map((b) => html`<rect class="${b.park ? 'vz-park' : 'vz-block'}" x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="3"/>`)}
       ${streets.map((d) => html`<path class="vz-street" d="${d}"/>`)}
-      <path class="vz-route" d="${route}"/>
-      <path class="vz-route-done" d="M60 300 L60 236 L140 236 L140 160 L186 160"/>
+      ${avenues.map((d) => html`<path class="vz-street vz-avenue" d="${d}"/>`)}
+      <path class="vz-route-done" d="${done}"/>
+      <path class="vz-route" d="${ahead}"/>
     </g>
     <rect class="vz-fg" x="52" y="292" width="16" height="16" rx="3"/>
-    ${stops.map(([x, y, done]) => (done ? check(x, y) : html`<circle class="vz-stop" cx="${x}" cy="${y}" r="6"/>`))}
-    ${pulseDot(232, 132, 7)}
-    <rect class="vz-card" x="356" y="68" width="180" height="150" rx="10"/>
+    ${delivered.map(([x, y]) => check(x, y))}
+    <circle class="vz-stop" cx="232" cy="104" r="6"/>
+    <circle class="vz-stop" cx="316" cy="104" r="6"/>
+    <circle class="vz-warn vz-ping" cx="60" cy="104" r="5"/>
+    <circle class="vz-warn" cx="60" cy="104" r="5"/>
+    <g class="vz-vehicle">
+      <circle class="vz-acc vz-ping" r="7"/>
+      <circle class="vz-acc" r="7"/>
+      <circle class="vz-hole" r="2.5"/>
+      <animateMotion dur="7s" repeatCount="indefinite" path="${drive}" keyPoints="0;1;1" keyTimes="0;0.55;1" calcMode="spline" keySplines="0.45 0 0.25 1; 0 0 1 1"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.92;1" dur="7s" repeatCount="indefinite"/>
+    </g>
+    <g class="vz-toast">
+      <rect class="vz-card vz-raised" x="150" y="262" width="182" height="58" rx="12"/>
+      <circle class="vz-fg" cx="172" cy="291" r="9"/>
+      <path class="vz-check" d="M168 291 l2.6 2.7 l5 -5.6"/>
+      <text class="vz-t1 vz-sm" x="190" y="286">${v.proof}</text>
+      <text class="vz-t3" x="190" y="303">${v.proofNote}</text>
+    </g>
+
+    <rect class="vz-card" x="356" y="68" width="180" height="124" rx="12"/>
     ${[
       [v.delivered, '18', 'vz-fg'],
       [v.route, '06', 'vz-acc'],
       [v.issue, '01', 'vz-warn'],
     ].map(([name, n, cls], i) => {
-      const y = 102 + i * 44;
+      const y = 100 + i * 32;
       return html`<circle class="${cls}" cx="378" cy="${y - 4}" r="4"/>
         <text class="vz-t2" x="392" y="${y}">${name}</text>
         <text class="vz-t1" x="516" y="${y}" text-anchor="end">${n}</text>`;
     })}
+
+    <rect class="vz-card" x="356" y="206" width="180" height="130" rx="12"/>
+    <text class="vz-t3 vz-caps" x="374" y="232">${v.next}</text>
+    <text class="vz-t1 vz-sm" x="374" y="258">${v.order}</text>
+    <text class="vz-t3" x="374" y="275">${v.area}</text>
+    <rect class="vz-track" x="374" y="292" width="144" height="4" rx="2"/>
+    <rect class="vz-acc vz-grow-x" x="374" y="292" width="${144 * 0.7}" height="4" rx="2"/>
+    <text class="vz-ta" x="374" y="318">${v.eta}</text>
 `,
   );
 }
