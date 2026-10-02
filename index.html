@@ -237,23 +237,15 @@
     <path class="vz-check" d="M57 236 l2.2 2.3 l4 -4.6"/><circle class="vz-fg" cx="140" cy="196" r="7"/>
     <path class="vz-check" d="M137 196 l2.2 2.3 l4 -4.6"/><circle class="vz-fg" cx="186" cy="160" r="7"/>
     <path class="vz-check" d="M183 160 l2.2 2.3 l4 -4.6"/>
-    <circle class="vz-stop" cx="232" cy="104" r="6"/>
     <circle class="vz-stop" cx="316" cy="104" r="6"/>
-    <circle class="vz-warn vz-ping" cx="60" cy="104" r="5"/>
-    <circle class="vz-warn" cx="60" cy="104" r="5"/>
     <g class="vz-vehicle">
       <circle class="vz-acc vz-ping" r="7"/>
       <circle class="vz-acc" r="7"/>
-      <circle class="vz-hole" r="2.5"/>
-      <animateMotion dur="7s" repeatCount="indefinite" path="M186 160 L232 160 L232 104" keyPoints="0;1;1" keyTimes="0;0.55;1" calcMode="spline" keySplines="0.45 0 0.25 1; 0 0 1 1"/>
-      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.92;1" dur="7s" repeatCount="indefinite"/>
-    </g>
-    <g class="vz-toast">
-      <rect class="vz-card vz-raised" x="150" y="262" width="182" height="58" rx="12"/>
-      <circle class="vz-fg" cx="172" cy="291" r="9"/>
-      <path class="vz-check" d="M168 291 l2.6 2.7 l5 -5.6"/>
-      <text class="vz-t1 vz-sm" x="190" y="286">Entrega confirmada</text>
-      <text class="vz-t3" x="190" y="303">Foto e assinatura</text>
+      <circle class="vz-hole" r="2.5">
+        <animate attributeName="opacity" values="1;0" keyTimes="0;0.5" calcMode="discrete" dur="8s" repeatCount="indefinite"/>
+      </circle>
+      <animateMotion dur="8s" repeatCount="indefinite" path="M186 160 L232 160 L232 104 L316 104" keyPoints="0;1;1" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.45 0 0.25 1; 0 0 1 1"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.94;1" dur="8s" repeatCount="indefinite"/>
     </g>
 
     <rect class="vz-card" x="356" y="68" width="180" height="124" rx="12"/>
