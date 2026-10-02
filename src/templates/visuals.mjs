@@ -42,7 +42,7 @@ function ecommerce(v, label) {
   return frame(
     label,
     html`
-    ${header(v.order, 'R$ 389,90')}
+    ${header(v.order, v.total)}
     <line class="vz-line" x1="40" y1="98" x2="40" y2="262"/>
     ${steps.map(([name, time, done], i) => {
       const y = 98 + i * 55;

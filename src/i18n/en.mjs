@@ -45,7 +45,7 @@ export default {
 
   solutions: {
     eyebrow: 'Solutions',
-    title: 'For your kind of business.',
+    title: 'Built for your kind of business.',
     lead: 'Every company faces a different challenge. We start with yours.',
     tabsLabel: 'Industries',
     items: {
@@ -53,25 +53,25 @@ export default {
         tab: 'Retail and e-commerce',
         title: 'Sell online without the manual work.',
         lead: 'Your online store connected to payments, invoicing and inventory.',
-        benefits: ['Checkout with cards and wallets in a few clicks', 'An invoice issued with every sale, no typing', 'One inventory for your shop, website and marketplaces'],
+        benefits: ['Checkout with cards and wallets in a few clicks', 'An invoice for every sale, issued automatically', 'One inventory across your store, website and marketplaces'],
       },
       logistics: {
         tab: 'Logistics and delivery',
         title: 'From packed order to the customer’s door.',
         lead: 'Every delivery tracked, with deadlines and costs in view.',
-        benefits: ['Every delivery’s position on the map', 'Delays spotted before customers complain', 'Digital proof of delivery with photo and signature'],
+        benefits: ['See every delivery on the map', 'Delays spotted before customers complain', 'Digital proof of delivery with photo and signature'],
       },
       restaurants: {
         tab: 'Restaurants',
-        title: 'The right order, a kitchen in rhythm.',
+        title: 'Every order right, the kitchen in sync.',
         lead: 'Dining room, kitchen, stock and register connected.',
-        benefits: ['Digital tickets, straight to the kitchen screen', 'Cost of every dish and ingredient stock', 'Register closed in minutes'],
+        benefits: ['Digital tickets, straight to the kitchen screen', 'Cost per dish and ingredient stock levels', 'Close out the register in minutes'],
       },
       hospitality: {
         tab: 'Hotels and inns',
-        title: 'Guests well received, rooms always ready.',
+        title: 'Guests welcomed, rooms always ready.',
         lead: 'Bookings, occupancy, check-in and housekeeping in one dashboard.',
-        benefits: ['Direct bookings on your website, beyond the platforms', 'Occupancy map for every room', 'Digital check-in and housekeeping by room'],
+        benefits: ['Direct bookings on your own website, not just on booking platforms', 'Occupancy map for every room', 'Digital check-in and room-by-room housekeeping'],
       },
       appointments: {
         tab: 'Clinics and salons',
@@ -83,7 +83,7 @@ export default {
         tab: 'Teams and processes',
         title: 'Your whole team on the same page.',
         lead: 'Tasks, deadlines and processes organized, with every step visible.',
-        benefits: ['Every task with an owner and a deadline', 'Approvals in the right flow, no lost emails', 'Each area’s progress in view, without having to ask'],
+        benefits: ['Every task with an owner and a deadline', 'Approvals that follow the right path, no emails lost', 'Every department’s progress at a glance, without having to ask'],
       },
     },
   },
@@ -91,11 +91,11 @@ export default {
   services: {
     eyebrow: 'Services',
     title: 'From your first system to continuous improvement.',
-    lead: 'Three ways we work, depending on where your company is. The solutions above are built from them.',
+    lead: 'Three ways we work, depending on where your company stands. Every solution above is built on them.',
     items: [
-      { icon: 'build', kicker: 'Build', title: 'New systems and products', text: 'From scratch to first use: we design and build what your operation needs.', points: ['Business management systems', 'Online stores and portals', 'Apps for customers and teams'] },
-      { icon: 'connect', kicker: 'Connect', title: 'Integration and automation', text: 'We get the systems you already use talking to each other and take repetitive work off your team.', points: ['ERP, store and finance integrated', 'Automated routines and reports', 'Applied artificial intelligence'] },
-      { icon: 'evolve', kicker: 'Evolve', title: 'Ongoing evolution and support', text: 'We take over existing systems, keep them stable and keep improving them with you.', points: ['Maintenance and continuous improvements', 'Modernizing legacy systems', 'Technical consulting and assessments'] },
+      { icon: 'build', kicker: 'Build', title: 'New systems and products', text: 'From blank page to first use: we design and build what your operation needs.', points: ['Business management systems', 'Online stores and portals', 'Apps for customers and teams'] },
+      { icon: 'connect', kicker: 'Connect', title: 'Integration and automation', text: 'We get the systems you already use talking to each other and take repetitive work off your team’s plate.', points: ['ERP, store and finance working together', 'Automated routines and reports', 'Applied artificial intelligence'] },
+      { icon: 'evolve', kicker: 'Evolve', title: 'Evolution and support', text: 'We take over existing systems, keep them stable and keep improving them with you.', points: ['Maintenance and continuous improvements', 'Modernizing legacy systems', 'Technical consulting and assessments'] },
     ],
   },
 
@@ -116,7 +116,7 @@ export default {
     steps: [
       { title: 'Conversation', text: 'We learn about your business and what needs to improve.' },
       { title: 'Proposal', text: 'You receive a clear scope, timeline and investment.' },
-      { title: 'Development', text: 'We build in stages that you follow closely.' },
+      { title: 'Development', text: 'We build in stages, and you follow every one.' },
       { title: 'Launch', text: 'We go live, migrate your data and train your team.' },
     ],
   },
@@ -130,20 +130,20 @@ export default {
 
   faq: {
     eyebrow: 'FAQ',
-    title: 'Common questions.',
+    title: 'Frequently asked questions.',
     items: [
       { q: 'How much does it cost?', a: 'It depends on what your company needs. After a conversation, you receive a proposal with a clear scope, timeline and price.' },
-      { q: 'How long does it take?', a: 'It varies with the size of the project, and the timeline is set in the proposal. Since we deliver in stages, you start using the system before the end.' },
+      { q: 'How long does it take?', a: 'It varies with the size of the project, and the timeline is set in the proposal. Since we deliver in stages, you start using the system before the project is finished.' },
       { q: 'Does my company own the system?', a: 'Yes. The system and the data belong to your company, with no per-user licenses.' },
       { q: 'Do you offer support?', a: 'Yes. After launch, the system stays in our care through monthly support plans.' },
-      { q: 'Do I need to understand technology?', a: 'No. You run the business and we handle the technology, always explaining things simply.' },
+      { q: 'Do I need to understand technology?', a: 'No. You run the business and we handle the technology, and we always explain things in plain language.' },
     ],
   },
 
   contact: {
     eyebrow: 'Contact',
     title: 'Shall we talk about your project?',
-    lead: 'The first conversation comes with no commitment.',
+    lead: 'The first conversation comes with no strings attached.',
     whatsapp: 'Chat on WhatsApp',
     whatsappMessage: 'Hi! I found DuaTech’s website and would like to talk about a project.',
     linkedin: 'LinkedIn',
@@ -155,11 +155,11 @@ export default {
   },
 
   visuals: {
-    ecommerce: { order: 'Order #4821', paid: 'Payment approved', invoice: 'Invoice issued', label: 'Stock updated', transit: 'Ready to ship', waiting: 'awaiting pickup', sales: 'Sales today', amount: '$ 12,480' },
+    ecommerce: { order: 'Order #4821', paid: 'Payment approved', invoice: 'Invoice issued', label: 'Stock updated', transit: 'Ready to ship', waiting: 'awaiting pickup', sales: 'Sales today', amount: '$12,480', total: '$389.90' },
     restaurants: { title: 'Kitchen', count: '14 orders', cols: ['New', 'Cooking', 'Ready'], table: 'Table', delivery: 'Delivery', counter: 'Counter', items: ['2× Risotto', '1× Salad', '3× Burger', '1× Fries', '2× Juice', '1× Daily special'] },
     hospitality: { title: 'Occupancy', week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], rooms: [['Room 101', 'Standard'], ['Room 102', 'Standard'], ['Room 201', 'Deluxe'], ['Room 202', 'Suite'], ['Room 301', 'Family']], occupied: 'Occupied', reserved: 'Booked', cleaning: 'Cleaning' },
     appointments: { title: 'Schedule', week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], blocks: ['Visit · Ana', 'Haircut · John', 'Check-up · Bea', 'Follow-up · Cai', 'Color · Lia', 'Service · Leo', 'Visit · Ray'], toast: 'Reminder sent', confirmed: 'Confirmed' },
-    logistics: { title: 'Deliveries', delivered: 'Delivered', route: 'On route', issue: 'Attention', vehicle: 'Vehicle 03', eta: 'Arrives 2:35 pm' },
+    logistics: { title: 'Deliveries', delivered: 'Delivered', route: 'En route', issue: 'Attention', vehicle: 'Vehicle 03', eta: 'Arriving 2:35 PM' },
     teams: { title: 'Workflow', when: 'this week', stages: [['Request', '6'], ['Review', '4'], ['Approval', '9'], ['In progress', '5'], ['Done', '28']], bottleneck: 'Bottleneck', team: 'Team', people: ['Ana', 'Bruno', 'Carla', 'Diego'], onTime: 'On-time delivery', onTimeValue: '94%', trend: '+6% this month' },
   },
 };

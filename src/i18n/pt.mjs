@@ -155,7 +155,7 @@ export default {
   },
 
   visuals: {
-    ecommerce: { order: 'Pedido #4821', paid: 'Pagamento aprovado', invoice: 'Nota fiscal emitida', label: 'Estoque atualizado', transit: 'Pronto para envio', waiting: 'aguardando coleta', sales: 'Vendas hoje', amount: 'R$ 12.480' },
+    ecommerce: { order: 'Pedido #4821', paid: 'Pagamento aprovado', invoice: 'Nota fiscal emitida', label: 'Estoque atualizado', transit: 'Pronto para envio', waiting: 'aguardando coleta', sales: 'Vendas hoje', amount: 'R$ 12.480', total: 'R$ 389,90' },
     restaurants: { title: 'Cozinha', count: '14 pedidos', cols: ['Novos', 'Preparando', 'Prontos'], table: 'Mesa', delivery: 'Delivery', counter: 'Balcão', items: ['2× Risoto', '1× Salada', '3× Burger', '1× Fritas', '2× Suco', '1× Prato do dia'] },
     hospitality: { title: 'Ocupação', week: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], rooms: [['Quarto 101', 'Standard'], ['Quarto 102', 'Standard'], ['Quarto 201', 'Luxo'], ['Quarto 202', 'Suíte'], ['Quarto 301', 'Família']], occupied: 'Ocupado', reserved: 'Reservado', cleaning: 'Limpeza' },
     appointments: { title: 'Agenda', week: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'], blocks: ['Consulta · Ana', 'Corte · João', 'Avaliação · Bia', 'Retorno · Caio', 'Coloração · Lia', 'Revisão · Leo', 'Consulta · Rui'], toast: 'Lembrete enviado', confirmed: 'Confirmado' },
