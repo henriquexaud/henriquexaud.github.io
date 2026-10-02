@@ -49,59 +49,24 @@ export default {
     lead: 'Cada empresa tem um desafio diferente. Começamos pelo seu.',
     tabsLabel: 'Segmentos',
     items: {
-      ecommerce: {
-        tab: 'Lojas e e-commerce',
-        title: 'Venda online sem trabalho manual.',
-        lead: 'Sua loja virtual integrada ao pagamento, à nota fiscal e ao estoque.',
-        benefits: ['Pagamento por Pix e cartão em poucos cliques', 'Nota fiscal emitida a cada venda, sem digitação', 'Um só estoque para loja física, site e marketplaces'],
-      },
-      logistics: {
-        tab: 'Logística e entregas',
-        title: 'Do pedido pronto à porta do cliente.',
-        lead: 'Cada entrega acompanhada, com prazos e custos à vista.',
-        benefits: ['Posição de cada entrega no mapa', 'Atrasos identificados antes da reclamação', 'Comprovante digital com foto e assinatura'],
-      },
-      restaurants: {
-        tab: 'Restaurantes',
-        title: 'Pedido certo, cozinha no ritmo.',
-        lead: 'Salão, cozinha, estoque e caixa conectados.',
-        benefits: ['Comanda digital, direto na tela da cozinha', 'Custo de cada prato e estoque de insumos', 'Caixa fechado em minutos'],
-      },
-      hospitality: {
-        tab: 'Hotéis e pousadas',
-        title: 'Hóspedes bem recebidos, quartos sempre prontos.',
-        lead: 'Reservas, ocupação, check-in e governança em um só painel.',
-        benefits: ['Reservas diretas pelo site, além das plataformas', 'Mapa de ocupação de todos os quartos', 'Check-in digital e limpeza organizada por quarto'],
-      },
-      appointments: {
-        tab: 'Clínicas e serviços',
-        title: 'Agenda cheia e menos faltas.',
-        lead: 'O cliente agenda sozinho e recebe lembretes automáticos.',
-        benefits: ['Agendamento online, a qualquer hora', 'Confirmação por WhatsApp antes de cada horário', 'Comissões e recebimentos calculados sozinhos'],
-      },
-      gyms: {
-        tab: 'Academias e esportes',
-        title: 'Alunos que voltam todo mês.',
-        lead: 'Matrículas, aulas e mensalidades organizadas, com atenção especial a quem começa a sumir.',
-        benefits: ['Check-in por QR code e aulas com vagas controladas', 'Mensalidade recorrente no cartão ou Pix, sem cobrança manual', 'Alerta de alunos inativos antes que cancelem'],
-      },
-      teams: {
-        tab: 'Equipes e processos',
-        title: 'Menos ruído, mais trabalho andando.',
-        lead: 'Comunicação clara, impedimentos à vista e ciclos curtos para o time decidir e entregar mais rápido.',
-        benefits: ['Prioridades combinadas e visíveis para todo o time', 'Impedimentos sinalizados e resolvidos no mesmo dia', 'Entregas em ciclos curtos, com ajustes a cada rodada'],
-      },
+      ecommerce: { tab: 'Lojas e e-commerce', title: 'Venda online sem trabalho manual.', benefits: ['Pix e cartão em poucos cliques', 'Nota fiscal emitida a cada venda', 'Um só estoque para loja, site e marketplaces'] },
+      logistics: { tab: 'Logística e entregas', title: 'Do pedido pronto à porta do cliente.', benefits: ['Cada entrega visível no mapa', 'Atrasos identificados antes da reclamação', 'Comprovante digital de entrega'] },
+      restaurants: { tab: 'Restaurantes', title: 'Pedido certo, cozinha no ritmo.', benefits: ['Comanda digital direto na cozinha', 'Custo real de cada prato', 'Caixa fechado em minutos'] },
+      hospitality: { tab: 'Hotéis e pousadas', title: 'Hóspedes bem recebidos, quartos sempre prontos.', benefits: ['Reservas diretas pelo seu site', 'Ocupação de todos os quartos em um mapa', 'Check-in digital e limpeza organizada'] },
+      appointments: { tab: 'Clínicas e serviços', title: 'Agenda cheia e menos faltas.', benefits: ['Agendamento online a qualquer hora', 'Confirmação automática por WhatsApp', 'Comissões calculadas sem planilha'] },
+      gyms: { tab: 'Academias e esportes', title: 'Alunos que voltam todo mês.', benefits: ['Check-in por QR code', 'Mensalidade recorrente, sem cobrança manual', 'Alerta de alunos inativos antes do cancelamento'] },
+      teams: { tab: 'Equipes e processos', title: 'Menos ruído, mais trabalho andando.', benefits: ['Prioridades claras para todo o time', 'Impedimentos resolvidos no mesmo dia', 'Entregas em ciclos curtos'] },
     },
   },
 
   services: {
     eyebrow: 'Serviços',
     title: 'Do primeiro sistema à evolução contínua.',
-    lead: 'Três frentes de trabalho, conforme o momento da sua empresa. As soluções acima nascem delas.',
+    lead: 'Três frentes de trabalho, conforme o momento da sua empresa.',
     items: [
-      { icon: 'build', kicker: 'Criar', title: 'Sistemas e produtos novos', text: 'Do zero ao primeiro uso: desenhamos e construímos o que a sua operação precisa.', points: ['Sistemas de gestão', 'Lojas virtuais e portais', 'Aplicativos para clientes e equipes'] },
-      { icon: 'connect', kicker: 'Conectar', title: 'Integração e automação', text: 'Fazemos os sistemas que você já usa conversarem e tiramos o trabalho repetitivo das mãos da equipe.', points: ['ERP, loja e financeiro integrados', 'Rotinas e relatórios automáticos', 'Inteligência artificial aplicada'] },
-      { icon: 'evolve', kicker: 'Evoluir', title: 'Evolução e suporte', text: 'Assumimos sistemas existentes, cuidamos da estabilidade e seguimos melhorando com você.', points: ['Manutenção e melhorias contínuas', 'Modernização de sistemas antigos', 'Consultoria e diagnóstico técnico'] },
+      { icon: 'build', kicker: 'Criar', title: 'Sistemas e produtos novos', text: 'Desenhamos e construímos o que a sua operação precisa, do zero ao primeiro uso.', points: ['Sistemas de gestão', 'Lojas virtuais e portais', 'Aplicativos'] },
+      { icon: 'connect', kicker: 'Conectar', title: 'Integração e automação', text: 'Os sistemas que você já usa conversando entre si, sem trabalho repetitivo.', points: ['ERP, loja e financeiro integrados', 'Relatórios automáticos', 'Inteligência artificial aplicada'] },
+      { icon: 'evolve', kicker: 'Evoluir', title: 'Evolução e suporte', text: 'Assumimos sistemas existentes, garantimos estabilidade e seguimos melhorando.', points: ['Manutenção e melhorias', 'Modernização de sistemas antigos', 'Consultoria técnica'] },
     ],
   },
 
@@ -109,10 +74,10 @@ export default {
     eyebrow: 'Por que a DuaTech',
     title: 'Tecnologia a favor do seu negócio.',
     items: [
-      { icon: 'fit', title: 'Sob medida', text: 'O sistema se adapta ao seu processo, e não o contrário.' },
-      { icon: 'shield', title: 'Confiável', text: 'Feito para funcionar nos dias de maior movimento.' },
-      { icon: 'key', title: 'É seu', text: 'O sistema e os dados pertencem à sua empresa.' },
-      { icon: 'chat', title: 'Perto de você', text: 'Você fala direto com quem constrói, sem intermediários.' },
+      { icon: 'fit', title: 'Sob medida', text: 'O sistema segue o seu processo, e não o contrário.' },
+      { icon: 'shield', title: 'Confiável', text: 'Estável nos dias de maior movimento.' },
+      { icon: 'key', title: 'É seu', text: 'Código e dados pertencem à sua empresa.' },
+      { icon: 'chat', title: 'Atendimento direto', text: 'Você fala com quem constrói, sem intermediários.' },
     ],
   },
 
@@ -120,17 +85,17 @@ export default {
     eyebrow: 'Como funciona',
     title: 'Simples do início ao fim.',
     steps: [
-      { title: 'Conversa', text: 'Entendemos o seu negócio e o que precisa melhorar.' },
-      { title: 'Proposta', text: 'Você recebe escopo, prazo e investimento definidos.' },
-      { title: 'Desenvolvimento', text: 'Construímos em etapas que você acompanha de perto.' },
-      { title: 'Lançamento', text: 'Colocamos no ar, migramos os dados e treinamos sua equipe.' },
+      { title: 'Conversa', text: 'Entendemos o negócio e o que precisa melhorar.' },
+      { title: 'Proposta', text: 'Escopo, prazo e investimento definidos antes de começar.' },
+      { title: 'Desenvolvimento', text: 'Entregas em etapas, que você acompanha.' },
+      { title: 'Lançamento', text: 'Sistema no ar, dados migrados e equipe treinada.' },
     ],
   },
 
   about: {
     eyebrow: 'Sobre',
     title: 'Um estúdio pequeno por escolha.',
-    text: 'A DuaTech é um estúdio independente fundado por Henrique Xaud. Cada projeto tem um responsável do início ao fim e, quando preciso, reunimos especialistas de confiança para formar o time ideal.',
+    text: 'A DuaTech é um estúdio independente fundado por Henrique Xaud. Cada projeto tem um responsável do início ao fim e, quando necessário, especialistas de confiança completam o time.',
     founderRole: 'Fundador',
   },
 
@@ -138,11 +103,11 @@ export default {
     eyebrow: 'Dúvidas',
     title: 'Perguntas frequentes.',
     items: [
-      { q: 'Quanto custa?', a: 'Depende do que a sua empresa precisa. Depois de uma conversa, você recebe uma proposta com escopo, prazo e valor definidos.' },
-      { q: 'Quanto tempo leva?', a: 'Varia com o tamanho do projeto, e o prazo fica definido na proposta. Como entregamos em etapas, você começa a usar o sistema antes do fim.' },
-      { q: 'O sistema fica com a minha empresa?', a: 'Sim. O sistema e os dados são da sua empresa, sem licença por usuário.' },
-      { q: 'Vocês oferecem suporte?', a: 'Sim. Depois da entrega, o sistema continua sob nossos cuidados, com planos mensais de acompanhamento.' },
-      { q: 'Preciso entender de tecnologia?', a: 'Não. Você cuida do negócio e nós da tecnologia, sempre explicando tudo de forma simples.' },
+      { q: 'Quanto custa?', a: 'Depende do escopo. Após a primeira conversa, você recebe uma proposta com valor, prazo e entregas definidos.' },
+      { q: 'Quanto tempo leva?', a: 'O prazo é definido na proposta. Como entregamos em etapas, você começa a usar o sistema antes do fim do projeto.' },
+      { q: 'O sistema fica com a minha empresa?', a: 'Sim. Código e dados são da sua empresa, sem licença por usuário.' },
+      { q: 'Vocês oferecem suporte?', a: 'Sim. Após o lançamento, o sistema segue sob nossos cuidados com planos mensais.' },
+      { q: 'Preciso entender de tecnologia?', a: 'Não. Você cuida do negócio; nós cuidamos da tecnologia e explicamos cada decisão de forma simples.' },
     ],
   },
 
@@ -161,12 +126,12 @@ export default {
   },
 
   visuals: {
-    ecommerce: { order: 'Pedido #4821', paid: 'Pagamento aprovado', invoice: 'Nota fiscal emitida', label: 'Estoque atualizado', transit: 'Pronto para envio', waiting: 'aguardando coleta', sales: 'Vendas hoje', amount: 'R$ 12.480', total: 'R$ 389,90' },
+    ecommerce: { order: 'Pedido #4821', paid: 'Pagamento aprovado', invoice: 'Nota fiscal emitida', label: 'Estoque atualizado', transit: 'Pronto para envio', waiting: 'aguardando coleta', sales: 'Vendas hoje', amount: 'R$ 12.480' },
     restaurants: { title: 'Cozinha', count: '14 pedidos', cols: ['Novos', 'Preparando', 'Prontos'], table: 'Mesa', delivery: 'Delivery', counter: 'Balcão', items: ['2× Risoto', '1× Salada', '3× Burger', '1× Fritas', '2× Suco', '1× Prato do dia'] },
     hospitality: { title: 'Ocupação', week: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], rooms: [['Quarto 101', 'Standard'], ['Quarto 102', 'Standard'], ['Quarto 201', 'Luxo'], ['Quarto 202', 'Suíte'], ['Quarto 301', 'Família']], occupied: 'Ocupado', reserved: 'Reservado', cleaning: 'Limpeza' },
     appointments: { title: 'Agenda', week: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'], blocks: ['Consulta · Ana', 'Corte · João', 'Avaliação · Bia', 'Retorno · Caio', 'Coloração · Lia', 'Revisão · Leo', 'Consulta · Rui'], toast: 'Lembrete enviado', confirmed: 'Confirmado' },
-    logistics: { title: 'Entregas', delivered: 'Entregues', route: 'Em rota', issue: 'Atenção', vehicle: 'Veículo 03', eta: 'Previsão 14:35' },
-    gyms: { title: 'Frequência', when: 'últimos 7 dias', days: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], active: 'Alunos ativos', trend: '+12 este mês', risk: 'Risco de cancelamento', members: [['Marcos', '12 dias sem treinar'], ['Júlia', '9 dias sem treinar']], sent: 'Convite de volta enviado' },
-    teams: { title: 'Ciclo de entregas', when: 'esta semana', stages: [['A fazer', '8'], ['Em andamento', '5'], ['Em revisão', '3'], ['Concluído', '21']], blockers: 'Impedimentos', blockerItems: [['Acesso ao sistema do cliente', 'aberto há 2h'], ['Aprovação do orçamento', 'resolvido hoje']], cycle: 'Ciclo atual', cycleValue: '68%', cycleNote: 'faltam 4 dias', teamNote: '2 entregas hoje' },
+    logistics: { title: 'Entregas', delivered: 'Entregues', route: 'Em rota', issue: 'Atenção' },
+    gyms: { title: 'Frequência', when: 'últimos 7 dias', days: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], active: 'Alunos ativos', risk: 'Risco de cancelamento', members: [['Marcos', '12 dias sem treinar'], ['Júlia', '9 dias sem treinar']], sent: 'Convite de volta enviado' },
+    teams: { title: 'Ciclo de entregas', when: 'esta semana', stages: [['A fazer', '8'], ['Em andamento', '5'], ['Em revisão', '3'], ['Concluído', '21']], blockers: 'Impedimentos', blockerItems: [['Acesso ao sistema do cliente', 'aberto há 2h'], ['Aprovação do orçamento', 'resolvido hoje']], cycle: 'Ciclo atual', cycleValue: '68%', cycleNote: 'faltam 4 dias' },
   },
 };
