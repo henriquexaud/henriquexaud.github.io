@@ -124,7 +124,7 @@ export default {
   },
 
   visuals: {
-    ecommerce: { title: 'Ventas de hoy', when: 'todos los canales', amount: '$ 12.480', delta: '+18% respecto a ayer', stock: 'Inventario único', product: 'Bolso Lisboa', units: 'unidades', synced: 'Sincronizado', toast: 'Carrito recuperado', toastNote: 'WhatsApp · $ 412' },
+    ecommerce: { title: 'Ventas de hoy', when: 'todos los canales', amountBefore: '$ 12.090', amount: '$ 12.480', delta: '+18% respecto a ayer', stock: 'Inventario único', product: 'Bolso Lisboa', channels: ['Tienda física', 'Web', 'Marketplaces'], toast: 'Carrito recuperado', toastNote: 'WhatsApp · $ 390' },
     restaurants: { title: 'Cocina', count: '14 pedidos', cols: ['Nuevos', 'En curso', 'Listos'], table: 'Mesa', delivery: 'Delivery', counter: 'Mostrador', items: ['2× Risotto', '1× Ensalada', '3× Burger', '1× Papas fritas', '2× Jugo', '1× Menú del día'] },
     hospitality: { title: 'Ocupación', week: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], rooms: [['Hab. 101', 'Estándar'], ['Hab. 102', 'Estándar'], ['Hab. 201', 'Superior'], ['Hab. 202', 'Suite'], ['Hab. 301', 'Familiar']], occupied: 'Ocupada', reserved: 'Reservada', cleaning: 'Limpieza' },
     appointments: { title: 'Agenda', week: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'], blocks: ['Consulta · Ana', 'Control · Juan', 'Evaluación · Bea', 'Terapia · Caio', 'Ortodoncia · Lía', 'Fisioterapia · Leo', 'Consulta · Rui'], toast: 'Recordatorio enviado', confirmed: 'Confirmado' },
