@@ -6,8 +6,9 @@ import { html, raw } from '../lib/html.mjs';
 const W = 560;
 const H = 360;
 
-function frame(label, content, extra = '') {
-  return html`<svg class="vz" viewBox="0 0 ${W} ${H}" role="img" aria-label="${label}" focusable="false">
+// `still` (seconds): the moment of the animation shown when motion is reduced.
+function frame(label, content, extra = '', still = 0) {
+  return html`<svg class="vz" viewBox="0 0 ${W} ${H}" role="img" aria-label="${label}" focusable="false" data-still="${still}">
     <rect class="vz-bg" x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="14"/>
     ${content}
     ${raw(extra)}
@@ -216,10 +217,19 @@ function appointments(v, label) {
 function logistics(v, label) {
   const done = 'M60 300 L60 236 L140 236 L140 160 L186 160';
   const ahead = 'M186 160 L232 160 L232 104 L316 104';
-  // The order travels from the last delivered stop to its destination in one go,
-  // turns fully green on arrival and waits there before the loop restarts.
-  const cycle = '8s';
+  // One timeline drives the map and the card: the order sets off, a solid trail
+  // draws behind it, it settles at the destination, the card reads "delivered",
+  // then everything fades out and the loop restarts.
+  const dur = 9;
+  const go = 0.04;
   const arrive = 0.5;
+  const out = 0.9;
+  const gone = 0.97;
+  const ease = '0.45 0 0.25 1';
+  const travel = (attr, from, to) =>
+    raw(`<animate attributeName="${attr}" values="${from};${from};${to};${to}" keyTimes="0;${go};${arrive};1" calcMode="spline" keySplines="0 0 1 1; ${ease}; 0 0 1 1" dur="${dur}s" repeatCount="indefinite"/>`);
+  const fadeOut = raw(`<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;${out};${gone};1" dur="${dur}s" repeatCount="indefinite"/>`);
+
   // Streets on a grid; the two avenues are wider. City blocks fill the gaps.
   const xs = [60, 140, 232, 316];
   const ys = [104, 160, 236, 290];
@@ -253,19 +263,24 @@ function logistics(v, label) {
       ${streets.map((d) => html`<path class="vz-street" d="${d}"/>`)}
       ${avenues.map((d) => html`<path class="vz-street vz-avenue" d="${d}"/>`)}
       <path class="vz-route-done" d="${done}"/>
-      <path class="vz-route" d="${ahead}"/>
+      <path class="vz-route-plan" d="${ahead}"/>
+      <path class="vz-route-trail" d="${ahead}" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1">
+        ${travel('stroke-dashoffset', 1, 0)}
+        ${fadeOut}
+      </path>
     </g>
     <rect class="vz-fg" x="52" y="292" width="16" height="16" rx="3"/>
     ${delivered.map(([x, y]) => check(x, y))}
-    <circle class="vz-stop" cx="316" cy="104" r="6"/>
-    <g class="vz-vehicle">
-      <circle class="vz-acc vz-ping" r="7"/>
-      <circle class="vz-acc" r="7"/>
-      <circle class="vz-hole" r="2.5">
-        <animate attributeName="opacity" values="1;0" keyTimes="0;${arrive}" calcMode="discrete" dur="${cycle}" repeatCount="indefinite"/>
-      </circle>
-      <animateMotion dur="${cycle}" repeatCount="indefinite" path="${ahead}" keyPoints="0;1;1" keyTimes="0;${arrive};1" calcMode="spline" keySplines="0.45 0 0.25 1; 0 0 1 1"/>
-      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.94;1" dur="${cycle}" repeatCount="indefinite"/>
+    <circle class="vz-dest" cx="316" cy="104" r="6"/>
+    <circle class="vz-arrival" cx="316" cy="104" r="6" opacity="0">
+      <animate attributeName="r" values="6;6;20;20" keyTimes="0;${arrive};${arrive + 0.12};1" dur="${dur}s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0;0.5;0;0" keyTimes="0;${arrive};${arrive + 0.005};${arrive + 0.12};1" dur="${dur}s" repeatCount="indefinite"/>
+    </circle>
+    <g opacity="0">
+      <circle class="vz-car-halo" r="12"/>
+      <circle class="vz-car" r="6"/>
+      <animateMotion path="${ahead}" keyPoints="0;0;1;1" keyTimes="0;${go};${arrive};1" calcMode="spline" keySplines="0 0 1 1; ${ease}; 0 0 1 1" dur="${dur}s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;${go};${out};${gone};1" dur="${dur}s" repeatCount="indefinite"/>
     </g>
 
     <rect class="vz-card" x="356" y="68" width="180" height="124" rx="12"/>
@@ -285,9 +300,19 @@ function logistics(v, label) {
     <text class="vz-t1 vz-sm" x="374" y="258">${v.order}</text>
     <text class="vz-t3" x="374" y="275">${v.area}</text>
     <rect class="vz-track" x="374" y="292" width="144" height="4" rx="2"/>
-    <rect class="vz-acc vz-grow-x" x="374" y="292" width="${144 * 0.7}" height="4" rx="2"/>
-    <text class="vz-ta" x="374" y="318">${v.eta}</text>
+    <rect class="vz-acc" x="374" y="292" width="0" height="4" rx="2">
+      ${travel('width', 0, 144)}
+      ${fadeOut}
+    </rect>
+    <text class="vz-ta" x="374" y="318">${v.eta}
+      <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;${arrive};${arrive + 0.02};${gone};1" dur="${dur}s" repeatCount="indefinite"/>
+    </text>
+    <text class="vz-ta" x="374" y="318" opacity="0">${v.arrived}
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;${arrive};${arrive + 0.02};${out};${gone};1" dur="${dur}s" repeatCount="indefinite"/>
+    </text>
 `,
+    '',
+    dur * 0.7,
   );
 }
 
