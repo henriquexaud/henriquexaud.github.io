@@ -28,6 +28,16 @@ export const valueIcons = {
   chat: valueIcon('<path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8M8 13h5"/>'),
 };
 
+const serviceIcon = (body) =>
+  raw(`<svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${body}</svg>`);
+
+// Drafting-style icons for the three service fronts.
+export const serviceIcons = {
+  build: serviceIcon('<path d="M16 4 27 10.3v12.4L16 29 5 22.7V10.3z"/><path d="M5 10.3 16 16.6l11-6.3M16 16.6V29"/><path d="M16 4v4M27 10.3l-3.5 2" stroke-dasharray="1.5 2.5" opacity=".6"/>'),
+  connect: serviceIcon('<circle cx="7" cy="23" r="3"/><circle cx="25" cy="23" r="3"/><circle cx="16" cy="8" r="3"/><path d="M14.4 10.6 8.6 20.4M17.6 10.6l5.8 9.8M10 23h12"/>'),
+  evolve: serviceIcon('<path d="M5 26h5v-5h5v-5h5v-5h5"/><path d="M21 6h5v5"/><path d="m26 6-7 7" stroke-dasharray="1.5 2.5" opacity=".6"/>'),
+};
+
 // Round flags for the language menu (cropped to a circle by CSS).
 const usStripes = Array.from({ length: 7 }, (_, i) => `<rect y="${(i * 2 * 24) / 13}" width="24" height="${24 / 13}" fill="#B22234"/>`).join('');
 const usStars = [2.2, 5.5, 8.8]

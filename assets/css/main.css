@@ -876,28 +876,118 @@ p {
   box-shadow: 0 40px 80px -40px rgb(0 0 0 / 0.9);
 }
 
-/* Services */
+/* Services: three fronts of work (build, connect, evolve) */
 
-.service-grid {
+.pillars {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(40px, 5vw, 64px) clamp(32px, 4vw, 56px);
+  gap: 20px;
 }
 
-.service {
-  padding-top: 28px;
-  border-top: 1px solid var(--line-2);
+.pillar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(28px, 3vw, 40px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  overflow: hidden;
+  transition: border-color 0.3s var(--ease);
 }
 
-.service-title {
-  font-size: 20px;
-  letter-spacing: -0.02em;
+/* Accent line that draws across the top edge on hover. */
+.pillar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.6s var(--ease);
+}
+
+.pillar:hover {
+  border-color: var(--line-2);
+}
+
+.pillar:hover::before {
+  transform: scaleX(1);
+}
+
+.pillar-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+
+.pillar-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  border: 1px solid var(--line-2);
+  background:
+    linear-gradient(var(--grid-major) 1px, transparent 1px) 0 0 / 8px 8px,
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px) 0 0 / 8px 8px,
+    var(--surface-3);
+  color: var(--accent);
+}
+
+.pillar-index {
+  font-size: 14px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-3);
+}
+
+.pillar-kicker {
   margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
-.service-text {
+.pillar-title {
+  font-size: clamp(1.3rem, 1.15rem + 0.5vw, 1.55rem);
+  letter-spacing: -0.025em;
+  margin-bottom: 12px;
+}
+
+.pillar-text {
   color: var(--fg-2);
-  max-width: 32ch;
+  margin-bottom: 28px;
+}
+
+.pillar-points {
+  display: grid;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.pillar-points li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15.5px;
+}
+
+.pillar-points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 10px;
+  height: 1px;
+  background: var(--accent);
 }
 
 /* Why DuaTech */
@@ -1401,6 +1491,12 @@ body::after {
 .vz-chip { fill: #262930; }
 .vz-track { fill: rgb(255 255 255 / 0.08); }
 .vz-faded { opacity: 0.5; }
+.vz-orbit { fill: none; stroke: rgb(255 255 255 / 0.06); stroke-dasharray: 2 5; }
+.vz-link { fill: none; stroke: rgb(255 255 255 / 0.14); stroke-width: 1; }
+.vz-client { fill: #0b0c0f; stroke: var(--fg-2); stroke-width: 1.5; }
+.vz-hub { fill: #10251a; stroke: var(--accent); stroke-width: 1.2; filter: drop-shadow(0 0 14px rgb(0 200 83 / 0.25)); }
+.vz-hub-glyph { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linejoin: round; }
+.vz-tw { fill: var(--warn); font-size: 11.5px; }
 .vz-ring { fill: none; stroke: rgb(255 255 255 / 0.14); stroke-width: 1.5; }
 .vz-check-light { fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .vz-glyph { fill: none; stroke: var(--fg-2); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
@@ -1719,8 +1815,8 @@ body::after {
     overflow: hidden;
   }
 
-  .service-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .pillars {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .about,
@@ -1746,7 +1842,6 @@ body::after {
     flex: 1 1 auto;
   }
 
-  .service-grid,
   .value-grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -1758,10 +1853,6 @@ body::after {
   .hero::before {
     -webkit-mask-image: radial-gradient(ellipse 90% 60% at 60% 20%, #000 20%, transparent 80%);
     mask-image: radial-gradient(ellipse 90% 60% at 60% 20%, #000 20%, transparent 80%);
-  }
-
-  .service-grid {
-    gap: 36px;
   }
 
   .value {
