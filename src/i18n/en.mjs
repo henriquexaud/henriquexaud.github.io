@@ -9,9 +9,9 @@ export default {
   path: '/en/',
 
   meta: {
-    title: 'DuaTech — Custom software for businesses',
+    title: 'Duvalle — Custom software for businesses',
     description:
-      'Custom business systems, online stores, apps and automation. DuaTech builds software that solves real problems for your business.',
+      'Custom business systems, online stores, apps and automation. Duvalle builds software that solves real problems for your business.',
   },
 
   ui: {
@@ -71,7 +71,7 @@ export default {
   },
 
   why: {
-    eyebrow: 'Why DuaTech',
+    eyebrow: 'Why Duvalle',
     title: 'Technology that works for your business.',
     items: [
       { icon: 'fit', title: 'Tailor-made', text: 'The system follows your process, not the other way around.' },
@@ -95,7 +95,7 @@ export default {
   about: {
     eyebrow: 'About',
     title: 'A small studio, by choice.',
-    text: 'DuaTech is an independent studio founded by Henrique Xaud. Every project has one person accountable from start to finish and, when needed, trusted specialists complete the team.',
+    text: 'Duvalle is an independent studio founded by Henrique Xaud. Every project has one person accountable from start to finish and, when needed, trusted specialists complete the team.',
     founderRole: 'Founder',
   },
 
@@ -116,7 +116,7 @@ export default {
     title: 'Shall we talk about your project?',
     lead: 'The first conversation comes with no strings attached.',
     whatsapp: 'Chat on WhatsApp',
-    whatsappMessage: 'Hi! I found DuaTech’s website and would like to talk about a project.',
+    whatsappMessage: 'Hi! I found Duvalle’s website and would like to talk about a project.',
     linkedin: 'LinkedIn',
   },
 

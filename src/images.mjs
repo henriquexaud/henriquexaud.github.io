@@ -26,7 +26,7 @@ writeFileSync(join(img, 'favicon.svg'), faviconSvg);
 const fonts = `
 @font-face { font-family: 'Instrument Sans'; src: url('${fontUrl('instrument-sans-latin.woff2')}') format('woff2'); font-weight: 400 700; }`;
 
-const tmp = mkdtempSync(join(tmpdir(), 'duatech-'));
+const tmp = mkdtempSync(join(tmpdir(), 'duvalle-'));
 const browser = await chromium.launch();
 
 async function render(name, width, height, body, type = 'png') {

@@ -1,6 +1,6 @@
-# DuaTech — site
+# Duvalle — site
 
-Site da DuaTech, estúdio de engenharia de software: uma página única, estática e multilíngue (PT, EN, ES), publicada pelo GitHub Pages em https://henriquexaud.github.io.
+Site da Duvalle, estúdio de engenharia de software: uma página única, estática e multilíngue (PT, EN, ES), publicada pelo GitHub Pages em https://henriquexaud.github.io.
 
 - Português na raiz (`/`), inglês em `/en/` e espanhol em `/es/`.
 - HTML gerado em build: cada idioma é uma página completa, indexável e com `hreflang`, sem tradução no navegador.

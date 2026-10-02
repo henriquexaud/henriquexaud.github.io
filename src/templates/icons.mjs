@@ -1,6 +1,6 @@
 import { raw } from '../lib/html.mjs';
 
-// The DuaTech mark: a "D" split in two parts (dua = two).
+// The Duvalle mark: a "D" built from two parts.
 export const logoMark = (size = 22) =>
   raw(`<svg class="logo-mark" width="${size}" height="${size}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect class="logo-bar" x="2.5" y="3" width="5" height="18" rx="1.25"/><path class="logo-bowl" d="M10 3h1.5a9 9 0 0 1 0 18H10z"/></svg>`);
 
@@ -20,7 +20,7 @@ export const icons = {
 const valueIcon = (body) =>
   raw(`<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${body}</svg>`);
 
-// Line icons for the "why DuaTech" values.
+// Line icons for the "why Duvalle" values.
 export const valueIcons = {
   fit: valueIcon('<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>'),
   shield: valueIcon('<path d="M12 3 5 6v5c0 4.4 3 8.3 7 10 4-1.7 7-5.6 7-10V6z"/><path d="m9 12 2 2 4-4"/>'),
