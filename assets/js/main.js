@@ -127,6 +127,13 @@
         panels[i].hidden = !selected;
         panels[i].classList.toggle('is-entering', selected);
       });
+      // Replay the illustration's animation each time its tab is opened.
+      const figure = panels[index].querySelector('[data-visual]');
+      if (figure?.classList.contains('is-in')) {
+        figure.classList.remove('is-in');
+        void figure.offsetWidth;
+        figure.classList.add('is-in');
+      }
       const tab = tabs[index];
       if (focus) tab.focus();
       tab.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: reducedMotion.matches ? 'auto' : 'smooth' });

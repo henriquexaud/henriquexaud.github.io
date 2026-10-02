@@ -236,35 +236,54 @@ function logistics(v, label) {
   );
 }
 
+// Small line glyphs for each automation step, drawn around (0, 0).
+const glyphs = [
+  '<path class="vz-glyph" d="M-5 -2h10v7h-10z M-5 -2l2-3.5h6l2 3.5 M-1.5 1h3"/>',
+  '<path class="vz-glyph-fill" d="M0-6 1.6-1.6 6 0 1.6 1.6 0 6-1.6 1.6-6 0-1.6-1.6z"/>',
+  '<path class="vz-glyph" d="M-4.5-6h6l3 3v9h-9z M-2 0h4.5 M-2 3h4.5"/>',
+  '<path class="vz-glyph" d="M-5 5v-4 M0 5v-9 M5 5v-6"/>',
+];
+
+// Steps complete one after another; the activity log fills in step by step.
 function automation(v, label) {
   const ys = [76, 140, 204, 268];
-  const times = ['07:00', '07:01', '07:03'];
+  const step = 650;
+  const start = 250;
+  const times = ['07:00', '07:01', '07:02'];
   return frame(
     label,
     html`
     ${header(v.title, v.when)}
-    ${ys.slice(0, 3).map((y, i) => html`<line class="vz-line" x1="44" y1="${y + 44}" x2="44" y2="${ys[i + 1]}"/>
-      <circle class="vz-acc" r="3">
-        <animateMotion dur="2.4s" begin="${i * 0.8}s" repeatCount="indefinite" path="M44 ${y + 44} V${ys[i + 1]}"/>
-      </circle>`)}
+    ${ys.slice(0, 3).map((y, i) => html`<rect class="vz-track" x="49" y="${y + 48}" width="2" height="${ys[i + 1] - y - 48}" rx="1"/>
+      <rect class="vz-acc vz-seq-y" style="--t:${start + i * step + 300}ms" x="49" y="${y + 48}" width="2" height="${ys[i + 1] - y - 48}" rx="1"/>`)}
     ${v.nodes.map((n, i) => {
       const y = ys[i];
-      return html`<rect class="vz-card" x="24" y="${y}" width="232" height="44" rx="10"/>
-        <rect class="${i === 1 ? 'vz-acc' : 'vz-chip'}" x="36" y="${y + 12}" width="20" height="20" rx="5"/>
-        <text class="vz-t1 vz-sm" x="68" y="${y + 27}">${n}</text>
-        ${check(238, y + 22)}`;
+      return html`<rect class="vz-card" x="24" y="${y}" width="244" height="48" rx="12"/>
+        <rect class="vz-chip" x="36" y="${y + 10}" width="28" height="28" rx="8"/>
+        <g transform="translate(50 ${y + 24})">${raw(glyphs[i])}</g>
+        <text class="vz-t1 vz-sm" x="78" y="${y + 29}">${n}</text>
+        <circle class="vz-ring" cx="246" cy="${y + 24}" r="8"/>
+        <g class="vz-seq" style="--t:${start + i * step}ms">
+          <circle class="vz-acc" cx="246" cy="${y + 24}" r="8.5"/>
+          <path class="vz-check-light" d="M242.5 ${y + 24} l2.3 2.4 l4.3 -4.8"/>
+        </g>`;
     })}
-    <rect class="vz-card" x="280" y="76" width="256" height="236" rx="10"/>
-    <text class="vz-t3 vz-caps" x="300" y="104">${v.activity}</text>
-    <line class="vz-line" x1="280" y1="118" x2="536" y2="118"/>
+    <rect class="vz-card" x="288" y="76" width="248" height="240" rx="12"/>
+    <text class="vz-t3 vz-caps" x="308" y="104">${v.activity}</text>
+    <line class="vz-line" x1="288" y1="118" x2="536" y2="118"/>
     ${v.log.map((l, i) => {
-      const y = 148 + i * 48;
-      return html`<g class="vz-pop" style="--i:${i + 1}">
-        <text class="vz-t3" x="300" y="${y}">${times[i]}</text>
-        <text class="${i === 2 ? 'vz-ta' : 'vz-t2'} vz-sm" x="300" y="${y + 18}">${l}</text>
+      const y = 146 + i * 34;
+      return html`<g class="vz-seq" style="--t:${start + (i + 1) * step}ms">
+        <circle class="vz-acc" cx="312" cy="${y - 4}" r="3"/>
+        <text class="vz-t2 vz-sm" x="324" y="${y}">${l}</text>
+        <text class="vz-t3" x="516" y="${y}" text-anchor="end">${times[i]}</text>
       </g>`;
     })}
-`,
+    <line class="vz-line" x1="308" y1="240" x2="516" y2="240"/>
+    <g class="vz-seq" style="--t:${start + 4 * step}ms">
+      <text class="vz-t3" x="308" y="266">${v.savedLabel}</text>
+      <text class="vz-big" x="308" y="298">${v.savedValue}</text>
+    </g>`,
   );
 }
 

@@ -712,7 +712,7 @@ p {
 .benefits {
   display: grid;
   gap: 14px;
-  margin: 32px 0 40px;
+  margin-top: 32px;
 }
 
 .benefits li {
@@ -744,15 +744,6 @@ p {
   min-width: 0;
   border-radius: var(--radius);
   box-shadow: 0 40px 80px -40px rgb(0 0 0 / 0.9);
-}
-
-.solutions-other {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 16px;
-  margin-top: 40px;
-  color: var(--fg-2);
 }
 
 /* Services */
@@ -1091,6 +1082,28 @@ p {
   font-size: 14px;
 }
 
+/* Back to top */
+
+.back-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg-2);
+  transition: color 0.2s var(--ease);
+}
+
+.back-to-top:hover {
+  color: var(--fg);
+}
+
+.back-to-top .icon-up {
+  transition: transform 0.25s var(--ease);
+}
+
+.back-to-top:hover .icon-up {
+  transform: translateY(-3px);
+}
+
 /* 404 */
 
 .not-found {
@@ -1153,6 +1166,10 @@ p {
 .vz-chip { fill: #262930; }
 .vz-track { fill: rgb(255 255 255 / 0.08); }
 .vz-faded { opacity: 0.5; }
+.vz-ring { fill: none; stroke: rgb(255 255 255 / 0.14); stroke-width: 1.5; }
+.vz-check-light { fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.vz-glyph { fill: none; stroke: var(--fg-2); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.vz-glyph-fill { fill: var(--accent); }
 .vz-check,
 .vz-check-dark { fill: none; stroke: #0b0c0f; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .vz-map { fill: #0e1013; stroke: rgb(255 255 255 / 0.06); }
@@ -1193,6 +1210,37 @@ p {
 .js [data-visual]:not(.is-in) .vz-pop,
 .js [data-visual]:not(.is-in) .vz-toast {
   opacity: 0;
+}
+
+.vz-seq,
+.vz-seq-y {
+  transform-box: fill-box;
+}
+
+.vz-seq {
+  transform-origin: center;
+}
+
+.vz-seq-y {
+  transform-origin: 50% 0;
+}
+
+.js [data-visual]:not(.is-in) .vz-seq {
+  opacity: 0;
+}
+
+.js [data-visual]:not(.is-in) .vz-seq-y {
+  transform: scaleY(0);
+}
+
+[data-visual].is-in .vz-seq {
+  animation: seq-in 0.5s var(--ease) both;
+  animation-delay: var(--t, 0ms);
+}
+
+[data-visual].is-in .vz-seq-y {
+  animation: grow-y 0.45s var(--ease) both;
+  animation-delay: var(--t, 0ms);
 }
 
 [data-visual].is-in .vz-bar {
@@ -1237,6 +1285,11 @@ p {
 @keyframes ping {
   0% { transform: scale(1); opacity: 0.55; }
   80%, 100% { transform: scale(2.8); opacity: 0; }
+}
+
+@keyframes seq-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: none; }
 }
 
 @keyframes grow-y {
@@ -1463,8 +1516,4 @@ p {
     align-items: flex-start;
   }
 
-  .lang-footer .lang-menu {
-    right: auto;
-    left: 0;
-  }
 }
