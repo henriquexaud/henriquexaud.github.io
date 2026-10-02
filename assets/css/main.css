@@ -1460,8 +1460,6 @@ body::after {
 .vz-acc { fill: var(--accent); }
 .vz-warn { fill: var(--warn); }
 .vz-dim { fill: #2a2d34; }
-.vz-light { fill: #d9dbe0; }
-.vz-mid { fill: #6b707a; }
 .vz-area { fill: url(#vz-area); }
 .vz-spark { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .vz-chip { fill: #262930; }
