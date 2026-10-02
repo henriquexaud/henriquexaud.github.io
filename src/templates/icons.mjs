@@ -35,7 +35,7 @@ const serviceIcon = (body) =>
 export const serviceIcons = {
   build: serviceIcon('<path d="M16 4 27 10.3v12.4L16 29 5 22.7V10.3z"/><path d="M5 10.3 16 16.6l11-6.3M16 16.6V29"/><path d="M16 4v4M27 10.3l-3.5 2" stroke-dasharray="1.5 2.5" opacity=".6"/>'),
   connect: serviceIcon('<circle cx="7" cy="23" r="3"/><circle cx="25" cy="23" r="3"/><circle cx="16" cy="8" r="3"/><path d="M14.4 10.6 8.6 20.4M17.6 10.6l5.8 9.8M10 23h12"/>'),
-  evolve: serviceIcon('<path d="M5 26h5v-5h5v-5h5v-5h5"/><path d="M21 6h5v5"/><path d="m26 6-7 7" stroke-dasharray="1.5 2.5" opacity=".6"/>'),
+  evolve: serviceIcon('<path d="M4 4v24h24" opacity=".45"/><path d="m8 22 6-7 5 4 9-11"/><path d="M21 8h7v7"/><circle cx="14" cy="15" r="1.6"/><circle cx="19" cy="19" r="1.6"/>'),
 };
 
 // Round flags for the language menu (cropped to a circle by CSS).
