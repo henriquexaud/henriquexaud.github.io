@@ -9,9 +9,9 @@ export default {
   path: '/',
 
   meta: {
-    title: 'DuaTech — Software sob medida para empresas',
+    title: 'Duvalle — Software sob medida para empresas',
     description:
-      'Sistemas de gestão, lojas virtuais, aplicativos e automações sob medida. A DuaTech cria software que resolve problemas reais do seu negócio.',
+      'Sistemas de gestão, lojas virtuais, aplicativos e automações sob medida. A Duvalle cria software que resolve problemas reais do seu negócio.',
   },
 
   ui: {
@@ -71,7 +71,7 @@ export default {
   },
 
   why: {
-    eyebrow: 'Por que a DuaTech',
+    eyebrow: 'Por que a Duvalle',
     title: 'Tecnologia a favor do seu negócio.',
     items: [
       { icon: 'fit', title: 'Sob medida', text: 'O sistema segue o seu processo, e não o contrário.' },
@@ -95,7 +95,7 @@ export default {
   about: {
     eyebrow: 'Sobre',
     title: 'Um estúdio pequeno por escolha.',
-    text: 'A DuaTech é um estúdio independente fundado por Henrique Xaud. Cada projeto tem um responsável do início ao fim e, quando necessário, especialistas de confiança completam o time.',
+    text: 'A Duvalle é um estúdio independente fundado por Henrique Xaud. Cada projeto tem um responsável do início ao fim e, quando necessário, especialistas de confiança completam o time.',
     founderRole: 'Fundador',
   },
 
@@ -116,7 +116,7 @@ export default {
     title: 'Vamos conversar sobre o seu projeto?',
     lead: 'A primeira conversa é sem compromisso.',
     whatsapp: 'Conversar no WhatsApp',
-    whatsappMessage: 'Olá! Vim pelo site da DuaTech e quero conversar sobre um projeto.',
+    whatsappMessage: 'Olá! Vim pelo site da Duvalle e quero conversar sobre um projeto.',
     linkedin: 'LinkedIn',
   },
 

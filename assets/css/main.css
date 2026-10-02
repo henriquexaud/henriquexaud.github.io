@@ -1,4 +1,4 @@
-/* DuaTech — main stylesheet
+/* Duvalle — main stylesheet
    1. Tokens & font   2. Base   3. Layout   4. Components   5. Sections
    6. Visuals (.vz)   7. Motion 8. Responsive */
 
@@ -970,7 +970,7 @@ p {
   background: var(--accent);
 }
 
-/* Why DuaTech: light items, no boxes, so it doesn't compete with the service cards. */
+/* Why Duvalle: light items, no boxes, so it doesn't compete with the service cards. */
 
 .value-grid {
   display: grid;
