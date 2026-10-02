@@ -746,7 +746,7 @@ p {
 
 .solution-tabs {
   display: none;
-  gap: 8px;
+  gap: 6px;
   margin-bottom: 24px;
   overflow-x: auto;
   scrollbar-width: none;
@@ -761,13 +761,21 @@ p {
   display: flex;
 }
 
+/* On wide screens all segments stay visible, wrapping onto a second row if needed. */
+@media (min-width: 960px) {
+  .solution-tabs {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+}
+
 .solution-tab {
   flex: none;
   height: 44px;
-  padding: 0 20px;
+  padding: 0 16px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  font-size: 15px;
+  font-size: 14.5px;
   color: var(--fg-2);
   scroll-snap-align: start;
   transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background-color 0.2s var(--ease);
@@ -1492,11 +1500,13 @@ body::after {
 .vz-track { fill: rgb(255 255 255 / 0.08); }
 .vz-faded { opacity: 0.5; }
 .vz-flow { fill: none; stroke: rgb(255 255 255 / 0.14); stroke-width: 1.5; stroke-dasharray: 3 4; }
-.vz-jam { stroke: rgb(245 165 36 / 0.7); }
-.vz-big-warn { fill: var(--warn); }
 .vz-count { font-size: 22px; }
 .vz-avatar { fill: #23262d; stroke: rgb(255 255 255 / 0.12); }
 .vz-initial { fill: var(--fg); font-size: 10px; font-weight: 600; }
+.vz-cell { fill: #15171b; }
+.vz-heat { fill: var(--accent); }
+.vz-stack { stroke: #14161a; stroke-width: 2; }
+.vz-done { text-decoration: line-through; text-decoration-color: rgb(255 255 255 / 0.3); }
 .vz-tw { fill: var(--warn); font-size: 11.5px; }
 .vz-ring { fill: none; stroke: rgb(255 255 255 / 0.14); stroke-width: 1.5; }
 .vz-check-light { fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
