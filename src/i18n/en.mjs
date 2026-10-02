@@ -9,9 +9,9 @@ export default {
   path: '/en/',
 
   meta: {
-    title: 'Duvalle — Custom software for businesses',
+    title: 'Duvalle — Software studio for businesses',
     description:
-      'Custom business systems, online stores, apps and automation. Duvalle builds software that solves real problems for your business.',
+      'We learn how your company works and build the system it’s been missing: reliable, built to last, with direct access to the people who build it.',
   },
 
   ui: {
