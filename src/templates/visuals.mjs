@@ -92,28 +92,21 @@ function restaurants(v, label) {
   );
 }
 
-function rental(v, label) {
+function hospitality(v, label) {
   const x0 = 150;
   const colW = 55;
-  const plates = [
-    ['RXB-4E21', 'Onix'],
-    ['QTZ-7A90', 'HB20'],
-    ['PLM-2C34', 'Compass'],
-    ['SDF-9H12', 'Kwid'],
-    ['MNO-5J67', 'Strada'],
-  ];
-  // [row, startDay, days, kind]
+  // [row, startDay, days, kind]: stays, bookings and cleaning between guests.
   const bars = [
-    [0, 0, 3, 'rented'], [0, 4, 3, 'reserved'],
-    [1, 1, 4, 'rented'],
-    [2, 0, 2, 'maintenance'], [2, 3, 3, 'reserved'],
-    [3, 0, 6, 'rented'],
-    [4, 2, 2, 'reserved'], [4, 5, 2, 'rented'],
+    [0, 0, 3, 'occupied'], [0, 3, 1, 'cleaning'], [0, 4, 3, 'reserved'],
+    [1, 1, 4, 'occupied'], [1, 5, 1, 'cleaning'],
+    [2, 0, 2, 'occupied'], [2, 2, 1, 'cleaning'], [2, 3, 3, 'reserved'],
+    [3, 0, 6, 'occupied'],
+    [4, 2, 2, 'reserved'], [4, 5, 2, 'occupied'],
   ];
   const legend = [
-    ['rented', v.rented],
+    ['occupied', v.occupied],
     ['reserved', v.reserved],
-    ['maintenance', v.maintenance],
+    ['cleaning', v.cleaning],
   ];
   return frame(
     label,
@@ -133,7 +126,7 @@ function rental(v, label) {
     ${v.week.map((d, i) => html`<text class="vz-t3" x="${x0 + i * colW + colW / 2}" y="82" text-anchor="middle">${d}</text>
       <line class="vz-grid" x1="${x0 + i * colW}" y1="94" x2="${x0 + i * colW}" y2="336"/>`)}
     <line class="vz-today" x1="${x0 + 2 * colW + 30}" y1="90" x2="${x0 + 2 * colW + 30}" y2="336"/>
-    ${plates.map(([plate, model], r) => {
+    ${v.rooms.map(([plate, model], r) => {
       const y = 110 + r * 46;
       return html`<text class="vz-t1 vz-sm" x="24" y="${y + 9}">${plate}</text>
         <text class="vz-t3" x="24" y="${y + 25}">${model}</text>`;
@@ -287,7 +280,7 @@ function automation(v, label) {
   );
 }
 
-const renderers = { ecommerce, restaurants, rental, appointments, logistics, automation };
+const renderers = { ecommerce, logistics, restaurants, hospitality, appointments, automation };
 
 export function visual(key, labels, ariaLabel) {
   return renderers[key](labels, ariaLabel);
