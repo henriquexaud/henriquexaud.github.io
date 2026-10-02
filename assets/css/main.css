@@ -650,7 +650,7 @@ p {
 .blueprint {
   position: absolute;
   /* Sits high, right under the header, so it frames the title instead of competing with it. */
-  top: calc(-1 * clamp(96px, 16vw, 200px) + 8px);
+  top: calc(-1 * clamp(96px, 16vw, 200px) + clamp(24px, 4vw, 56px));
   right: 0;
   z-index: 0;
   width: min(50%, 600px);
@@ -674,6 +674,7 @@ p {
 .bp-side-dark { fill: #0c0d10; }
 .bp-line { fill: none; stroke: rgb(255 255 255 / 0.2); stroke-width: 1; }
 .bp-hatch { fill: none; stroke: rgb(255 255 255 / 0.1); stroke-width: 1; }
+.bp-hatch-lit { fill: none; stroke: var(--accent); stroke-width: 1.5; filter: drop-shadow(0 0 3px rgb(0 200 83 / 0.6)); }
 .bp-fill-accent { fill: rgb(0 200 83 / 0.12); stroke: var(--accent); stroke-width: 1; }
 .bp-connector { fill: none; stroke: rgb(255 255 255 / 0.12); stroke-width: 1; stroke-dasharray: 3 5; }
 .bp-cross { fill: none; stroke: rgb(255 255 255 / 0.28); stroke-width: 1; }

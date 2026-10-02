@@ -8,7 +8,7 @@ const CX = 300;
 const A = 170; // half width of a plate
 const B = 98; // half height (isometric ratio)
 const T = 8; // plate thickness
-const TOPS = [30, 148, 266];
+const TOPS = [30, 136, 242];
 const EXPLODE = [-30, 0, 30];
 
 const f = (n) => Math.round(n * 10) / 10;
@@ -112,10 +112,12 @@ function processLayer(y) {
 
 function dataLayer(y) {
   const lines = [];
-  for (let u = 0.16; u <= 0.85; u += 0.1) {
+  // One line is lit: the data layer is active too, like the other two.
+  for (let k = 0; k < 7; k++) {
+    const u = 0.16 + k * 0.1;
     const [x1, y1] = at(y, u, 0.14).map(f);
     const [x2, y2] = at(y, u, 0.86).map(f);
-    lines.push(html`<path class="bp-hatch bp-draw" pathLength="1" d="M${x1} ${y1} L${x2} ${y2}"/>`);
+    lines.push(html`<path class="${k === 4 ? 'bp-hatch-lit' : 'bp-hatch'} bp-draw" pathLength="1" d="M${x1} ${y1} L${x2} ${y2}"/>`);
   }
   return lines;
 }
@@ -130,7 +132,7 @@ export function blueprint(layers) {
   const order = [2, 1, 0];
 
   return html`<div class="blueprint" data-blueprint aria-hidden="true">
-  <svg class="bp" viewBox="0 0 640 500" focusable="false">
+  <svg class="bp" viewBox="0 0 640 480" focusable="false">
     <g class="bp-guides">
       <path class="bp-connector" d="M${CX + A} ${TOPS[0] + B} V${TOPS[2] + B} M${CX} ${TOPS[0] + 2 * B} V${TOPS[2] + 2 * B}"/>
       ${cross(CX + A + 24, 14)}
