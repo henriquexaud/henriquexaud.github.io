@@ -229,15 +229,65 @@ function logistics(v, label) {
   );
 }
 
-// Teams and processes: work moving through the stages of a process (with the
-// bottleneck flagged), the team's workload and the on-time rate.
+// Gyms: a heatmap of check-ins over the week (peaks at dawn and evening) and a
+// retention panel that flags members who stopped showing up.
+function gyms(v, label) {
+  // Rows: Mon..Sun. Columns: 2-hour slots from 06:00 to 20:00.
+  const heat = [
+    [0.9, 0.5, 0.2, 0.3, 0.2, 0.4, 1, 0.8],
+    [0.8, 0.4, 0.3, 0.4, 0.2, 0.5, 0.9, 0.7],
+    [0.9, 0.5, 0.2, 0.3, 0.3, 0.4, 1, 0.9],
+    [0.7, 0.4, 0.3, 0.2, 0.2, 0.5, 0.9, 0.6],
+    [0.6, 0.3, 0.2, 0.3, 0.2, 0.4, 0.7, 0.4],
+    [0.3, 0.6, 0.7, 0.4, 0.2, 0.1, 0.1, 0],
+    [0.1, 0.3, 0.4, 0.2, 0.1, 0, 0, 0],
+  ];
+  const x0 = 62;
+  const y0 = 80;
+  const cell = 28;
+  const step = 32;
+  return frame(
+    label,
+    html`
+    ${header(v.title, v.when)}
+    ${v.days.map((d, r) => html`<text class="vz-t3" x="24" y="${y0 + r * step + 18}">${d}</text>`)}
+    ${heat.map((row, r) =>
+      row.map(
+        (o, c) => html`<rect class="vz-cell vz-pop" style="--i:${c}" x="${x0 + c * step}" y="${y0 + r * step}" width="${cell}" height="${cell}" rx="6"/>
+          ${o > 0 ? html`<rect class="vz-heat vz-pop" style="--i:${c}" fill-opacity="${o}" x="${x0 + c * step}" y="${y0 + r * step}" width="${cell}" height="${cell}" rx="6"/>` : ''}`,
+      ),
+    )}
+    ${['06h', '10h', '14h', '18h'].map((h, i) => html`<text class="vz-t3" x="${x0 + i * 2 * step}" y="${y0 + 7 * step + 12}">${h}</text>`)}
+    <rect class="vz-card" x="356" y="70" width="180" height="270" rx="12"/>
+    <text class="vz-t3" x="374" y="98">${v.active}</text>
+    <text class="vz-big" x="374" y="130">486</text>
+    <text class="vz-ta" x="374" y="150">${v.trend}</text>
+    <line class="vz-line" x1="374" y1="168" x2="518" y2="168"/>
+    <text class="vz-tw" x="374" y="194">${v.risk}</text>
+    ${v.members.map(([name, note], i) => {
+      const y = 222 + i * 40;
+      return html`<g class="vz-pop" style="--i:${i + 3}">
+        <circle class="vz-avatar" cx="384" cy="${y}" r="10"/>
+        <text class="vz-initial" x="384" y="${y + 4}" text-anchor="middle">${name[0]}</text>
+        <text class="vz-t2 vz-sm" x="402" y="${y - 2}">${name}</text>
+        <text class="vz-t3" x="402" y="${y + 13}">${note}</text>
+      </g>`;
+    })}
+    <g class="vz-toast">
+      <circle class="vz-acc" cx="382" cy="309" r="7"/>
+      <path class="vz-check-dark" d="M379 309 l2 2.2 l3.6 -4"/>
+      <text class="vz-ta" x="396" y="313">${v.sent}</text>
+    </g>`,
+  );
+}
+
+// Teams: work flowing through a short delivery cycle, blockers surfaced and
+// cleared, and the cycle's progress shared by the whole team.
 function teams(v, label) {
-  const cardW = 84;
-  const gap = 20;
+  const cardW = 110;
+  const gap = 14;
   const y0 = 82;
   const xs = v.stages.map((_, i) => 24 + i * (cardW + gap));
-  const jam = 2;
-  const loads = [0.62, 0.95, 0.48, 0.7];
   const flow = `M${xs[0] + cardW / 2} ${y0 + 28} H${xs[xs.length - 1] + cardW / 2}`;
   return frame(
     label,
@@ -245,39 +295,43 @@ function teams(v, label) {
     ${header(v.title, v.when)}
     <path class="vz-flow" d="${flow}"/>
     <circle class="vz-acc" r="3.5">
-      <animateMotion dur="4.5s" repeatCount="indefinite" path="${flow}"/>
+      <animateMotion dur="4s" repeatCount="indefinite" path="${flow}"/>
     </circle>
     ${v.stages.map(([name, count], i) => {
       const x = xs[i];
-      const hot = i === jam;
       return html`<g class="vz-pop" style="--i:${i}">
-        <rect class="${hot ? 'vz-card vz-jam' : 'vz-card'}" x="${x}" y="${y0}" width="${cardW}" height="56" rx="10"/>
-        <text class="${hot ? 'vz-big vz-big-warn' : 'vz-big'} vz-count" x="${x + 12}" y="${y0 + 30}">${count}</text>
-        <text class="vz-t3" x="${x + 12}" y="${y0 + 46}">${name}</text>
+        <rect class="vz-card" x="${x}" y="${y0}" width="${cardW}" height="56" rx="10"/>
+        <text class="vz-big vz-count" x="${x + 14}" y="${y0 + 30}">${count}</text>
+        <text class="vz-t3" x="${x + 14}" y="${y0 + 46}">${name}</text>
       </g>`;
     })}
-    <text class="vz-tw" x="${xs[jam] + cardW / 2}" y="${y0 + 76}" text-anchor="middle">${v.bottleneck}</text>
-    <rect class="vz-card" x="24" y="186" width="316" height="154" rx="12"/>
-    <text class="vz-t3 vz-caps" x="42" y="212">${v.team}</text>
-    ${v.people.map((name, i) => {
-      const y = 240 + i * 26;
-      const heavy = loads[i] > 0.9;
-      return html`<circle class="vz-avatar" cx="50" cy="${y - 4}" r="9"/>
-        <text class="vz-initial" x="50" y="${y}" text-anchor="middle">${name[0]}</text>
-        <text class="vz-t2 vz-sm" x="68" y="${y}">${name}</text>
-        <rect class="vz-track" x="170" y="${y - 7}" width="150" height="5" rx="2.5"/>
-        <rect class="${heavy ? 'vz-warn' : 'vz-acc'} vz-grow-x" style="--i:${i}" x="170" y="${y - 7}" width="${150 * loads[i]}" height="5" rx="2.5"/>`;
+    <rect class="vz-card" x="24" y="164" width="316" height="176" rx="12"/>
+    <text class="vz-t3 vz-caps" x="42" y="190">${v.blockers}</text>
+    <line class="vz-line" x1="24" y1="204" x2="340" y2="204"/>
+    ${v.blockerItems.map(([title, note], i) => {
+      const y = 236 + i * 52;
+      const open = i === 0;
+      return html`<g class="vz-pop" style="--i:${i + 4}">
+        ${open
+          ? html`<circle class="vz-warn" cx="48" cy="${y - 4}" r="5"/>`
+          : html`<circle class="vz-acc" cx="48" cy="${y - 4}" r="7"/><path class="vz-check-dark" d="M45 ${y - 4} l2 2.2 l3.6 -4"/>`}
+        <text class="${open ? 'vz-t1 vz-sm' : 'vz-t2 vz-sm vz-done'}" x="66" y="${y}">${title}</text>
+        <text class="${open ? 'vz-tw' : 'vz-ta'}" x="66" y="${y + 16}">${note}</text>
+      </g>`;
     })}
-    <rect class="vz-card" x="356" y="186" width="180" height="154" rx="12"/>
-    <text class="vz-t3" x="374" y="216">${v.onTime}</text>
-    <text class="vz-big" x="374" y="254">${v.onTimeValue}</text>
-    <rect class="vz-track" x="374" y="274" width="144" height="5" rx="2.5"/>
-    <rect class="vz-acc vz-grow-x" x="374" y="274" width="${144 * 0.94}" height="5" rx="2.5"/>
-    <text class="vz-ta" x="374" y="310">${v.trend}</text>`,
+    <rect class="vz-card" x="356" y="164" width="180" height="176" rx="12"/>
+    <text class="vz-t3" x="374" y="192">${v.cycle}</text>
+    <text class="vz-big" x="374" y="228">${v.cycleValue}</text>
+    <rect class="vz-track" x="374" y="244" width="144" height="5" rx="2.5"/>
+    <rect class="vz-acc vz-grow-x" x="374" y="244" width="${144 * 0.68}" height="5" rx="2.5"/>
+    <text class="vz-t3" x="374" y="270">${v.cycleNote}</text>
+    ${['A', 'B', 'C', 'D'].map((n, i) => html`<circle class="vz-avatar vz-stack" cx="${384 + i * 16}" cy="294" r="10"/>
+      <text class="vz-initial" x="${384 + i * 16}" y="298" text-anchor="middle">${n}</text>`)}
+    <text class="vz-ta" x="374" y="324">${v.teamNote}</text>`,
   );
 }
 
-const renderers = { ecommerce, logistics, restaurants, hospitality, appointments, teams };
+const renderers = { ecommerce, logistics, restaurants, hospitality, appointments, gyms, teams };
 
 export function visual(key, labels, ariaLabel) {
   return renderers[key](labels, ariaLabel);
