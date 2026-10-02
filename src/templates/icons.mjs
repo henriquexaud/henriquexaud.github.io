@@ -26,3 +26,22 @@ export const valueIcons = {
   key: valueIcon('<circle cx="8" cy="15" r="4"/><path d="m11 12 8-8M16 7l2 2M14 9l2 2"/>'),
   chat: valueIcon('<path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8M8 13h5"/>'),
 };
+
+// Round flags for the language menu (cropped to a circle by CSS).
+const usStripes = Array.from({ length: 7 }, (_, i) => `<rect y="${(i * 2 * 24) / 13}" width="24" height="${24 / 13}" fill="#B22234"/>`).join('');
+const usStars = [2.2, 5.5, 8.8]
+  .flatMap((x) => [2.2, 5.5, 8.8, 11.4].map((y) => `<circle cx="${x}" cy="${y}" r="0.7" fill="#fff"/>`))
+  .join('');
+
+const flagSvgs = {
+  br: '<rect width="24" height="24" fill="#009B3A"/><path d="M12 3.6 22.4 12 12 20.4 1.6 12z" fill="#FEDF00"/><circle cx="12" cy="12" r="5" fill="#002776"/><path d="M7.1 11.1c3.3-.9 6.8-.4 9.8 1.4" fill="none" stroke="#fff" stroke-width="0.9"/>',
+  us: `<rect width="24" height="24" fill="#fff"/>${usStripes}<rect width="11" height="${(24 * 7) / 13}" fill="#3C3B6E"/>${usStars}`,
+  es: '<rect width="24" height="24" fill="#AA151B"/><rect y="6" width="24" height="12" fill="#F1BF00"/>',
+};
+
+export const flag = (code, size = 20) =>
+  raw(`<span class="flag" style="--flag-size:${size}px"><svg width="${size}" height="${size}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${flagSvgs[code]}</svg></span>`);
+
+export const chevronDown = raw(
+  '<svg class="icon icon-chevron" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m4.5 6.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+);
