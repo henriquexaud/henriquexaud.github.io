@@ -140,29 +140,30 @@ function appointments(v, label) {
   const colW = 92.8;
   const y0 = 92;
   const rowH = 24;
-  const hours = ['08', '09', '10', '11', '12', '13', '14', '15', '16', '17'];
-  // [day, startRow, rows, labelIndex]
+  // Hour labels every 2h; one appointment per day keeps the week readable.
+  const hours = ['08', '10', '12', '14', '16'];
+  // [day, startHour (0 = 08:00), hours, labelIndex]
   const blocks = [
-    [0, 0, 2, 0], [0, 4, 2, 1],
-    [1, 1, 2, 2], [1, 6, 2, 3],
-    [2, 0, 3, 4],
-    [3, 2, 2, 5], [3, 6, 2, 6],
-    [4, 1, 2, 1],
+    [0, 0, 2, 0],
+    [1, 1, 2, 2],
+    [2, 3, 2, 3],
+    [3, 0, 2, 4],
+    [4, 2, 2, 5],
   ];
   return frame(
     label,
     html`
     ${header(v.title, '')}
     ${v.week.map((d, i) => html`<text class="vz-t3" x="${x0 + i * colW + 8}" y="80">${d}</text>`)}
-    ${hours.map((h, i) => html`<text class="vz-t3" x="24" y="${y0 + i * rowH + 4}">${h}:00</text>
-      <line class="vz-grid" x1="${x0}" y1="${y0 + i * rowH}" x2="${W - 24}" y2="${y0 + i * rowH}"/>`)}
+    ${hours.map((h, i) => html`<text class="vz-t3" x="24" y="${y0 + i * 2 * rowH + 4}">${h}:00</text>
+      <line class="vz-grid" x1="${x0}" y1="${y0 + i * 2 * rowH}" x2="${W - 24}" y2="${y0 + i * 2 * rowH}"/>`)}
     ${blocks.map(([d, s, n, l], i) => {
       const x = x0 + d * colW + 4;
       const y = y0 + s * rowH + 2;
       const [service, person] = v.blocks[l].split(' · ');
       return html`<g class="vz-pop" style="--i:${i}">
         <rect class="vz-card" x="${x}" y="${y}" width="${colW - 8}" height="${n * rowH - 4}" rx="6"/>
-        <rect class="${i === 2 ? 'vz-acc' : 'vz-fg'}" x="${x}" y="${y}" width="3" height="${n * rowH - 4}" rx="1.5"/>
+        <rect class="${i === 1 ? 'vz-acc' : 'vz-fg'}" x="${x}" y="${y}" width="3" height="${n * rowH - 4}" rx="1.5"/>
         <text class="vz-t2 vz-xs" x="${x + 10}" y="${y + 15}">${service}</text>
         <text class="vz-t3 vz-xs" x="${x + 10}" y="${y + 29}">${person}</text>
       </g>`;
@@ -219,53 +220,40 @@ function logistics(v, label) {
   );
 }
 
-// Gyms: a heatmap of check-ins over the week (peaks at dawn and evening) and a
-// retention panel that flags members who stopped showing up.
+// Gyms: check-ins per day this week and members drifting away.
 function gyms(v, label) {
-  // Rows: Mon..Sun. Columns: 2-hour slots from 06:00 to 20:00.
-  const heat = [
-    [0.9, 0.5, 0.2, 0.3, 0.2, 0.4, 1, 0.8],
-    [0.8, 0.4, 0.3, 0.4, 0.2, 0.5, 0.9, 0.7],
-    [0.9, 0.5, 0.2, 0.3, 0.3, 0.4, 1, 0.9],
-    [0.7, 0.4, 0.3, 0.2, 0.2, 0.5, 0.9, 0.6],
-    [0.6, 0.3, 0.2, 0.3, 0.2, 0.4, 0.7, 0.4],
-    [0.3, 0.6, 0.7, 0.4, 0.2, 0.1, 0.1, 0],
-    [0.1, 0.3, 0.4, 0.2, 0.1, 0, 0, 0],
-  ];
-  const x0 = 62;
-  const y0 = 80;
-  const cell = 28;
-  const step = 32;
+  const values = [0.82, 0.74, 0.9, 0.7, 0.6, 0.42, 0.24];
+  const today = 2;
+  const base = 300;
+  const maxH = 190;
+  const barW = 22;
+  const step = 44;
+  const x0 = 40;
   return frame(
     label,
     html`
     ${header(v.title, v.when)}
-    ${v.days.map((d, r) => html`<text class="vz-t3" x="24" y="${y0 + r * step + 18}">${d}</text>`)}
-    ${heat.map((row, r) =>
-      row.map(
-        (o, c) => html`<rect class="vz-cell vz-pop" style="--i:${c}" x="${x0 + c * step}" y="${y0 + r * step}" width="${cell}" height="${cell}" rx="6"/>
-          ${o > 0 ? html`<rect class="vz-heat vz-pop" style="--i:${c}" fill-opacity="${o}" x="${x0 + c * step}" y="${y0 + r * step}" width="${cell}" height="${cell}" rx="6"/>` : ''}`,
-      ),
-    )}
-    ${['06h', '10h', '14h', '18h'].map((h, i) => html`<text class="vz-t3" x="${x0 + i * 2 * step}" y="${y0 + 7 * step + 12}">${h}</text>`)}
-    <rect class="vz-card" x="356" y="70" width="180" height="270" rx="12"/>
-    <text class="vz-t3" x="374" y="98">${v.active}</text>
-    <text class="vz-big" x="374" y="130">486</text>
-    <line class="vz-line" x1="374" y1="168" x2="518" y2="168"/>
-    <text class="vz-tw" x="374" y="194">${v.risk}</text>
-    ${v.members.map(([name, note], i) => {
-      const y = 222 + i * 40;
-      return html`<g class="vz-pop" style="--i:${i + 3}">
-        <circle class="vz-avatar" cx="384" cy="${y}" r="10"/>
-        <text class="vz-initial" x="384" y="${y + 4}" text-anchor="middle">${name[0]}</text>
-        <text class="vz-t2 vz-sm" x="402" y="${y - 2}">${name}</text>
-        <text class="vz-t3" x="402" y="${y + 13}">${note}</text>
-      </g>`;
+    <line class="vz-line" x1="24" y1="${base + 0.5}" x2="340" y2="${base + 0.5}"/>
+    ${values.map((val, i) => {
+      const h = Math.round(maxH * val);
+      return html`<rect class="vz-bar ${i === today ? 'vz-acc' : 'vz-dim'}" style="--i:${i}" x="${x0 + i * step}" y="${base - h}" width="${barW}" height="${h}" rx="5"/>
+        <text class="${i === today ? 'vz-ta' : 'vz-t3'}" x="${x0 + i * step + barW / 2}" y="${base + 22}" text-anchor="middle">${v.days[i]}</text>`;
     })}
+    <rect class="vz-card" x="356" y="78" width="180" height="248" rx="12"/>
+    <text class="vz-t3" x="374" y="108">${v.active}</text>
+    <text class="vz-big" x="374" y="142">486</text>
+    <line class="vz-line" x1="374" y1="168" x2="518" y2="168"/>
+    <text class="vz-tw" x="374" y="196">${v.risk}</text>
+    <g class="vz-pop" style="--i:3">
+      <circle class="vz-avatar" cx="384" cy="228" r="10"/>
+      <text class="vz-initial" x="384" y="232" text-anchor="middle">${v.members[0][0][0]}</text>
+      <text class="vz-t2 vz-sm" x="402" y="226">${v.members[0][0]}</text>
+      <text class="vz-t3" x="402" y="241">${v.members[0][1]}</text>
+    </g>
     <g class="vz-toast">
-      <circle class="vz-acc" cx="382" cy="309" r="7"/>
-      <path class="vz-check-dark" d="M379 309 l2 2.2 l3.6 -4"/>
-      <text class="vz-ta" x="396" y="313">${v.sent}</text>
+      <circle class="vz-acc" cx="382" cy="291" r="7"/>
+      <path class="vz-check-dark" d="M379 291 l2 2.2 l3.6 -4"/>
+      <text class="vz-ta" x="396" y="295">${v.sent}</text>
     </g>`,
   );
 }

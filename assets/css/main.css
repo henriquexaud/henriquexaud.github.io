@@ -1461,8 +1461,6 @@ body::after {
 .vz-count { font-size: 22px; }
 .vz-avatar { fill: #23262d; stroke: rgb(255 255 255 / 0.12); }
 .vz-initial { fill: var(--fg); font-size: 10px; font-weight: 600; }
-.vz-cell { fill: #15171b; }
-.vz-heat { fill: var(--accent); }
 .vz-stack { stroke: #14161a; stroke-width: 2; }
 .vz-done { text-decoration: line-through; text-decoration-color: rgb(255 255 255 / 0.3); }
 .vz-tw { fill: var(--warn); font-size: 11.5px; }
