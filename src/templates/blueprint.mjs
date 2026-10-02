@@ -117,7 +117,7 @@ function dataLayer(y) {
     const u = 0.16 + k * 0.1;
     const [x1, y1] = at(y, u, 0.14).map(f);
     const [x2, y2] = at(y, u, 0.86).map(f);
-    lines.push(html`<path class="${k === 4 ? 'bp-hatch-lit' : 'bp-hatch'} bp-draw" pathLength="1" d="M${x1} ${y1} L${x2} ${y2}"/>`);
+    lines.push(html`<path class="${k === 5 ? 'bp-hatch-lit' : 'bp-hatch'} bp-draw" pathLength="1" d="M${x1} ${y1} L${x2} ${y2}"/>`);
   }
   return lines;
 }
