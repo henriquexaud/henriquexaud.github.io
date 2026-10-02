@@ -97,12 +97,15 @@
 
     const still = reducedMotion.matches;
 
-    // Hero drawing: plates move apart (exploded view), drift and fade as the hero leaves.
+    // Hero drawing: plates draw closer over the first stretch of scroll and settle at a
+    // fixed distance; the drawing trails the text (parallax) and fades as the hero leaves.
     if (heroEl && drawing) {
-      const p = still ? 0 : clamp(y / heroEl.offsetHeight);
-      drawing.style.setProperty('--explode', p.toFixed(3));
-      drawing.style.transform = still ? '' : `translate3d(0, ${(y * 0.12).toFixed(1)}px, 0)`;
-      drawing.style.opacity = still ? '' : String(1 - p * 0.85);
+      const h = heroEl.offsetHeight;
+      const settle = still ? 0 : clamp(y / (h * 0.35));
+      const approach = 1 - (1 - settle) ** 3;
+      drawing.style.setProperty('--approach', approach.toFixed(3));
+      drawing.style.transform = still ? '' : `translate3d(0, ${(y * 0.22).toFixed(1)}px, 0)`;
+      drawing.style.opacity = still ? '' : String(1 - clamp(y / h) * 0.85);
     }
 
     // Process line fills while the section crosses the viewport.
