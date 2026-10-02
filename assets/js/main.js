@@ -59,6 +59,7 @@
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
           entry.target.classList.add('is-in');
+          if (entry.target.matches('[data-visual]')) restartSvg(entry.target.querySelector('svg.vz'));
           revealObserver.unobserve(entry.target);
         });
       },
@@ -69,10 +70,20 @@
     revealTargets.forEach((el) => el.classList.add('is-in'));
   }
 
-  // SMIL animations (moving dots in the visuals) can't be stopped from CSS.
+  // SMIL animations (moving parts in the visuals) can't be stopped from CSS. With reduced
+  // motion each drawing rests on its data-still moment; otherwise it can restart from zero.
+  const restartSvg = (svg) => {
+    if (!svg?.setCurrentTime) return;
+    if (reducedMotion.matches) {
+      svg.setCurrentTime(Number(svg.dataset.still) || 0);
+      svg.pauseAnimations();
+    } else {
+      svg.setCurrentTime(0);
+    }
+  };
   const syncSvgAnimations = () => {
     document.querySelectorAll('svg.vz, svg.bp').forEach((svg) => {
-      if (reducedMotion.matches) svg.pauseAnimations?.();
+      if (reducedMotion.matches) restartSvg(svg);
       else svg.unpauseAnimations?.();
     });
   };
@@ -190,6 +201,7 @@
         figure.classList.remove('is-in');
         void figure.offsetWidth;
         figure.classList.add('is-in');
+        restartSvg(figure.querySelector('svg.vz'));
       }
       const tab = tabs[index];
       if (focus) tab.focus();

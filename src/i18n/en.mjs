@@ -128,6 +128,6 @@ export default {
     restaurants: { title: 'Kitchen', count: '14 orders', cols: ['New', 'Cooking', 'Ready'], table: 'Table', delivery: 'Delivery', counter: 'Counter', items: ['2× Risotto', '1× Salad', '3× Burger', '1× Fries', '2× Juice', '1× Daily special'] },
     hospitality: { title: 'Occupancy', week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], rooms: [['Room 101', 'Standard'], ['Room 102', 'Standard'], ['Room 201', 'Deluxe'], ['Room 202', 'Suite'], ['Room 301', 'Family']], occupied: 'Occupied', reserved: 'Booked', cleaning: 'Cleaning' },
     appointments: { title: 'Schedule', week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], blocks: ['Visit · Ana', 'Follow-up · John', 'Assessment · Bea', 'Therapy · Cai', 'Orthodontics · Lia', 'Physio · Leo', 'Visit · Ray'], toast: 'Reminder sent', confirmed: 'Confirmed' },
-    logistics: { title: 'Deliveries', when: 'today', delivered: 'Delivered', route: 'En route', issue: 'Attention', next: 'Next delivery', order: 'Order #2193', area: 'Downtown · 1.5 mi', eta: 'Arrives in 8 min' },
+    logistics: { title: 'Deliveries', when: 'today', delivered: 'Delivered', route: 'En route', issue: 'Attention', next: 'Next delivery', order: 'Order #2193', area: 'Downtown · 1.5 mi', eta: 'Arrives in 8 min', arrived: 'Delivered just now' },
   },
 };

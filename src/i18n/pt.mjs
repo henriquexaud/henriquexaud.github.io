@@ -128,6 +128,6 @@ export default {
     restaurants: { title: 'Cozinha', count: '14 pedidos', cols: ['Novos', 'Preparando', 'Prontos'], table: 'Mesa', delivery: 'Delivery', counter: 'Balcão', items: ['2× Risoto', '1× Salada', '3× Burger', '1× Fritas', '2× Suco', '1× Prato do dia'] },
     hospitality: { title: 'Ocupação', week: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], rooms: [['Quarto 101', 'Standard'], ['Quarto 102', 'Standard'], ['Quarto 201', 'Luxo'], ['Quarto 202', 'Suíte'], ['Quarto 301', 'Família']], occupied: 'Ocupado', reserved: 'Reservado', cleaning: 'Limpeza' },
     appointments: { title: 'Agenda', week: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'], blocks: ['Consulta · Ana', 'Retorno · João', 'Avaliação · Bia', 'Terapia · Caio', 'Ortodontia · Lia', 'Fisioterapia · Leo', 'Consulta · Rui'], toast: 'Lembrete enviado', confirmed: 'Confirmado' },
-    logistics: { title: 'Entregas', when: 'hoje', delivered: 'Entregues', route: 'Em rota', issue: 'Atenção', next: 'Próxima entrega', order: 'Pedido #2193', area: 'Centro · 2,4 km', eta: 'Chega em 8 min' },
+    logistics: { title: 'Entregas', when: 'hoje', delivered: 'Entregues', route: 'Em rota', issue: 'Atenção', next: 'Próxima entrega', order: 'Pedido #2193', area: 'Centro · 2,4 km', eta: 'Chega em 8 min', arrived: 'Entregue agora' },
   },
 };
