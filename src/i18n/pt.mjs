@@ -54,8 +54,6 @@ export default {
       restaurants: { tab: 'Restaurantes', title: 'Pedido certo, cozinha no ritmo.', benefits: ['Comanda digital direto na cozinha', 'Custo real de cada prato', 'Caixa fechado em minutos'] },
       hospitality: { tab: 'Hotéis e pousadas', title: 'Hóspedes bem recebidos, quartos sempre prontos.', benefits: ['Reservas diretas pelo seu site', 'Ocupação de todos os quartos em um mapa', 'Check-in digital e limpeza organizada'] },
       appointments: { tab: 'Clínicas e serviços', title: 'Pacientes bem atendidos.', benefits: ['Agendamento online, a qualquer hora', 'Confirmação automática por WhatsApp', 'Prontuário e histórico de cada paciente'] },
-      gyms: { tab: 'Academias e esportes', title: 'Alunos que voltam todo mês.', benefits: ['Check-in por QR code', 'Mensalidade recorrente, sem cobrança manual', 'Alerta de alunos inativos antes do cancelamento'] },
-      teams: { tab: 'Equipes e processos', title: 'Menos ruído, mais trabalho andando.', benefits: ['Prioridades claras para todo o time', 'Impedimentos resolvidos no mesmo dia', 'Entregas em ciclos curtos'] },
     },
   },
 
@@ -131,7 +129,5 @@ export default {
     hospitality: { title: 'Ocupação', week: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], rooms: [['Quarto 101', 'Standard'], ['Quarto 102', 'Standard'], ['Quarto 201', 'Luxo'], ['Quarto 202', 'Suíte'], ['Quarto 301', 'Família']], occupied: 'Ocupado', reserved: 'Reservado', cleaning: 'Limpeza' },
     appointments: { title: 'Agenda', week: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'], blocks: ['Consulta · Ana', 'Retorno · João', 'Avaliação · Bia', 'Terapia · Caio', 'Ortodontia · Lia', 'Fisioterapia · Leo', 'Consulta · Rui'], toast: 'Lembrete enviado', confirmed: 'Confirmado' },
     logistics: { title: 'Entregas', when: 'hoje', delivered: 'Entregues', route: 'Em rota', issue: 'Atenção', next: 'Próxima entrega', order: 'Pedido #2193', area: 'Centro · 2,4 km', eta: 'Chega em 8 min' },
-    gyms: { title: 'Frequência', when: 'últimos 7 dias', days: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], active: 'Alunos ativos', risk: 'Risco de cancelamento', members: [['Marcos', '12 dias sem treinar']], sent: 'Convite de volta enviado' },
-    teams: { title: 'Ciclo de entregas', when: 'esta semana', stages: [['A fazer', '8'], ['Em andamento', '5'], ['Em revisão', '3'], ['Concluído', '21']], blockers: 'Impedimentos', blockerItems: [['Acesso ao sistema do cliente', 'aberto há 2h'], ['Aprovação do orçamento', 'resolvido hoje']], cycle: 'Ciclo atual', cycleValue: '68%', cycleNote: 'faltam 4 dias' },
   },
 };
