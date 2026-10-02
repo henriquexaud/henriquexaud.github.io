@@ -212,13 +212,14 @@ function appointments(v, label) {
   );
 }
 
-// Logistics: the day's route on a map, with the vehicle heading to its next stop,
-// a delay flagged early and a delivery confirmed with proof.
+// Logistics: the day's route on a map, with the order travelling to its destination.
 function logistics(v, label) {
   const done = 'M60 300 L60 236 L140 236 L140 160 L186 160';
   const ahead = 'M186 160 L232 160 L232 104 L316 104';
-  // The vehicle drives from the last delivered stop to the next one, waits, then loops.
-  const drive = 'M186 160 L232 160 L232 104';
+  // The order travels from the last delivered stop to its destination in one go,
+  // turns fully green on arrival and waits there before the loop restarts.
+  const cycle = '8s';
+  const arrive = 0.5;
   // Streets on a grid; the two avenues are wider. City blocks fill the gaps.
   const xs = [60, 140, 232, 316];
   const ys = [104, 160, 236, 290];
@@ -256,23 +257,15 @@ function logistics(v, label) {
     </g>
     <rect class="vz-fg" x="52" y="292" width="16" height="16" rx="3"/>
     ${delivered.map(([x, y]) => check(x, y))}
-    <circle class="vz-stop" cx="232" cy="104" r="6"/>
     <circle class="vz-stop" cx="316" cy="104" r="6"/>
-    <circle class="vz-warn vz-ping" cx="60" cy="104" r="5"/>
-    <circle class="vz-warn" cx="60" cy="104" r="5"/>
     <g class="vz-vehicle">
       <circle class="vz-acc vz-ping" r="7"/>
       <circle class="vz-acc" r="7"/>
-      <circle class="vz-hole" r="2.5"/>
-      <animateMotion dur="7s" repeatCount="indefinite" path="${drive}" keyPoints="0;1;1" keyTimes="0;0.55;1" calcMode="spline" keySplines="0.45 0 0.25 1; 0 0 1 1"/>
-      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.92;1" dur="7s" repeatCount="indefinite"/>
-    </g>
-    <g class="vz-toast">
-      <rect class="vz-card vz-raised" x="150" y="262" width="182" height="58" rx="12"/>
-      <circle class="vz-fg" cx="172" cy="291" r="9"/>
-      <path class="vz-check" d="M168 291 l2.6 2.7 l5 -5.6"/>
-      <text class="vz-t1 vz-sm" x="190" y="286">${v.proof}</text>
-      <text class="vz-t3" x="190" y="303">${v.proofNote}</text>
+      <circle class="vz-hole" r="2.5">
+        <animate attributeName="opacity" values="1;0" keyTimes="0;${arrive}" calcMode="discrete" dur="${cycle}" repeatCount="indefinite"/>
+      </circle>
+      <animateMotion dur="${cycle}" repeatCount="indefinite" path="${ahead}" keyPoints="0;1;1" keyTimes="0;${arrive};1" calcMode="spline" keySplines="0.45 0 0.25 1; 0 0 1 1"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.94;1" dur="${cycle}" repeatCount="indefinite"/>
     </g>
 
     <rect class="vz-card" x="356" y="68" width="180" height="124" rx="12"/>
