@@ -163,7 +163,6 @@ function solutions(t) {
           <ul class="benefits">
             ${item.benefits.map((b) => html`<li><span class="benefit-mark">${icons.check}</span><span>${b}</span></li>`)}
           </ul>
-          ${externalLink(whatsappUrl(item.message), s.cta, t, 'text-link', icons.whatsapp)}
         </div>
         <figure class="solution-visual" data-visual>
           ${visual(key, t.visuals[key], `${item.tab}: ${item.title}`)}
@@ -171,7 +170,6 @@ function solutions(t) {
       </div>`;
       })}
     </div>
-    <p class="solutions-other">${s.other} <a class="text-link" href="#contact">${s.otherCta}${icons.arrowRight}</a></p>
   </div>
 </section>`;
 }
@@ -277,7 +275,7 @@ function contactSection(t) {
 </section>`;
 }
 
-function siteFooter(t, all, year) {
+function siteFooter(t, year) {
   return html`<footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-brand">
@@ -289,7 +287,7 @@ function siteFooter(t, all, year) {
     </nav>
     <div class="footer-bottom">
       <p>© ${year} ${site.name}. ${t.footer.rights}</p>
-      ${languageSwitch(t, all, 'lang-footer lang-up')}
+      <a class="back-to-top" href="#top">${t.ui.backToTop}${icons.arrowUp}</a>
     </div>
   </div>
 </footer>`;
@@ -299,7 +297,7 @@ export function renderPage(t, ctx) {
   return html`<!doctype html>
 <html lang="${t.htmlLang}">
 ${head(t, ctx)}
-<body>
+<body id="top">
 <a class="skip-link" href="#main">${t.ui.skip}</a>
 ${siteHeader(t, ctx.all)}
 <main id="main">
@@ -312,7 +310,7 @@ ${about(t)}
 ${faq(t)}
 ${contactSection(t)}
 </main>
-${siteFooter(t, ctx.all, ctx.year)}
+${siteFooter(t, ctx.year)}
 </body>
 </html>
 `;
