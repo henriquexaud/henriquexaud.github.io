@@ -79,6 +79,60 @@
   syncSvgAnimations();
   reducedMotion.addEventListener('change', syncSvgAnimations);
 
+  // Scroll-linked effects (one rAF-throttled handler) -----------------------------
+  const progressBar = document.querySelector('[data-progress]');
+  const heroEl = document.querySelector('.hero');
+  const drawing = document.querySelector('[data-blueprint]');
+  const processEl = document.querySelector('[data-process]');
+  const steps = processEl ? [...processEl.children] : [];
+  const clamp = (n) => Math.min(1, Math.max(0, n));
+  let ticking = false;
+
+  const updateScroll = () => {
+    ticking = false;
+    const y = window.scrollY;
+    const vh = window.innerHeight;
+    const max = document.documentElement.scrollHeight - vh;
+    if (progressBar) progressBar.style.transform = `scaleX(${max > 0 ? clamp(y / max) : 0})`;
+
+    const still = reducedMotion.matches;
+
+    // Hero drawing: plates move apart (exploded view), drift and fade as the hero leaves.
+    if (heroEl && drawing) {
+      const p = still ? 0 : clamp(y / heroEl.offsetHeight);
+      drawing.style.setProperty('--explode', p.toFixed(3));
+      drawing.style.transform = still ? '' : `translate3d(0, ${(y * 0.12).toFixed(1)}px, 0)`;
+      drawing.style.opacity = still ? '' : String(1 - p * 0.85);
+    }
+
+    // Process line fills while the section crosses the viewport.
+    if (processEl) {
+      const top = processEl.getBoundingClientRect().top;
+      const p = still ? 1 : clamp((vh * 0.8 - top) / (vh * 0.45));
+      processEl.style.setProperty('--p', p.toFixed(3));
+      steps.forEach((step, i) => step.classList.toggle('is-active', p > 0 && p >= i / Math.max(1, steps.length - 1) - 0.02));
+    }
+  };
+
+  const requestScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(updateScroll);
+  };
+  updateScroll();
+  window.addEventListener('scroll', requestScroll, { passive: true });
+  window.addEventListener('resize', requestScroll, { passive: true });
+  reducedMotion.addEventListener('change', requestScroll);
+
+  // Pointer-following light on cards.
+  document.querySelectorAll('[data-spotlight]').forEach((card) => {
+    card.addEventListener('pointermove', (event) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${event.clientX - rect.left}px`);
+      card.style.setProperty('--my', `${event.clientY - rect.top}px`);
+    });
+  });
+
   // Active section in the navigation ---------------------------------------------
   const navLinks = new Map();
   document.querySelectorAll('[data-nav]').forEach((link) => navLinks.set(link.dataset.nav, link));

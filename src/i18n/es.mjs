@@ -39,6 +39,7 @@ export default {
     titleMuted: 'que resuelve problemas reales.',
     lead: 'Sistemas, tiendas online y aplicaciones a medida para empresas que quieren crecer con menos esfuerzo.',
     primary: 'Iniciar un proyecto',
+    layers: ['Interfaz', 'Procesos', 'Datos'],
     secondary: 'Ver soluciones',
   },
 

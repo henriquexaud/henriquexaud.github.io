@@ -2,11 +2,15 @@ import { html, raw } from '../lib/html.mjs';
 import { site, contact, founder, solutionKeys } from '../config.mjs';
 import { logoMark, icons, valueIcons, flag, chevronDown } from './icons.mjs';
 import { visual } from './visuals.mjs';
+import { blueprint } from './blueprint.mjs';
 
 const pad = (n) => String(n).padStart(2, '0');
 const whatsappUrl = (message) => `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(message)}`;
 
 const NAV = ['solutions', 'services', 'process', 'about', 'faq'];
+
+// Registration marks drawn in the corners of a card, like on a technical drawing.
+const MARKS = raw('<span class="marks" aria-hidden="true"><i></i><i></i><i></i><i></i></span>');
 
 function externalLink(href, label, t, cls = '', icon = '') {
   return html`<a class="${cls}" href="${href}" target="_blank" rel="noopener noreferrer">${icon}<span>${label}</span><span class="visually-hidden"> (${t.ui.external})</span></a>`;
@@ -14,9 +18,9 @@ function externalLink(href, label, t, cls = '', icon = '') {
 
 function sectionHead(id, eyebrow, title, lead) {
   return html`<header class="section-head">
-    <p class="eyebrow">${eyebrow}</p>
-    <h2 class="section-title" id="${id}-title">${title}</h2>
-    ${lead ? html`<p class="section-lead">${lead}</p>` : ''}
+    <p class="eyebrow reveal">${eyebrow}</p>
+    <h2 class="section-title reveal" style="--d:1" id="${id}-title">${title}</h2>
+    ${lead ? html`<p class="section-lead reveal" style="--d:2">${lead}</p>` : ''}
   </header>`;
 }
 
@@ -107,6 +111,7 @@ function languageSwitch(t, all, cls) {
 
 function siteHeader(t, all) {
   return html`<header class="site-header" data-header>
+  <div class="scroll-progress" data-progress aria-hidden="true"></div>
   <div class="container header-inner">
     <a class="brand" href="${t.path}" aria-label="${site.name}">${logoMark(22)}<span class="brand-name">${site.name}</span></a>
     <nav class="primary-nav" aria-label="${t.ui.primaryNav}" id="primary-nav">
@@ -132,7 +137,8 @@ function siteHeader(t, all) {
 
 function hero(t) {
   return html`<section class="hero" aria-labelledby="hero-title">
-  <div class="container">
+  <div class="container hero-inner">
+    ${blueprint(t.hero.layers)}
     <p class="eyebrow hero-eyebrow reveal">${t.hero.eyebrow}</p>
     <h1 class="hero-title reveal" id="hero-title">${t.hero.title} <span class="hero-title-muted">${t.hero.titleMuted}</span></h1>
     <p class="hero-lead reveal">${t.hero.lead}</p>
@@ -140,6 +146,7 @@ function hero(t) {
       <a class="button button-primary button-large" href="#contact">${t.hero.primary}${icons.arrowRight}</a>
       <a class="button button-ghost button-large" href="#solutions">${t.hero.secondary}</a>
     </div>
+    <div class="ruler" aria-hidden="true"></div>
   </div>
 </section>`;
 }
@@ -155,7 +162,8 @@ function solutions(t) {
       </div>
       ${solutionKeys.map((key, i) => {
         const item = s.items[key];
-        return html`<div class="solution-panel" role="tabpanel" id="panel-${key}" aria-labelledby="tab-${key}" tabindex="0" ${i === 0 ? '' : raw('data-inactive')}>
+        return html`<div class="solution-panel" role="tabpanel" id="panel-${key}" aria-labelledby="tab-${key}" tabindex="0" data-spotlight ${i === 0 ? '' : raw('data-inactive')}>
+        ${MARKS}
         <div class="solution-copy">
           <p class="solution-kicker">${item.tab}</p>
           <h3 class="solution-title">${item.title}</h3>
@@ -195,7 +203,7 @@ function why(t) {
   <div class="container">
     ${sectionHead('why', w.eyebrow, w.title)}
     <ul class="value-grid">
-      ${w.items.map((item, i) => html`<li class="value reveal" style="--d:${i}">
+      ${w.items.map((item, i) => html`<li class="value reveal" style="--d:${i}" data-spotlight>
         <span class="value-icon" aria-hidden="true">${valueIcons[item.icon]}</span>
         <h3 class="value-title">${item.title}</h3>
         <p class="value-text">${item.text}</p>
@@ -210,8 +218,9 @@ function process(t) {
   return html`<section class="section" id="process" aria-labelledby="process-title">
   <div class="container">
     ${sectionHead('process', p.eyebrow, p.title)}
-    <ol class="process">
+    <ol class="process" data-process>
       ${p.steps.map((step, i) => html`<li class="process-step reveal" style="--d:${i}">
+        <span class="process-node" aria-hidden="true"></span>
         <span class="process-index" aria-hidden="true">${pad(i + 1)}</span>
         <h3 class="process-title">${step.title}</h3>
         <p class="process-text">${step.text}</p>
@@ -262,6 +271,7 @@ function contactSection(t) {
   return html`<section class="section contact" id="contact" aria-labelledby="contact-title">
   <div class="container">
     <div class="contact-card reveal">
+      ${MARKS}
       <p class="eyebrow">${c.eyebrow}</p>
       <h2 class="contact-title" id="contact-title">${c.title}</h2>
       <p class="contact-lead">${c.lead}</p>
