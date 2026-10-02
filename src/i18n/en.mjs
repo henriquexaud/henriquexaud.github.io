@@ -39,6 +39,7 @@ export default {
     titleMuted: 'that solves real problems.',
     lead: 'Custom systems, online stores and apps for companies that want to grow with less effort.',
     primary: 'Start a project',
+    layers: ['Interface', 'Processes', 'Data'],
     secondary: 'See solutions',
   },
 
