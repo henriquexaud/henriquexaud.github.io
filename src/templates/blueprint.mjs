@@ -11,7 +11,7 @@ const B = 98; // half height (isometric ratio)
 const T = 8; // plate thickness
 const TOPS = [30, 136, 242];
 const SPAN = TOPS[2] - TOPS[0];
-const APPROACH = [26, 0, -26]; // how far each plate travels towards the middle one
+const APPROACH = [44, 0, -44]; // how far each plate travels towards the middle one
 
 const f = (n) => Math.round(n * 10) / 10;
 
