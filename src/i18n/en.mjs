@@ -61,17 +61,11 @@ export default {
         lead: 'Every delivery tracked, with deadlines and costs in view.',
         benefits: ['Every delivery’s position on the map', 'Delays spotted before customers complain', 'Digital proof of delivery with photo and signature'],
       },
-      distribution: {
-        tab: 'Distributors and manufacturers',
-        title: 'Your customers ordering directly, anytime.',
-        lead: 'An ordering portal for resellers, with each customer’s catalog and terms.',
-        benefits: ['Orders around the clock, without waiting for a sales rep', 'Prices, terms and credit limits per customer', 'Production and stock planned on real demand'],
-      },
       restaurants: {
         tab: 'Restaurants',
-        title: 'From the dining room to the kitchen, no paper and no mistakes.',
-        lead: 'Orders, kitchen, stock and register connected.',
-        benefits: ['Orders taken once, straight to the kitchen screen', 'Cost of every dish and ingredient stock', 'Register closed in minutes'],
+        title: 'The right order, a kitchen in rhythm.',
+        lead: 'Dining room, kitchen, stock and register connected.',
+        benefits: ['Digital tickets, straight to the kitchen screen', 'Cost of every dish and ingredient stock', 'Register closed in minutes'],
       },
       hospitality: {
         tab: 'Hotels and inns',
@@ -80,10 +74,16 @@ export default {
         benefits: ['Direct bookings on your website, beyond the platforms', 'Occupancy map for every room', 'Digital check-in and housekeeping by room'],
       },
       appointments: {
-        tab: 'Clinics and services',
+        tab: 'Clinics and salons',
         title: 'A full calendar and fewer no-shows.',
         lead: 'Clients book on their own and get automatic reminders.',
         benefits: ['Online booking, anytime', 'WhatsApp confirmation before every appointment', 'Commissions and payments calculated for you'],
+      },
+      teams: {
+        tab: 'Teams and processes',
+        title: 'Your whole team on the same page.',
+        lead: 'Tasks, deadlines and processes organized, with every step visible.',
+        benefits: ['Every task with an owner and a deadline', 'Approvals in the right flow, no lost emails', 'Each area’s progress in view, without having to ask'],
       },
     },
   },
@@ -106,7 +106,7 @@ export default {
       { icon: 'fit', title: 'Tailor-made', text: 'The system adapts to your process, not the other way around.' },
       { icon: 'shield', title: 'Reliable', text: 'Built to perform on your busiest days.' },
       { icon: 'key', title: 'Yours', text: 'The system and the data belong to your company.' },
-      { icon: 'chat', title: 'Close to you', text: 'You talk directly to the people who build it, from start to support.' },
+      { icon: 'chat', title: 'Close to you', text: 'You talk directly to the people who build it, no middlemen.' },
     ],
   },
 
@@ -117,7 +117,7 @@ export default {
       { title: 'Conversation', text: 'We learn about your business and what needs to improve.' },
       { title: 'Proposal', text: 'You receive a clear scope, timeline and investment.' },
       { title: 'Development', text: 'We build in stages that you follow closely.' },
-      { title: 'Launch and support', text: 'We go live, train your team and keep working together.' },
+      { title: 'Launch', text: 'We go live, migrate your data and train your team.' },
     ],
   },
 
@@ -133,7 +133,7 @@ export default {
     title: 'Common questions.',
     items: [
       { q: 'How much does it cost?', a: 'It depends on what your company needs. After a conversation, you receive a proposal with a clear scope, timeline and price.' },
-      { q: 'How long does it take?', a: 'It depends on the size of the project. We deliver in stages so you can start using the system as soon as possible.' },
+      { q: 'How long does it take?', a: 'It varies with the size of the project, and the timeline is set in the proposal. Since we deliver in stages, you start using the system before the end.' },
       { q: 'Does my company own the system?', a: 'Yes. The system and the data belong to your company, with no per-user licenses.' },
       { q: 'Do you offer support?', a: 'Yes. After launch, the system stays in our care through monthly support plans.' },
       { q: 'Do I need to understand technology?', a: 'No. You run the business and we handle the technology, always explaining things simply.' },
@@ -160,6 +160,6 @@ export default {
     hospitality: { title: 'Occupancy', week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], rooms: [['Room 101', 'Standard'], ['Room 102', 'Standard'], ['Room 201', 'Deluxe'], ['Room 202', 'Suite'], ['Room 301', 'Family']], occupied: 'Occupied', reserved: 'Booked', cleaning: 'Cleaning' },
     appointments: { title: 'Schedule', week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], blocks: ['Visit · Ana', 'Haircut · John', 'Check-up · Bea', 'Follow-up · Cai', 'Color · Lia', 'Service · Leo', 'Visit · Ray'], toast: 'Reminder sent', confirmed: 'Confirmed' },
     logistics: { title: 'Deliveries', delivered: 'Delivered', route: 'On route', issue: 'Attention', vehicle: 'Vehicle 03', eta: 'Arrives 2:35 pm' },
-    distribution: { title: 'B2B orders', when: 'today', hub: 'Factory', hubSub: '48 orders today', clients: [['Central Market', '12 orders'], ['FreshMart Group', '8 orders'], ['South Wholesale', '21 orders'], ['North Grocers', '7 orders']], stockTitle: 'Stock', stock: [['Premium line', '82%'], ['Basic line', '56%'], ['Kids line', '18%']], restock: 'Restock', portalLabel: 'Orders via portal', portalValue: '64%' },
+    teams: { title: 'Workflow', when: 'this week', stages: [['Request', '6'], ['Review', '4'], ['Approval', '9'], ['In progress', '5'], ['Done', '28']], bottleneck: 'Bottleneck', team: 'Team', people: ['Ana', 'Bruno', 'Carla', 'Diego'], onTime: 'On-time delivery', onTimeValue: '94%', trend: '+6% this month' },
   },
 };

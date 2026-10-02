@@ -229,59 +229,55 @@ function logistics(v, label) {
   );
 }
 
-// Distribution: resellers send orders to the factory through a B2B portal;
-// a side panel shows stock by product line.
-function distribution(v, label) {
-  const hub = [182, 206];
-  const clients = [
-    { at: [52, 112], anchor: 'start', dx: 14 },
-    { at: [312, 112], anchor: 'end', dx: -14 },
-    { at: [52, 304], anchor: 'start', dx: 14 },
-    { at: [312, 304], anchor: 'end', dx: -14 },
-  ];
-  const levels = [0.82, 0.56, 0.18];
+// Teams and processes: work moving through the stages of a process (with the
+// bottleneck flagged), the team's workload and the on-time rate.
+function teams(v, label) {
+  const cardW = 84;
+  const gap = 20;
+  const y0 = 82;
+  const xs = v.stages.map((_, i) => 24 + i * (cardW + gap));
+  const jam = 2;
+  const loads = [0.62, 0.95, 0.48, 0.7];
+  const flow = `M${xs[0] + cardW / 2} ${y0 + 28} H${xs[xs.length - 1] + cardW / 2}`;
   return frame(
     label,
     html`
     ${header(v.title, v.when)}
-    <circle class="vz-orbit" cx="${hub[0]}" cy="${hub[1]}" r="62"/>
-    <circle class="vz-orbit" cx="${hub[0]}" cy="${hub[1]}" r="104"/>
-    ${clients.map(({ at: [x, y] }) => html`<path class="vz-link" d="M${x} ${y} L${hub[0]} ${hub[1]}"/>`)}
-    ${clients.map(
-      ({ at: [x, y] }, i) => html`<circle class="vz-acc" r="3">
-        <animateMotion dur="2.8s" begin="${(i * 0.7).toFixed(1)}s" repeatCount="indefinite" path="M${x} ${y} L${hub[0]} ${hub[1]}"/>
-      </circle>`,
-    )}
-    ${clients.map(({ at: [x, y], anchor, dx }, i) => {
-      const [name, count] = v.clients[i];
+    <path class="vz-flow" d="${flow}"/>
+    <circle class="vz-acc" r="3.5">
+      <animateMotion dur="4.5s" repeatCount="indefinite" path="${flow}"/>
+    </circle>
+    ${v.stages.map(([name, count], i) => {
+      const x = xs[i];
+      const hot = i === jam;
       return html`<g class="vz-pop" style="--i:${i}">
-        <circle class="vz-client" cx="${x}" cy="${y}" r="6"/>
-        <text class="vz-t1 vz-sm" x="${x + dx}" y="${y - 2}" text-anchor="${anchor}">${name}</text>
-        <text class="vz-t3" x="${x + dx}" y="${y + 14}" text-anchor="${anchor}">${count}</text>
+        <rect class="${hot ? 'vz-card vz-jam' : 'vz-card'}" x="${x}" y="${y0}" width="${cardW}" height="56" rx="10"/>
+        <text class="${hot ? 'vz-big vz-big-warn' : 'vz-big'} vz-count" x="${x + 12}" y="${y0 + 30}">${count}</text>
+        <text class="vz-t3" x="${x + 12}" y="${y0 + 46}">${name}</text>
       </g>`;
     })}
-    <rect class="vz-hub" x="${hub[0] - 30}" y="${hub[1] - 30}" width="60" height="60" rx="16"/>
-    <path class="vz-hub-glyph" d="M${hub[0] - 13} ${hub[1] + 11} V${hub[1] - 1} l7 -5 v5 l7 -5 v5 l7 -5 V${hub[1] - 12} h6 V${hub[1] + 11} Z"/>
-    <text class="vz-t1 vz-sm" x="${hub[0]}" y="${hub[1] + 50}" text-anchor="middle">${v.hub}</text>
-    <text class="vz-ta" x="${hub[0]}" y="${hub[1] + 66}" text-anchor="middle">${v.hubSub}</text>
-    <rect class="vz-card" x="356" y="70" width="180" height="270" rx="12"/>
-    <text class="vz-t3 vz-caps" x="374" y="98">${v.stockTitle}</text>
-    <line class="vz-line" x1="356" y1="112" x2="536" y2="112"/>
-    ${v.stock.map(([name, pct], i) => {
-      const y = 140 + i * 46;
-      const low = levels[i] < 0.3;
-      return html`<text class="vz-t2 vz-sm" x="374" y="${y}">${name}</text>
-        <text class="${low ? 'vz-tw' : 'vz-t3'}" x="518" y="${y}" text-anchor="end">${low ? `${pct} · ${v.restock}` : pct}</text>
-        <rect class="vz-track" x="374" y="${y + 10}" width="144" height="5" rx="2.5"/>
-        <rect class="${low ? 'vz-warn' : 'vz-acc'} vz-grow-x" style="--i:${i}" x="374" y="${y + 10}" width="${144 * levels[i]}" height="5" rx="2.5"/>`;
+    <text class="vz-tw" x="${xs[jam] + cardW / 2}" y="${y0 + 76}" text-anchor="middle">${v.bottleneck}</text>
+    <rect class="vz-card" x="24" y="186" width="316" height="154" rx="12"/>
+    <text class="vz-t3 vz-caps" x="42" y="212">${v.team}</text>
+    ${v.people.map((name, i) => {
+      const y = 240 + i * 26;
+      const heavy = loads[i] > 0.9;
+      return html`<circle class="vz-avatar" cx="50" cy="${y - 4}" r="9"/>
+        <text class="vz-initial" x="50" y="${y}" text-anchor="middle">${name[0]}</text>
+        <text class="vz-t2 vz-sm" x="68" y="${y}">${name}</text>
+        <rect class="vz-track" x="170" y="${y - 7}" width="150" height="5" rx="2.5"/>
+        <rect class="${heavy ? 'vz-warn' : 'vz-acc'} vz-grow-x" style="--i:${i}" x="170" y="${y - 7}" width="${150 * loads[i]}" height="5" rx="2.5"/>`;
     })}
-    <line class="vz-line" x1="374" y1="272" x2="518" y2="272"/>
-    <text class="vz-t3" x="374" y="296">${v.portalLabel}</text>
-    <text class="vz-big" x="374" y="328">${v.portalValue}</text>`,
+    <rect class="vz-card" x="356" y="186" width="180" height="154" rx="12"/>
+    <text class="vz-t3" x="374" y="216">${v.onTime}</text>
+    <text class="vz-big" x="374" y="254">${v.onTimeValue}</text>
+    <rect class="vz-track" x="374" y="274" width="144" height="5" rx="2.5"/>
+    <rect class="vz-acc vz-grow-x" x="374" y="274" width="${144 * 0.94}" height="5" rx="2.5"/>
+    <text class="vz-ta" x="374" y="310">${v.trend}</text>`,
   );
 }
 
-const renderers = { ecommerce, logistics, distribution, restaurants, hospitality, appointments };
+const renderers = { ecommerce, logistics, restaurants, hospitality, appointments, teams };
 
 export function visual(key, labels, ariaLabel) {
   return renderers[key](labels, ariaLabel);

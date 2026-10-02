@@ -61,17 +61,11 @@ export default {
         lead: 'Cada entrega con seguimiento, plazos y costes a la vista.',
         benefits: ['La posición de cada entrega en el mapa', 'Retrasos detectados antes de la queja', 'Comprobante digital con foto y firma'],
       },
-      distribution: {
-        tab: 'Distribuidoras e industria',
-        title: 'Tus clientes comprando directo, a cualquier hora.',
-        lead: 'Un portal de pedidos para revendedores, con el catálogo y las condiciones de cada cliente.',
-        benefits: ['Pedidos las 24 horas, sin depender del comercial', 'Precio, plazo y límite de crédito por cliente', 'Producción y stock planificados según la demanda real'],
-      },
       restaurants: {
         tab: 'Restaurantes',
-        title: 'Del salón a la cocina, sin papel y sin errores.',
-        lead: 'Pedidos, cocina, stock y caja conectados.',
-        benefits: ['Pedido tomado una vez, directo a la pantalla de cocina', 'Coste de cada plato y stock de ingredientes', 'Caja cerrada en minutos'],
+        title: 'Pedido correcto, cocina a buen ritmo.',
+        lead: 'Salón, cocina, stock y caja conectados.',
+        benefits: ['Comanda digital, directo a la pantalla de cocina', 'Coste de cada plato y stock de ingredientes', 'Caja cerrada en minutos'],
       },
       hospitality: {
         tab: 'Hoteles y posadas',
@@ -80,10 +74,16 @@ export default {
         benefits: ['Reservas directas en tu web, además de las plataformas', 'Mapa de ocupación de todas las habitaciones', 'Check-in digital y limpieza organizada por habitación'],
       },
       appointments: {
-        tab: 'Clínicas y servicios',
+        tab: 'Clínicas y salones',
         title: 'Agenda llena y menos ausencias.',
         lead: 'El cliente reserva solo y recibe recordatorios automáticos.',
         benefits: ['Reservas online, a cualquier hora', 'Confirmación por WhatsApp antes de cada cita', 'Comisiones y cobros calculados solos'],
+      },
+      teams: {
+        tab: 'Equipos y procesos',
+        title: 'Todo el equipo en la misma página.',
+        lead: 'Tareas, plazos y procesos organizados, con cada etapa visible.',
+        benefits: ['Cada tarea con responsable y plazo', 'Aprobaciones en el flujo correcto, sin correos perdidos', 'El avance de cada área a la vista, sin tener que preguntar'],
       },
     },
   },
@@ -106,7 +106,7 @@ export default {
       { icon: 'fit', title: 'A medida', text: 'El sistema se adapta a tu proceso, y no al revés.' },
       { icon: 'shield', title: 'Fiable', text: 'Hecho para funcionar en tus días de más actividad.' },
       { icon: 'key', title: 'Es tuyo', text: 'El sistema y los datos pertenecen a tu empresa.' },
-      { icon: 'chat', title: 'Cerca de ti', text: 'Hablas directamente con quien lo construye, del inicio al soporte.' },
+      { icon: 'chat', title: 'Cerca de ti', text: 'Hablas directamente con quien lo construye, sin intermediarios.' },
     ],
   },
 
@@ -117,7 +117,7 @@ export default {
       { title: 'Conversación', text: 'Entendemos tu negocio y lo que necesita mejorar.' },
       { title: 'Propuesta', text: 'Recibes alcance, plazo e inversión definidos.' },
       { title: 'Desarrollo', text: 'Construimos por etapas que sigues de cerca.' },
-      { title: 'Lanzamiento y soporte', text: 'Lo ponemos en marcha, formamos a tu equipo y seguimos juntos.' },
+      { title: 'Lanzamiento', text: 'Lo ponemos en marcha, migramos los datos y formamos a tu equipo.' },
     ],
   },
 
@@ -133,7 +133,7 @@ export default {
     title: 'Preguntas frecuentes.',
     items: [
       { q: '¿Cuánto cuesta?', a: 'Depende de lo que necesite tu empresa. Después de una conversación, recibes una propuesta con alcance, plazo y precio definidos.' },
-      { q: '¿Cuánto tiempo lleva?', a: 'Depende del tamaño del proyecto. Entregamos por etapas para que empieces a usar el sistema cuanto antes.' },
+      { q: '¿Cuánto tiempo lleva?', a: 'Varía según el tamaño del proyecto, y el plazo queda definido en la propuesta. Como entregamos por etapas, empiezas a usar el sistema antes del final.' },
       { q: '¿El sistema es de mi empresa?', a: 'Sí. El sistema y los datos son de tu empresa, sin licencias por usuario.' },
       { q: '¿Ofrecéis soporte?', a: 'Sí. Tras la entrega, el sistema sigue a nuestro cuidado con planes mensuales de acompañamiento.' },
       { q: '¿Necesito saber de tecnología?', a: 'No. Tú te ocupas del negocio y nosotros de la tecnología, siempre explicándolo todo de forma sencilla.' },
@@ -160,6 +160,6 @@ export default {
     hospitality: { title: 'Ocupación', week: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], rooms: [['Hab. 101', 'Estándar'], ['Hab. 102', 'Estándar'], ['Hab. 201', 'Superior'], ['Hab. 202', 'Suite'], ['Hab. 301', 'Familiar']], occupied: 'Ocupada', reserved: 'Reservada', cleaning: 'Limpieza' },
     appointments: { title: 'Agenda', week: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'], blocks: ['Consulta · Ana', 'Corte · Juan', 'Revisión · Bea', 'Control · Caio', 'Color · Lía', 'Servicio · Leo', 'Consulta · Rui'], toast: 'Recordatorio enviado', confirmed: 'Confirmado' },
     logistics: { title: 'Entregas', delivered: 'Entregadas', route: 'En ruta', issue: 'Atención', vehicle: 'Vehículo 03', eta: 'Llega 14:35' },
-    distribution: { title: 'Pedidos B2B', when: 'hoy', hub: 'Fábrica', hubSub: '48 pedidos hoy', clients: [['Mercado Central', '12 pedidos'], ['Red Buen Precio', '8 pedidos'], ['Mayorista Sur', '21 pedidos'], ['Almacén Norte', '7 pedidos']], stockTitle: 'Stock', stock: [['Línea Premium', '82%'], ['Línea Básica', '56%'], ['Línea Infantil', '18%']], restock: 'Reponer', portalLabel: 'Pedidos por el portal', portalValue: '64%' },
+    teams: { title: 'Flujo de trabajo', when: 'esta semana', stages: [['Solicitud', '6'], ['Análisis', '4'], ['Aprobación', '9'], ['Ejecución', '5'], ['Completado', '28']], bottleneck: 'Cuello de botella', team: 'Equipo', people: ['Ana', 'Bruno', 'Carla', 'Diego'], onTime: 'Entregas a tiempo', onTimeValue: '94%', trend: '+6% este mes' },
   },
 };
