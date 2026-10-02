@@ -1,7 +1,7 @@
 export default {
   code: 'es',
   htmlLang: 'es',
-  ogLocale: 'es_ES',
+  ogLocale: 'es_LA',
   label: 'Español',
   short: 'ES',
   flag: 'es',
@@ -52,20 +52,20 @@ export default {
       ecommerce: {
         tab: 'Tiendas y e-commerce',
         title: 'Vende online sin trabajo manual.',
-        lead: 'Tu tienda online integrada con el pago, la facturación y el stock.',
-        benefits: ['Pago con tarjeta y transferencia en pocos clics', 'Factura emitida en cada venta, sin teclear nada', 'Un solo stock para tienda física, web y marketplaces'],
+        lead: 'Tu tienda online integrada con el pago, la facturación y el inventario.',
+        benefits: ['Pago con tarjeta y transferencia en pocos clics', 'Factura emitida en cada venta, sin digitar nada', 'Un solo inventario para tienda física, web y marketplaces'],
       },
       logistics: {
         tab: 'Logística y entregas',
         title: 'Del pedido listo a la puerta del cliente.',
-        lead: 'Cada entrega con seguimiento, plazos y costes a la vista.',
-        benefits: ['La posición de cada entrega en el mapa', 'Retrasos detectados antes de la queja', 'Comprobante digital con foto y firma'],
+        lead: 'Cada entrega con seguimiento, plazos y costos a la vista.',
+        benefits: ['Cada entrega ubicada en el mapa', 'Retrasos detectados antes del reclamo', 'Comprobante digital con foto y firma'],
       },
       restaurants: {
         tab: 'Restaurantes',
         title: 'Pedido correcto, cocina a buen ritmo.',
-        lead: 'Salón, cocina, stock y caja conectados.',
-        benefits: ['Comanda digital, directo a la pantalla de cocina', 'Coste de cada plato y stock de ingredientes', 'Caja cerrada en minutos'],
+        lead: 'Salón, cocina, inventario y caja conectados.',
+        benefits: ['Comanda digital, directo a la pantalla de cocina', 'Costo de cada plato e inventario de insumos', 'Caja cerrada en minutos'],
       },
       hospitality: {
         tab: 'Hoteles y posadas',
@@ -77,11 +77,11 @@ export default {
         tab: 'Clínicas y salones',
         title: 'Agenda llena y menos ausencias.',
         lead: 'El cliente reserva solo y recibe recordatorios automáticos.',
-        benefits: ['Reservas online, a cualquier hora', 'Confirmación por WhatsApp antes de cada cita', 'Comisiones y cobros calculados solos'],
+        benefits: ['Reservas online, a cualquier hora', 'Confirmación por WhatsApp antes de cada cita', 'Comisiones y cobros calculados automáticamente'],
       },
       teams: {
         tab: 'Equipos y procesos',
-        title: 'Todo el equipo en la misma página.',
+        title: 'Todo tu equipo en sintonía.',
         lead: 'Tareas, plazos y procesos organizados, con cada etapa visible.',
         benefits: ['Cada tarea con responsable y plazo', 'Aprobaciones en el flujo correcto, sin correos perdidos', 'El avance de cada área a la vista, sin tener que preguntar'],
       },
@@ -91,10 +91,10 @@ export default {
   services: {
     eyebrow: 'Servicios',
     title: 'Del primer sistema a la mejora continua.',
-    lead: 'Tres frentes de trabajo, según el momento de tu empresa. Las soluciones de arriba nacen de ellas.',
+    lead: 'Tres frentes de trabajo, según el momento de tu empresa. Cada solución de arriba nace de ellos.',
     items: [
       { icon: 'build', kicker: 'Crear', title: 'Sistemas y productos nuevos', text: 'De cero al primer uso: diseñamos y construimos lo que tu operación necesita.', points: ['Sistemas de gestión', 'Tiendas online y portales', 'Apps para clientes y equipos'] },
-      { icon: 'connect', kicker: 'Conectar', title: 'Integración y automatización', text: 'Hacemos que los sistemas que ya usas hablen entre sí y quitamos el trabajo repetitivo a tu equipo.', points: ['ERP, tienda y finanzas integrados', 'Rutinas e informes automáticos', 'Inteligencia artificial aplicada'] },
+      { icon: 'connect', kicker: 'Conectar', title: 'Integración y automatización', text: 'Hacemos que los sistemas que ya usas hablen entre sí y liberamos a tu equipo del trabajo repetitivo.', points: ['ERP, tienda y finanzas integrados', 'Rutinas e informes automáticos', 'Inteligencia artificial aplicada'] },
       { icon: 'evolve', kicker: 'Evolucionar', title: 'Evolución y soporte', text: 'Asumimos sistemas existentes, cuidamos su estabilidad y seguimos mejorándolos contigo.', points: ['Mantenimiento y mejoras continuas', 'Modernización de sistemas antiguos', 'Consultoría y diagnóstico técnico'] },
     ],
   },
@@ -104,7 +104,7 @@ export default {
     title: 'Tecnología a favor de tu negocio.',
     items: [
       { icon: 'fit', title: 'A medida', text: 'El sistema se adapta a tu proceso, y no al revés.' },
-      { icon: 'shield', title: 'Fiable', text: 'Hecho para funcionar en tus días de más actividad.' },
+      { icon: 'shield', title: 'Confiable', text: 'Hecho para funcionar en tus días de mayor movimiento.' },
       { icon: 'key', title: 'Es tuyo', text: 'El sistema y los datos pertenecen a tu empresa.' },
       { icon: 'chat', title: 'Cerca de ti', text: 'Hablas directamente con quien lo construye, sin intermediarios.' },
     ],
@@ -116,8 +116,8 @@ export default {
     steps: [
       { title: 'Conversación', text: 'Entendemos tu negocio y lo que necesita mejorar.' },
       { title: 'Propuesta', text: 'Recibes alcance, plazo e inversión definidos.' },
-      { title: 'Desarrollo', text: 'Construimos por etapas que sigues de cerca.' },
-      { title: 'Lanzamiento', text: 'Lo ponemos en marcha, migramos los datos y formamos a tu equipo.' },
+      { title: 'Desarrollo', text: 'Construimos por etapas y tú las sigues de cerca.' },
+      { title: 'Lanzamiento', text: 'Lo ponemos en marcha, migramos los datos y capacitamos a tu equipo.' },
     ],
   },
 
@@ -133,9 +133,9 @@ export default {
     title: 'Preguntas frecuentes.',
     items: [
       { q: '¿Cuánto cuesta?', a: 'Depende de lo que necesite tu empresa. Después de una conversación, recibes una propuesta con alcance, plazo y precio definidos.' },
-      { q: '¿Cuánto tiempo lleva?', a: 'Varía según el tamaño del proyecto, y el plazo queda definido en la propuesta. Como entregamos por etapas, empiezas a usar el sistema antes del final.' },
+      { q: '¿Cuánto tiempo toma?', a: 'Varía según el tamaño del proyecto, y el plazo queda definido en la propuesta. Como entregamos por etapas, empiezas a usar el sistema antes del final.' },
       { q: '¿El sistema es de mi empresa?', a: 'Sí. El sistema y los datos son de tu empresa, sin licencias por usuario.' },
-      { q: '¿Ofrecéis soporte?', a: 'Sí. Tras la entrega, el sistema sigue a nuestro cuidado con planes mensuales de acompañamiento.' },
+      { q: '¿Ofrecen soporte?', a: 'Sí. Tras la entrega, el sistema sigue a nuestro cuidado con planes mensuales de acompañamiento.' },
       { q: '¿Necesito saber de tecnología?', a: 'No. Tú te ocupas del negocio y nosotros de la tecnología, siempre explicándolo todo de forma sencilla.' },
     ],
   },
@@ -144,8 +144,8 @@ export default {
     eyebrow: 'Contacto',
     title: '¿Hablamos de tu proyecto?',
     lead: 'La primera conversación es sin compromiso.',
-    whatsapp: 'Escribir por WhatsApp',
-    whatsappMessage: '¡Hola! Vengo de la web de DuaTech y quiero hablar sobre un proyecto.',
+    whatsapp: 'Conversar por WhatsApp',
+    whatsappMessage: '¡Hola! Vi el sitio de DuaTech y quiero hablar sobre un proyecto.',
     linkedin: 'LinkedIn',
   },
 
@@ -155,8 +155,8 @@ export default {
   },
 
   visuals: {
-    ecommerce: { order: 'Pedido #4821', paid: 'Pago aprobado', invoice: 'Factura emitida', label: 'Stock actualizado', transit: 'Listo para envío', waiting: 'esperando recogida', sales: 'Ventas hoy', amount: '$ 12.480' },
-    restaurants: { title: 'Cocina', count: '14 pedidos', cols: ['Nuevos', 'En curso', 'Listos'], table: 'Mesa', delivery: 'Delivery', counter: 'Barra', items: ['2× Risotto', '1× Ensalada', '3× Burger', '1× Patatas', '2× Zumo', '1× Menú del día'] },
+    ecommerce: { order: 'Pedido #4821', paid: 'Pago aprobado', invoice: 'Factura emitida', label: 'Inventario actualizado', transit: 'Listo para envío', waiting: 'esperando retiro', sales: 'Ventas hoy', amount: '$ 12.480', total: '$ 389,90' },
+    restaurants: { title: 'Cocina', count: '14 pedidos', cols: ['Nuevos', 'En curso', 'Listos'], table: 'Mesa', delivery: 'Delivery', counter: 'Mostrador', items: ['2× Risotto', '1× Ensalada', '3× Burger', '1× Papas fritas', '2× Jugo', '1× Menú del día'] },
     hospitality: { title: 'Ocupación', week: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], rooms: [['Hab. 101', 'Estándar'], ['Hab. 102', 'Estándar'], ['Hab. 201', 'Superior'], ['Hab. 202', 'Suite'], ['Hab. 301', 'Familiar']], occupied: 'Ocupada', reserved: 'Reservada', cleaning: 'Limpieza' },
     appointments: { title: 'Agenda', week: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'], blocks: ['Consulta · Ana', 'Corte · Juan', 'Revisión · Bea', 'Control · Caio', 'Color · Lía', 'Servicio · Leo', 'Consulta · Rui'], toast: 'Recordatorio enviado', confirmed: 'Confirmado' },
     logistics: { title: 'Entregas', delivered: 'Entregadas', route: 'En ruta', issue: 'Atención', vehicle: 'Vehículo 03', eta: 'Llega 14:35' },
