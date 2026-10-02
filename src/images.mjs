@@ -66,7 +66,8 @@ writeFileSync(join(root, 'favicon.ico'), Buffer.concat([header, png32]));
 
 for (const code of locales) {
   const t = (await import(`./i18n/${code}.mjs`)).default;
-  const solutions = Object.values(t.solutions.items).map((s) => s.tab);
+  // Footer line: the studio's values, so the preview says how we work, not a list of products.
+  const values = t.why.items.map((item) => item.title).join(' · ');
   const body = `<div style="position:relative;width:1200px;height:630px;background:#09090b;color:#ededef;font-family:'Instrument Sans';overflow:hidden">
     <div style="position:absolute;inset:0 72px;border-left:1px solid rgb(255 255 255/.08);border-right:1px solid rgb(255 255 255/.08)"></div>
     <div style="position:absolute;left:0;right:0;top:120px;border-top:1px solid rgb(255 255 255/.08)"></div>
@@ -75,7 +76,7 @@ for (const code of locales) {
     <div style="position:absolute;right:112px;top:56px;font-size:17px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#a3a6ad;display:flex;align-items:center;gap:12px"><span style="width:8px;height:8px;border-radius:50%;background:#00c853"></span>${escape(t.hero.eyebrow)}</div>
     <div style="position:absolute;left:112px;right:112px;top:168px;font-size:76px;font-weight:600;line-height:1;letter-spacing:-.045em">${escape(t.hero.title)} <span style="color:#80848d">${escape(t.hero.titleMuted)}</span></div>
     <div style="position:absolute;left:112px;right:112px;bottom:46px;display:flex;justify-content:space-between;font-size:18px;color:#80848d">
-      <span>${escape(solutions.slice(0, 3).join(' · '))}</span><span>${site.url.replace('https://', '')}</span>
+      <span>${escape(values)}</span><span>${site.url.replace('https://', '')}</span>
     </div>
   </div>`;
   writeFileSync(join(img, `og-${code}.png`), await render(`og-${code}`, 1200, 630, body));

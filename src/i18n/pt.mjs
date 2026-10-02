@@ -9,9 +9,9 @@ export default {
   path: '/',
 
   meta: {
-    title: 'Duvalle — Software sob medida para empresas',
+    title: 'Duvalle — Estúdio de software para empresas',
     description:
-      'Sistemas de gestão, lojas virtuais, aplicativos e automações sob medida. A Duvalle cria software que resolve problemas reais do seu negócio.',
+      'Entendemos como a sua empresa funciona e construímos o sistema que faltava: confiável, feito para durar e com atendimento direto de quem desenvolve.',
   },
 
   ui: {
