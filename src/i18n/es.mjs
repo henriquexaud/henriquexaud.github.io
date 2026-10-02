@@ -54,8 +54,6 @@ export default {
       restaurants: { tab: 'Restaurantes', title: 'Pedido correcto, cocina a buen ritmo.', benefits: ['Comanda digital directo a la cocina', 'El costo real de cada plato', 'Caja cerrada en minutos'] },
       hospitality: { tab: 'Hoteles y posadas', title: 'Huéspedes bien recibidos, habitaciones siempre listas.', benefits: ['Reservas directas en tu propia web', 'Ocupación de todas las habitaciones en un mapa', 'Check-in digital y limpieza organizada'] },
       appointments: { tab: 'Clínicas y servicios', title: 'Pacientes bien atendidos.', benefits: ['Reservas online, a cualquier hora', 'Confirmación automática por WhatsApp', 'Historial clínico de cada paciente'] },
-      gyms: { tab: 'Gimnasios y deportes', title: 'Alumnos que vuelven cada mes.', benefits: ['Check-in con código QR', 'Cobro recurrente, sin cobranza manual', 'Alertas de alumnos inactivos antes de que cancelen'] },
-      teams: { tab: 'Equipos y procesos', title: 'Menos ruido, más trabajo avanzando.', benefits: ['Prioridades claras para todo el equipo', 'Impedimentos resueltos el mismo día', 'Entregas en ciclos cortos'] },
     },
   },
 
@@ -131,7 +129,5 @@ export default {
     hospitality: { title: 'Ocupación', week: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], rooms: [['Hab. 101', 'Estándar'], ['Hab. 102', 'Estándar'], ['Hab. 201', 'Superior'], ['Hab. 202', 'Suite'], ['Hab. 301', 'Familiar']], occupied: 'Ocupada', reserved: 'Reservada', cleaning: 'Limpieza' },
     appointments: { title: 'Agenda', week: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'], blocks: ['Consulta · Ana', 'Control · Juan', 'Evaluación · Bea', 'Terapia · Caio', 'Ortodoncia · Lía', 'Fisioterapia · Leo', 'Consulta · Rui'], toast: 'Recordatorio enviado', confirmed: 'Confirmado' },
     logistics: { title: 'Entregas', when: 'hoy', delivered: 'Entregadas', route: 'En ruta', issue: 'Atención', next: 'Próxima entrega', order: 'Pedido #2193', area: 'Centro · 2,4 km', eta: 'Llega en 8 min' },
-    gyms: { title: 'Asistencia', when: 'últimos 7 días', days: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], active: 'Alumnos activos', risk: 'Riesgo de baja', members: [['Marcos', '12 días sin entrenar']], sent: 'Invitación enviada' },
-    teams: { title: 'Ciclo de entregas', when: 'esta semana', stages: [['Por hacer', '8'], ['En curso', '5'], ['En revisión', '3'], ['Completado', '21']], blockers: 'Impedimentos', blockerItems: [['Acceso al sistema del cliente', 'abierto hace 2 h'], ['Aprobación del presupuesto', 'resuelto hoy']], cycle: 'Ciclo actual', cycleValue: '68%', cycleNote: 'faltan 4 días' },
   },
 };

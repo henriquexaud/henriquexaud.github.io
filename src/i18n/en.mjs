@@ -54,8 +54,6 @@ export default {
       restaurants: { tab: 'Restaurants', title: 'Every order right, the kitchen in sync.', benefits: ['Digital tickets straight to the kitchen', 'The real cost of every dish', 'Register closed in minutes'] },
       hospitality: { tab: 'Hotels and inns', title: 'Guests welcomed, rooms always ready.', benefits: ['Direct bookings on your own website', 'Every room’s occupancy on one map', 'Digital check-in and organized housekeeping'] },
       appointments: { tab: 'Clinics and services', title: 'Patients well cared for.', benefits: ['Online booking, anytime', 'Automatic WhatsApp confirmations', 'Records and history for every patient'] },
-      gyms: { tab: 'Gyms and sports', title: 'Members who keep coming back.', benefits: ['QR code check-in', 'Recurring billing, no manual collection', 'Alerts on inactive members before they cancel'] },
-      teams: { tab: 'Teams and processes', title: 'Less noise, more work moving forward.', benefits: ['Clear priorities for the whole team', 'Blockers cleared the same day', 'Work delivered in short cycles'] },
     },
   },
 
@@ -131,7 +129,5 @@ export default {
     hospitality: { title: 'Occupancy', week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], rooms: [['Room 101', 'Standard'], ['Room 102', 'Standard'], ['Room 201', 'Deluxe'], ['Room 202', 'Suite'], ['Room 301', 'Family']], occupied: 'Occupied', reserved: 'Booked', cleaning: 'Cleaning' },
     appointments: { title: 'Schedule', week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], blocks: ['Visit · Ana', 'Follow-up · John', 'Assessment · Bea', 'Therapy · Cai', 'Orthodontics · Lia', 'Physio · Leo', 'Visit · Ray'], toast: 'Reminder sent', confirmed: 'Confirmed' },
     logistics: { title: 'Deliveries', when: 'today', delivered: 'Delivered', route: 'En route', issue: 'Attention', next: 'Next delivery', order: 'Order #2193', area: 'Downtown · 1.5 mi', eta: 'Arrives in 8 min' },
-    gyms: { title: 'Attendance', when: 'last 7 days', days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], active: 'Active members', risk: 'At risk of canceling', members: [['Marcus', '12 days without training']], sent: 'Comeback invite sent' },
-    teams: { title: 'Delivery cycle', when: 'this week', stages: [['To do', '8'], ['In progress', '5'], ['In review', '3'], ['Done', '21']], blockers: 'Blockers', blockerItems: [['Access to the client’s system', 'open for 2h'], ['Budget approval', 'cleared today']], cycle: 'Current cycle', cycleValue: '68%', cycleNote: '4 days left' },
   },
 };
