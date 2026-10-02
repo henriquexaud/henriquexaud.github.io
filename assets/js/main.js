@@ -30,6 +30,27 @@
   });
   window.matchMedia('(min-width: 960px)').addEventListener('change', (event) => event.matches && setMenu(false));
 
+  // Language menus: close on outside click and on Escape ----------------------------
+  const langMenus = [...document.querySelectorAll('[data-lang]')];
+  document.addEventListener('click', (event) => {
+    langMenus.forEach((menu) => {
+      if (menu.open && !menu.contains(event.target)) menu.open = false;
+    });
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    langMenus.forEach((menu) => {
+      if (!menu.open) return;
+      menu.open = false;
+      menu.querySelector('summary')?.focus();
+    });
+  });
+  langMenus.forEach((menu) =>
+    menu.addEventListener('toggle', () => {
+      if (menu.open) langMenus.forEach((other) => other !== menu && (other.open = false));
+    }),
+  );
+
   // Reveal on scroll ----------------------------------------------------------
   const revealTargets = document.querySelectorAll('.reveal, [data-visual]');
   if ('IntersectionObserver' in window) {

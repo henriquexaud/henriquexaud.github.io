@@ -1,6 +1,6 @@
 import { html, raw } from '../lib/html.mjs';
 import { site, contact, founder, solutionKeys } from '../config.mjs';
-import { logoMark, icons, valueIcons } from './icons.mjs';
+import { logoMark, icons, valueIcons, flag, chevronDown } from './icons.mjs';
 import { visual } from './visuals.mjs';
 
 const pad = (n) => String(n).padStart(2, '0');
@@ -90,13 +90,19 @@ ${all.filter((l) => l.code !== t.code).map((l) => html`<meta property="og:locale
 </head>`;
 }
 
+// Language menu: a native <details> disclosure, so it also works without JavaScript.
 function languageSwitch(t, all, cls) {
-  return html`<div class="lang ${cls}" role="group" aria-label="${t.ui.language}">
-    ${all.map(
-      (l) =>
-        html`<a class="lang-item" href="${l.path}" hreflang="${l.htmlLang}" lang="${l.htmlLang}" title="${l.label}" ${l.code === t.code ? raw('aria-current="true"') : ''}>${l.short}</a>`,
-    )}
-  </div>`;
+  return html`<details class="lang ${cls}" data-lang>
+    <summary class="lang-trigger">
+      ${flag(t.flag, 20)}<span class="visually-hidden">${t.ui.language}: ${t.menuLabel}</span>${chevronDown}
+    </summary>
+    <ul class="lang-menu">
+      ${all.map(
+        (l) =>
+          html`<li><a class="lang-option" href="${l.path}" hreflang="${l.htmlLang}" lang="${l.htmlLang}" ${l.code === t.code ? raw('aria-current="true"') : ''}>${flag(l.flag, 24)}<span>${l.menuLabel}</span>${l.code === t.code ? icons.check : ''}</a></li>`,
+      )}
+    </ul>
+  </details>`;
 }
 
 function siteHeader(t, all) {
@@ -108,7 +114,7 @@ function siteHeader(t, all) {
         ${NAV.map((id) => html`<li><a class="nav-link" href="#${id}" data-nav="${id}">${t.nav[id]}</a></li>`)}
       </ul>
       <div class="nav-mobile-extra">
-        ${languageSwitch(t, all, 'lang-mobile')}
+        ${languageSwitch(t, all, 'lang-mobile lang-up')}
         <a class="button button-primary" href="#contact">${t.nav.cta}${icons.arrowRight}</a>
       </div>
     </nav>
@@ -283,7 +289,7 @@ function siteFooter(t, all, year) {
     </nav>
     <div class="footer-bottom">
       <p>© ${year} ${site.name}. ${t.footer.rights}</p>
-      ${languageSwitch(t, all, 'lang-footer')}
+      ${languageSwitch(t, all, 'lang-footer lang-up')}
     </div>
   </div>
 </footer>`;

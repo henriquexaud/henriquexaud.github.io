@@ -4,6 +4,8 @@ export default {
   ogLocale: 'es_ES',
   label: 'Español',
   short: 'ES',
+  flag: 'es',
+  menuLabel: 'Español (ES)',
   path: '/es/',
 
   meta: {

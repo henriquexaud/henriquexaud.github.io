@@ -4,6 +4,8 @@ export default {
   ogLocale: 'pt_BR',
   label: 'Português',
   short: 'PT',
+  flag: 'br',
+  menuLabel: 'Português (BR)',
   path: '/',
 
   meta: {
