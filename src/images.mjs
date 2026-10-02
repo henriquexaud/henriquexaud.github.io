@@ -16,11 +16,11 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const img = join(root, 'assets/img');
 const fontUrl = (file) => pathToFileURL(join(root, 'assets/fonts', file)).href;
 
-const mark = (size, bar = '#c8f169', bowl = '#ededef') =>
+const mark = (size, bar = '#009b3b', bowl = '#ededef') =>
   `<svg width="${size}" height="${size}" viewBox="0 0 24 24"><rect x="2.5" y="3" width="5" height="18" rx="1.25" fill="${bar}"/><path d="M10 3h1.5a9 9 0 0 1 0 18H10z" fill="${bowl}"/></svg>`;
 
 // Favicon: the mark on a dark rounded tile.
-const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#09090b"/><g transform="translate(5 5) scale(0.9166)"><rect x="2.5" y="3" width="5" height="18" rx="1.25" fill="#c8f169"/><path d="M10 3h1.5a9 9 0 0 1 0 18H10z" fill="#ededef"/></g></svg>\n`;
+const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#09090b"/><g transform="translate(5 5) scale(0.9166)"><rect x="2.5" y="3" width="5" height="18" rx="1.25" fill="#009b3b"/><path d="M10 3h1.5a9 9 0 0 1 0 18H10z" fill="#ededef"/></g></svg>\n`;
 writeFileSync(join(img, 'favicon.svg'), faviconSvg);
 
 const fonts = `
@@ -72,7 +72,7 @@ for (const code of locales) {
     <div style="position:absolute;left:0;right:0;top:120px;border-top:1px solid rgb(255 255 255/.08)"></div>
     <div style="position:absolute;left:0;right:0;bottom:120px;border-top:1px solid rgb(255 255 255/.08)"></div>
     <div style="position:absolute;left:112px;top:44px;display:flex;align-items:center;gap:14px;font-size:30px;font-weight:600;letter-spacing:-.02em">${mark(32)}${site.name}</div>
-    <div style="position:absolute;right:112px;top:56px;font-size:17px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#a3a6ad;display:flex;align-items:center;gap:12px"><span style="width:8px;height:8px;border-radius:50%;background:#c8f169"></span>${escape(t.hero.eyebrow)}</div>
+    <div style="position:absolute;right:112px;top:56px;font-size:17px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#a3a6ad;display:flex;align-items:center;gap:12px"><span style="width:8px;height:8px;border-radius:50%;background:#009b3b"></span>${escape(t.hero.eyebrow)}</div>
     <div style="position:absolute;left:112px;right:112px;top:168px;font-size:76px;font-weight:600;line-height:1;letter-spacing:-.045em">${escape(t.hero.title)} <span style="color:#80848d">${escape(t.hero.titleMuted)}</span></div>
     <div style="position:absolute;left:112px;right:112px;bottom:46px;display:flex;justify-content:space-between;font-size:18px;color:#80848d">
       <span>${escape(solutions.slice(0, 3).join(' · '))}</span><span>${site.url.replace('https://', '')}</span>
