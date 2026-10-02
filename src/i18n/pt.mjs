@@ -61,6 +61,12 @@ export default {
         lead: 'Cada entrega acompanhada, com prazos e custos à vista.',
         benefits: ['Posição de cada entrega no mapa', 'Atrasos identificados antes da reclamação', 'Comprovante digital com foto e assinatura'],
       },
+      distribution: {
+        tab: 'Distribuidoras e indústria',
+        title: 'Seus clientes comprando direto, a qualquer hora.',
+        lead: 'Um portal de pedidos para revendedores, com o catálogo e as condições de cada cliente.',
+        benefits: ['Pedidos 24 horas, sem depender do representante', 'Preço, prazo e limite de crédito por cliente', 'Produção e estoque planejados pela demanda real'],
+      },
       restaurants: {
         tab: 'Restaurantes',
         title: 'Do salão à cozinha, sem papel e sem erro.',
@@ -79,25 +85,17 @@ export default {
         lead: 'O cliente agenda sozinho e recebe lembretes automáticos.',
         benefits: ['Agendamento online, a qualquer hora', 'Confirmação por WhatsApp antes de cada horário', 'Comissões e recebimentos calculados sozinhos'],
       },
-      automation: {
-        tab: 'Automação e IA',
-        title: 'Menos tarefas repetitivas, mais tempo para crescer.',
-        lead: 'Conectamos os sistemas que você já usa e automatizamos o trabalho manual.',
-        benefits: ['Sem digitar a mesma informação duas vezes', 'Relatórios prontos todos os dias', 'IA aplicada onde traz resultado'],
-      },
     },
   },
 
   services: {
     eyebrow: 'Serviços',
-    title: 'O que fazemos.',
+    title: 'Do primeiro sistema à evolução contínua.',
+    lead: 'Três frentes de trabalho, conforme o momento da sua empresa. As soluções acima nascem delas.',
     items: [
-      { title: 'Sistemas de gestão', text: 'Controle completo da operação, do jeito que a sua empresa trabalha.' },
-      { title: 'Lojas virtuais', text: 'Lojas rápidas e bonitas, prontas para vender em qualquer tela.' },
-      { title: 'Aplicativos', text: 'Sua empresa no celular dos clientes e da equipe.' },
-      { title: 'Integrações e automação', text: 'Seus sistemas conversando entre si, sem retrabalho.' },
-      { title: 'Painéis e relatórios', text: 'Os números do negócio claros, sempre que você precisar.' },
-      { title: 'Inteligência artificial', text: 'Atendimento e tarefas do dia a dia mais rápidos com IA.' },
+      { icon: 'build', kicker: 'Criar', title: 'Sistemas e produtos novos', text: 'Do zero ao primeiro uso: desenhamos e construímos o que a sua operação precisa.', points: ['Sistemas de gestão', 'Lojas virtuais e portais', 'Aplicativos para clientes e equipes'] },
+      { icon: 'connect', kicker: 'Conectar', title: 'Integração e automação', text: 'Fazemos os sistemas que você já usa conversarem e tiramos o trabalho repetitivo das mãos da equipe.', points: ['ERP, loja e financeiro integrados', 'Rotinas e relatórios automáticos', 'Inteligência artificial aplicada'] },
+      { icon: 'evolve', kicker: 'Evoluir', title: 'Evolução e suporte', text: 'Assumimos sistemas existentes, cuidamos da estabilidade e seguimos melhorando com você.', points: ['Manutenção e melhorias contínuas', 'Modernização de sistemas antigos', 'Consultoria e diagnóstico técnico'] },
     ],
   },
 
@@ -137,7 +135,7 @@ export default {
       { q: 'Quanto custa?', a: 'Depende do que a sua empresa precisa. Depois de uma conversa, você recebe uma proposta com escopo, prazo e valor definidos.' },
       { q: 'Quanto tempo leva?', a: 'Depende do tamanho do projeto. Entregamos em etapas, para você começar a usar o sistema o quanto antes.' },
       { q: 'O sistema fica com a minha empresa?', a: 'Sim. O sistema e os dados são da sua empresa, sem licença por usuário.' },
-      { q: 'Vocês oferecem suporte?', a: 'Sim. Seguimos ao seu lado com suporte e melhorias contínuas.' },
+      { q: 'Vocês oferecem suporte?', a: 'Sim. Depois da entrega, o sistema continua sob nossos cuidados, com planos mensais de acompanhamento.' },
       { q: 'Preciso entender de tecnologia?', a: 'Não. Você cuida do negócio e nós da tecnologia, sempre explicando tudo de forma simples.' },
     ],
   },
@@ -162,6 +160,6 @@ export default {
     hospitality: { title: 'Ocupação', week: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], rooms: [['Quarto 101', 'Standard'], ['Quarto 102', 'Standard'], ['Quarto 201', 'Luxo'], ['Quarto 202', 'Suíte'], ['Quarto 301', 'Família']], occupied: 'Ocupado', reserved: 'Reservado', cleaning: 'Limpeza' },
     appointments: { title: 'Agenda', week: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'], blocks: ['Consulta · Ana', 'Corte · João', 'Avaliação · Bia', 'Retorno · Caio', 'Coloração · Lia', 'Revisão · Leo', 'Consulta · Rui'], toast: 'Lembrete enviado', confirmed: 'Confirmado' },
     logistics: { title: 'Entregas', delivered: 'Entregues', route: 'Em rota', issue: 'Atenção', vehicle: 'Veículo 03', eta: 'Previsão 14:35' },
-    automation: { title: 'Automações', when: 'hoje', activity: 'Atividade', nodes: ['Pedido recebido', 'Dados lidos com IA', 'Nota emitida', 'Relatório enviado'], log: ['312 registros atualizados', 'Nota nº 1.284 emitida', 'Relatório enviado'], savedLabel: 'Tempo economizado hoje', savedValue: '3h 20min' },
+    distribution: { title: 'Pedidos B2B', when: 'hoje', hub: 'Fábrica', hubSub: '48 pedidos hoje', clients: [['Mercado Central', '12 pedidos'], ['Rede Bom Preço', '8 pedidos'], ['Atacado Sul', '21 pedidos'], ['Empório Norte', '7 pedidos']], stockTitle: 'Estoque', stock: [['Linha Premium', '82%'], ['Linha Básica', '56%'], ['Linha Kids', '18%']], restock: 'Repor', portalLabel: 'Pedidos pelo portal', portalValue: '64%' },
   },
 };

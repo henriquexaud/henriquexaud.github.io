@@ -61,6 +61,12 @@ export default {
         lead: 'Every delivery tracked, with deadlines and costs in view.',
         benefits: ['Every delivery’s position on the map', 'Delays spotted before customers complain', 'Digital proof of delivery with photo and signature'],
       },
+      distribution: {
+        tab: 'Distributors and manufacturers',
+        title: 'Your customers ordering directly, anytime.',
+        lead: 'An ordering portal for resellers, with each customer’s catalog and terms.',
+        benefits: ['Orders around the clock, without waiting for a sales rep', 'Prices, terms and credit limits per customer', 'Production and stock planned on real demand'],
+      },
       restaurants: {
         tab: 'Restaurants',
         title: 'From the dining room to the kitchen, no paper and no mistakes.',
@@ -79,25 +85,17 @@ export default {
         lead: 'Clients book on their own and get automatic reminders.',
         benefits: ['Online booking, anytime', 'WhatsApp confirmation before every appointment', 'Commissions and payments calculated for you'],
       },
-      automation: {
-        tab: 'Automation and AI',
-        title: 'Less repetitive work, more time to grow.',
-        lead: 'We connect the systems you already use and automate the manual work.',
-        benefits: ['No more typing the same data twice', 'Reports ready every day', 'AI applied where it pays off'],
-      },
     },
   },
 
   services: {
     eyebrow: 'Services',
-    title: 'What we do.',
+    title: 'From your first system to continuous improvement.',
+    lead: 'Three ways we work, depending on where your company is. The solutions above are built from them.',
     items: [
-      { title: 'Business systems', text: 'Full control of your operations, built around the way your company works.' },
-      { title: 'Online stores', text: 'Fast, beautiful stores ready to sell on any screen.' },
-      { title: 'Apps', text: 'Your business on your customers’ and team’s phones.' },
-      { title: 'Integration and automation', text: 'Your systems talking to each other, with no rework.' },
-      { title: 'Dashboards and reports', text: 'Clear business numbers, whenever you need them.' },
-      { title: 'Artificial intelligence', text: 'Faster customer service and day-to-day tasks with AI.' },
+      { icon: 'build', kicker: 'Build', title: 'New systems and products', text: 'From scratch to first use: we design and build what your operation needs.', points: ['Business management systems', 'Online stores and portals', 'Apps for customers and teams'] },
+      { icon: 'connect', kicker: 'Connect', title: 'Integration and automation', text: 'We get the systems you already use talking to each other and take repetitive work off your team.', points: ['ERP, store and finance integrated', 'Automated routines and reports', 'Applied artificial intelligence'] },
+      { icon: 'evolve', kicker: 'Evolve', title: 'Ongoing evolution and support', text: 'We take over existing systems, keep them stable and keep improving them with you.', points: ['Maintenance and continuous improvements', 'Modernizing legacy systems', 'Technical consulting and assessments'] },
     ],
   },
 
@@ -137,7 +135,7 @@ export default {
       { q: 'How much does it cost?', a: 'It depends on what your company needs. After a conversation, you receive a proposal with a clear scope, timeline and price.' },
       { q: 'How long does it take?', a: 'It depends on the size of the project. We deliver in stages so you can start using the system as soon as possible.' },
       { q: 'Does my company own the system?', a: 'Yes. The system and the data belong to your company, with no per-user licenses.' },
-      { q: 'Do you offer support?', a: 'Yes. We stay by your side with ongoing support and improvements.' },
+      { q: 'Do you offer support?', a: 'Yes. After launch, the system stays in our care through monthly support plans.' },
       { q: 'Do I need to understand technology?', a: 'No. You run the business and we handle the technology, always explaining things simply.' },
     ],
   },
@@ -162,6 +160,6 @@ export default {
     hospitality: { title: 'Occupancy', week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], rooms: [['Room 101', 'Standard'], ['Room 102', 'Standard'], ['Room 201', 'Deluxe'], ['Room 202', 'Suite'], ['Room 301', 'Family']], occupied: 'Occupied', reserved: 'Booked', cleaning: 'Cleaning' },
     appointments: { title: 'Schedule', week: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], blocks: ['Visit · Ana', 'Haircut · John', 'Check-up · Bea', 'Follow-up · Cai', 'Color · Lia', 'Service · Leo', 'Visit · Ray'], toast: 'Reminder sent', confirmed: 'Confirmed' },
     logistics: { title: 'Deliveries', delivered: 'Delivered', route: 'On route', issue: 'Attention', vehicle: 'Vehicle 03', eta: 'Arrives 2:35 pm' },
-    automation: { title: 'Automations', when: 'today', activity: 'Activity', nodes: ['Order received', 'Data read by AI', 'Invoice issued', 'Report sent'], log: ['312 records updated', 'Invoice #1284 issued', 'Report sent'], savedLabel: 'Time saved today', savedValue: '3h 20min' },
+    distribution: { title: 'B2B orders', when: 'today', hub: 'Factory', hubSub: '48 orders today', clients: [['Central Market', '12 orders'], ['FreshMart Group', '8 orders'], ['South Wholesale', '21 orders'], ['North Grocers', '7 orders']], stockTitle: 'Stock', stock: [['Premium line', '82%'], ['Basic line', '56%'], ['Kids line', '18%']], restock: 'Restock', portalLabel: 'Orders via portal', portalValue: '64%' },
   },
 };

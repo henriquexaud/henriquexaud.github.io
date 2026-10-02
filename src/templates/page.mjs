@@ -1,6 +1,6 @@
 import { html, raw } from '../lib/html.mjs';
 import { site, contact, founder, solutionKeys } from '../config.mjs';
-import { logoMark, icons, valueIcons, flag, chevronDown } from './icons.mjs';
+import { logoMark, icons, valueIcons, serviceIcons, flag, chevronDown } from './icons.mjs';
 import { visual } from './visuals.mjs';
 import { blueprint } from './blueprint.mjs';
 
@@ -48,7 +48,7 @@ function head(t, ctx) {
         hasOfferCatalog: {
           '@type': 'OfferCatalog',
           name: t.services.title,
-          itemListElement: t.services.items.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.title, description: s.text } })),
+          itemListElement: t.services.items.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.title, description: `${s.text} ${s.points.join(', ')}.` } })),
         },
       },
       { '@type': 'WebSite', '@id': `${site.url}/#website`, url: site.url + '/', name: site.name, inLanguage: t.htmlLang, publisher: { '@id': `${site.url}/#organization` } },
@@ -186,13 +186,21 @@ function services(t) {
   const s = t.services;
   return html`<section class="section" id="services" aria-labelledby="services-title">
   <div class="container">
-    ${sectionHead('services', s.eyebrow, s.title)}
-    <ul class="service-grid">
-      ${s.items.map((item, i) => html`<li class="service reveal" style="--d:${i % 3}">
-        <h3 class="service-title">${item.title}</h3>
-        <p class="service-text">${item.text}</p>
+    ${sectionHead('services', s.eyebrow, s.title, s.lead)}
+    <ol class="pillars">
+      ${s.items.map((item, i) => html`<li class="pillar reveal" style="--d:${i}" data-spotlight>
+        <div class="pillar-top">
+          <span class="pillar-icon" aria-hidden="true">${serviceIcons[item.icon]}</span>
+          <span class="pillar-index" aria-hidden="true">${pad(i + 1)}</span>
+        </div>
+        <p class="pillar-kicker">${item.kicker}</p>
+        <h3 class="pillar-title">${item.title}</h3>
+        <p class="pillar-text">${item.text}</p>
+        <ul class="pillar-points">
+          ${item.points.map((point) => html`<li>${point}</li>`)}
+        </ul>
       </li>`)}
-    </ul>
+    </ol>
   </div>
 </section>`;
 }
