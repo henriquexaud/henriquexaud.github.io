@@ -71,7 +71,7 @@
 
   // SMIL animations (moving dots in the visuals) can't be stopped from CSS.
   const syncSvgAnimations = () => {
-    document.querySelectorAll('svg.vz').forEach((svg) => {
+    document.querySelectorAll('svg.vz, svg.bp').forEach((svg) => {
       if (reducedMotion.matches) svg.pauseAnimations?.();
       else svg.unpauseAnimations?.();
     });
