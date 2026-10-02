@@ -42,7 +42,7 @@ function ecommerce(v, label) {
   return frame(
     label,
     html`
-    ${header(v.order, v.total)}
+    ${header(v.order, '')}
     <line class="vz-line" x1="40" y1="98" x2="40" y2="262"/>
     ${steps.map(([name, time, done], i) => {
       const y = 98 + i * 55;
@@ -88,7 +88,7 @@ function restaurants(v, label) {
         ${t.done ? check(x + 135, t.y + 86) : ''}
       </g>`;
     })}
-    <rect class="vz-card vz-ghost" x="380" y="214" width="156" height="104" rx="9"/>`,
+`,
   );
 }
 
@@ -189,7 +189,6 @@ function logistics(v, label) {
   const streets = [
     'M24 236 H340', 'M24 160 H340', 'M24 104 H340', 'M24 290 H340',
     'M60 64 V336', 'M140 64 V336', 'M232 64 V336', 'M316 64 V336',
-    'M24 330 L180 64', 'M200 336 L340 200',
   ];
   return frame(
     label,
@@ -204,12 +203,8 @@ function logistics(v, label) {
     </g>
     <rect class="vz-fg" x="52" y="292" width="16" height="16" rx="3"/>
     ${stops.map(([x, y, done]) => (done ? check(x, y) : html`<circle class="vz-stop" cx="${x}" cy="${y}" r="6"/>`))}
-    <g>
-      <circle class="vz-acc vz-ping" r="7"/>
-      <circle class="vz-acc" r="7"/>
-      <animateMotion dur="7s" repeatCount="indefinite" path="M186 160 L232 160 L232 104 L316 104" keyPoints="0;1;1" keyTimes="0;0.85;1" calcMode="linear"/>
-    </g>
-    <rect class="vz-card" x="356" y="68" width="180" height="268" rx="10"/>
+    ${pulseDot(232, 132, 7)}
+    <rect class="vz-card" x="356" y="68" width="180" height="150" rx="10"/>
     ${[
       [v.delivered, '18', 'vz-fg'],
       [v.route, '06', 'vz-acc'],
@@ -220,12 +215,7 @@ function logistics(v, label) {
         <text class="vz-t2" x="392" y="${y}">${name}</text>
         <text class="vz-t1" x="516" y="${y}" text-anchor="end">${n}</text>`;
     })}
-    <line class="vz-line" x1="372" y1="236" x2="520" y2="236"/>
-    <text class="vz-t3" x="374" y="262">${v.vehicle}</text>
-    <text class="vz-t1" x="516" y="262" text-anchor="end">3/5</text>
-    <rect class="vz-track" x="374" y="278" width="142" height="5" rx="2.5"/>
-    <rect class="vz-acc vz-grow-x" x="374" y="278" width="85" height="5" rx="2.5"/>
-    <text class="vz-t3" x="374" y="310">${v.eta}</text>`,
+`,
   );
 }
 
@@ -261,7 +251,6 @@ function gyms(v, label) {
     <rect class="vz-card" x="356" y="70" width="180" height="270" rx="12"/>
     <text class="vz-t3" x="374" y="98">${v.active}</text>
     <text class="vz-big" x="374" y="130">486</text>
-    <text class="vz-ta" x="374" y="150">${v.trend}</text>
     <line class="vz-line" x1="374" y1="168" x2="518" y2="168"/>
     <text class="vz-tw" x="374" y="194">${v.risk}</text>
     ${v.members.map(([name, note], i) => {
@@ -294,9 +283,6 @@ function teams(v, label) {
     html`
     ${header(v.title, v.when)}
     <path class="vz-flow" d="${flow}"/>
-    <circle class="vz-acc" r="3.5">
-      <animateMotion dur="4s" repeatCount="indefinite" path="${flow}"/>
-    </circle>
     ${v.stages.map(([name, count], i) => {
       const x = xs[i];
       return html`<g class="vz-pop" style="--i:${i}">
@@ -325,9 +311,7 @@ function teams(v, label) {
     <rect class="vz-track" x="374" y="244" width="144" height="5" rx="2.5"/>
     <rect class="vz-acc vz-grow-x" x="374" y="244" width="${144 * 0.68}" height="5" rx="2.5"/>
     <text class="vz-t3" x="374" y="270">${v.cycleNote}</text>
-    ${['A', 'B', 'C', 'D'].map((n, i) => html`<circle class="vz-avatar vz-stack" cx="${384 + i * 16}" cy="294" r="10"/>
-      <text class="vz-initial" x="${384 + i * 16}" y="298" text-anchor="middle">${n}</text>`)}
-    <text class="vz-ta" x="374" y="324">${v.teamNote}</text>`,
+    `,
   );
 }
 

@@ -146,7 +146,6 @@ function hero(t) {
       <a class="button button-primary button-large" href="#contact">${t.hero.primary}${icons.arrowRight}</a>
       <a class="button button-ghost button-large" href="#solutions">${t.hero.secondary}</a>
     </div>
-    <div class="ruler" aria-hidden="true"></div>
   </div>
 </section>`;
 }
@@ -162,12 +161,10 @@ function solutions(t) {
       </div>
       ${solutionKeys.map((key, i) => {
         const item = s.items[key];
-        return html`<div class="solution-panel" role="tabpanel" id="panel-${key}" aria-labelledby="tab-${key}" tabindex="0" data-spotlight ${i === 0 ? '' : raw('data-inactive')}>
-        ${MARKS}
+        return html`<div class="solution-panel" role="tabpanel" id="panel-${key}" aria-labelledby="tab-${key}" tabindex="0" ${i === 0 ? '' : raw('data-inactive')}>
         <div class="solution-copy">
           <p class="solution-kicker">${item.tab}</p>
           <h3 class="solution-title">${item.title}</h3>
-          <p class="solution-lead">${item.lead}</p>
           <ul class="benefits">
             ${item.benefits.map((b) => html`<li><span class="benefit-mark">${icons.check}</span><span>${b}</span></li>`)}
           </ul>
@@ -191,7 +188,6 @@ function services(t) {
       ${s.items.map((item, i) => html`<li class="pillar reveal" style="--d:${i}" data-spotlight>
         <div class="pillar-top">
           <span class="pillar-icon" aria-hidden="true">${serviceIcons[item.icon]}</span>
-          <span class="pillar-index" aria-hidden="true">${pad(i + 1)}</span>
         </div>
         <p class="pillar-kicker">${item.kicker}</p>
         <h3 class="pillar-title">${item.title}</h3>
@@ -211,7 +207,7 @@ function why(t) {
   <div class="container">
     ${sectionHead('why', w.eyebrow, w.title)}
     <ul class="value-grid">
-      ${w.items.map((item, i) => html`<li class="value reveal" style="--d:${i}" data-spotlight>
+      ${w.items.map((item, i) => html`<li class="value reveal" style="--d:${i}">
         <span class="value-icon" aria-hidden="true">${valueIcons[item.icon]}</span>
         <h3 class="value-title">${item.title}</h3>
         <p class="value-text">${item.text}</p>
