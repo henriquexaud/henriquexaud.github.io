@@ -1413,9 +1413,9 @@ body::after {
 .vz-route-done { fill: none; stroke: var(--fg-2); stroke-width: 2; stroke-linejoin: round; }
 .vz-stop { fill: #0b0c0f; stroke: var(--fg-2); stroke-width: 1.5; }
 .vz-today { stroke: var(--accent); stroke-dasharray: 3 3; }
-.vz-k-rented { fill: #d9dbe0; }
+.vz-k-occupied { fill: #d9dbe0; }
 .vz-k-reserved { fill: rgb(255 255 255 / 0.04); stroke: var(--fg-3); stroke-dasharray: 3 3; }
-.vz-k-maintenance { fill: url(#vz-hatch); stroke: rgb(245 165 36 / 0.55); }
+.vz-k-cleaning { fill: url(#vz-hatch); stroke: rgb(245 165 36 / 0.55); }
 .vz-hatch { stroke: rgb(245 165 36 / 0.5); stroke-width: 2; }
 
 .vz-ping {

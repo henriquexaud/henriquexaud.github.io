@@ -26,4 +26,4 @@ export const founder = {
 export const locales = ['pt', 'en', 'es'];
 
 // Order of the solutions in the page. Keys must exist in every locale file.
-export const solutionKeys = ['ecommerce', 'restaurants', 'rental', 'appointments', 'logistics', 'automation'];
+export const solutionKeys = ['ecommerce', 'logistics', 'restaurants', 'hospitality', 'appointments', 'automation'];
