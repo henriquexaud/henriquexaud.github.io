@@ -686,6 +686,7 @@ p {
 .bp-mod-side { fill: #101215; stroke: rgb(255 255 255 / 0.12); stroke-width: 1; }
 .bp-mod-side-dark { fill: #0b0c0f; }
 .bp-pulse { fill: #b9f8d0; filter: drop-shadow(0 0 4px rgb(0 200 83 / 0.9)); }
+.bp-mod-flash { fill: var(--accent); stroke: #8ff5b8; stroke-width: 1; filter: drop-shadow(0 0 10px rgb(0 200 83 / 0.8)); pointer-events: none; }
 .bp-leader { fill: none; stroke: rgb(255 255 255 / 0.25); stroke-width: 1; }
 .bp-dot { fill: var(--fg-2); }
 .bp-index { fill: var(--accent); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; }
@@ -719,7 +720,7 @@ p {
 .js .bp-mod-lit,
 .js .bp-mod-hub,
 .js .bp-mod-side,
-.js .bp-pulse {
+.js .bp-pulse-wrap {
   opacity: 0;
   animation: fade-in 0.8s var(--ease) forwards;
   animation-delay: calc(1.1s + var(--i, 0) * 0.15s);

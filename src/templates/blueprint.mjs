@@ -98,16 +98,37 @@ function processLayer(y) {
       <polygon class="${hub ? 'bp-mod-hub' : lit ? 'bp-mod-lit' : 'bp-mod'}" points="${top}"/>`;
   };
 
-  const path = route.map(([i, j], k) => `${k ? 'L' : 'M'}${pt(at(y, G[i], G[j]))}`).join(' ');
+  // The pulse stops where it touches the last module; that module then lights up
+  // for a moment and the cycle pauses before starting again.
+  const [li, lj] = route[route.length - 1];
+  const [pi, pj] = route[route.length - 2];
+  const end = at(y, G[li] - (li - pi) * S, G[lj] - (lj - pj) * S);
+  const path = route
+    .slice(0, -1)
+    .map(([i, j], k) => `${k ? 'L' : 'M'}${pt(at(y, G[i], G[j]))}`)
+    .concat(`L${pt(end)}`)
+    .join(' ');
+  const cycle = '8s';
+  const arrive = 0.375; // 3s of travel
+  const lastTop = [at(y, G[li] - S, G[lj] - S), at(y, G[li] + S, G[lj] - S), at(y, G[li] + S, G[lj] + S), at(y, G[li] - S, G[lj] + S)]
+    .map((p) => [p[0], p[1] - H])
+    .map(pt)
+    .join(' ');
   const cells = [];
   // Back to front, so nearer modules overlap farther ones.
   for (let sum = 0; sum <= 4; sum++) for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) if (i + j === sum) cells.push([i, j]);
 
   return html`${wires.map((w) => html`<path class="${onRoute(w[0], w[1]) ? 'bp-wire-lit' : 'bp-wire'} bp-draw" pathLength="1" d="${wire(w)}"/>`)}
     ${cells.map(module)}
-    <circle class="bp-pulse" r="3">
-      <animateMotion dur="3.6s" repeatCount="indefinite" path="${path}" calcMode="linear"/>
-    </circle>`;
+    <polygon class="bp-mod-flash" points="${lastTop}" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;${arrive};${arrive + 0.03};${arrive + 0.2};${arrive + 0.3};1" dur="${cycle}" repeatCount="indefinite"/>
+    </polygon>
+    <g class="bp-pulse-wrap">
+      <circle class="bp-pulse" r="3">
+        <animateMotion dur="${cycle}" repeatCount="indefinite" path="${path}" keyPoints="0;1;1" keyTimes="0;${arrive};1" calcMode="linear"/>
+        <animate attributeName="opacity" values="1;0" keyTimes="0;${arrive}" calcMode="discrete" dur="${cycle}" repeatCount="indefinite"/>
+      </circle>
+    </g>`;
 }
 
 function dataLayer(y) {
