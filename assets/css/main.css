@@ -1460,6 +1460,10 @@ body::after {
 .vz-acc { fill: var(--accent); }
 .vz-warn { fill: var(--warn); }
 .vz-dim { fill: #2a2d34; }
+.vz-light { fill: #d9dbe0; }
+.vz-mid { fill: #6b707a; }
+.vz-area { fill: url(#vz-area); }
+.vz-spark { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .vz-chip { fill: #262930; }
 .vz-track { fill: rgb(255 255 255 / 0.08); }
 .vz-faded { opacity: 0.5; }
@@ -1562,6 +1566,18 @@ body::after {
   animation-delay: calc(var(--i, 0) * 70ms + 100ms);
 }
 
+.vz-draw-line {
+  stroke-dasharray: 1;
+}
+
+.js [data-visual]:not(.is-in) .vz-draw-line {
+  stroke-dashoffset: 1;
+}
+
+[data-visual].is-in .vz-draw-line {
+  animation: vz-draw 1.4s var(--ease) 0.15s both;
+}
+
 [data-visual].is-in .vz-toast {
   animation: toast 0.7s var(--ease) 0.9s both;
 }
@@ -1602,6 +1618,11 @@ body::after {
 
 @keyframes fill-in {
   to { fill-opacity: 1; }
+}
+
+@keyframes vz-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
 }
 
 @keyframes fade-in {

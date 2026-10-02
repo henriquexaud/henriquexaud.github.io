@@ -49,7 +49,7 @@ export default {
     lead: 'Cada empresa tiene un desafío distinto. Empezamos por el tuyo.',
     tabsLabel: 'Sectores',
     items: {
-      ecommerce: { tab: 'Tiendas y e-commerce', title: 'Vende online sin trabajo manual.', benefits: ['Pago con tarjeta en pocos clics', 'Factura emitida en cada venta', 'Un solo inventario para tienda, web y marketplaces'] },
+      ecommerce: { tab: 'Tiendas y e-commerce', title: 'Una sola tienda, vendiendo en todas partes.', benefits: ['Tu propia tienda online, con pago en pocos clics', 'Inventario único para tienda, web y marketplaces', 'Carritos abandonados convertidos en ventas'] },
       logistics: { tab: 'Logística y entregas', title: 'Del pedido listo a la puerta del cliente.', benefits: ['Cada entrega visible en el mapa', 'Retrasos detectados antes del reclamo', 'Comprobante digital de entrega'] },
       restaurants: { tab: 'Restaurantes', title: 'Pedido correcto, cocina a buen ritmo.', benefits: ['Comanda digital directo a la cocina', 'El costo real de cada plato', 'Caja cerrada en minutos'] },
       hospitality: { tab: 'Hoteles y posadas', title: 'Huéspedes bien recibidos, habitaciones siempre listas.', benefits: ['Reservas directas en tu propia web', 'Ocupación de todas las habitaciones en un mapa', 'Check-in digital y limpieza organizada'] },
@@ -126,7 +126,7 @@ export default {
   },
 
   visuals: {
-    ecommerce: { order: 'Pedido #4821', paid: 'Pago aprobado', invoice: 'Factura emitida', label: 'Inventario actualizado', transit: 'Listo para envío', waiting: 'esperando retiro', sales: 'Ventas hoy', amount: '$ 12.480' },
+    ecommerce: { title: 'Ventas de hoy', when: 'todos los canales', amount: '$ 12.480', delta: '+18% respecto a ayer', channels: [['Web', '46%'], ['Tienda física', '36%'], ['Marketplaces', '18%']], stock: 'Inventario único', product: 'Bolso Lisboa', variant: 'Cuero · Negro', units: 'unidades', synced: 'Sincronizado', toast: 'Carrito recuperado', toastNote: 'WhatsApp · $ 412' },
     restaurants: { title: 'Cocina', count: '14 pedidos', cols: ['Nuevos', 'En curso', 'Listos'], table: 'Mesa', delivery: 'Delivery', counter: 'Mostrador', items: ['2× Risotto', '1× Ensalada', '3× Burger', '1× Papas fritas', '2× Jugo', '1× Menú del día'] },
     hospitality: { title: 'Ocupación', week: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], rooms: [['Hab. 101', 'Estándar'], ['Hab. 102', 'Estándar'], ['Hab. 201', 'Superior'], ['Hab. 202', 'Suite'], ['Hab. 301', 'Familiar']], occupied: 'Ocupada', reserved: 'Reservada', cleaning: 'Limpieza' },
     appointments: { title: 'Agenda', week: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'], blocks: ['Consulta · Ana', 'Control · Juan', 'Evaluación · Bea', 'Terapia · Caio', 'Ortodoncia · Lía', 'Fisioterapia · Leo', 'Consulta · Rui'], toast: 'Recordatorio enviado', confirmed: 'Confirmado' },
