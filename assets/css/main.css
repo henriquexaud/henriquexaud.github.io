@@ -594,7 +594,7 @@ p {
   inset: calc(-1 * var(--header-h)) 0 0;
   z-index: -2;
   background-image:
-    radial-gradient(ellipse 36% 40% at 74% 24%, rgb(0 200 83 / 0.07), transparent 70%),
+    radial-gradient(ellipse 36% 40% at 74% 24%, rgb(0 200 83 / 0.05), transparent 70%),
     linear-gradient(var(--grid-major) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
     linear-gradient(var(--grid-minor) 1px, transparent 1px),
@@ -663,10 +663,18 @@ p {
   height: auto;
   overflow: visible;
   font-family: var(--font);
+  /* Kept in the background so the title leads. */
+  opacity: 0.72;
 }
 
 .bp-layer {
-  transform: translateY(calc(var(--explode, 0) * var(--shift)));
+  transform: translateY(calc(var(--approach, 0) * var(--shift)));
+}
+
+/* Connectors shorten with the plates, around their midpoint. */
+.bp-connector {
+  transform-origin: 0 var(--cy);
+  transform: scaleY(calc(1 - var(--approach, 0) * var(--k, 0)));
 }
 
 .bp-plate { fill: rgb(15 16 19 / 0.92); stroke: rgb(255 255 255 / 0.22); stroke-width: 1; }
@@ -1666,7 +1674,10 @@ body::after {
 @media (max-width: 1099px) {
   .blueprint {
     width: min(48%, 480px);
-    opacity: 0.8;
+  }
+
+  .bp {
+    opacity: 0.6;
   }
 
   .value-grid {

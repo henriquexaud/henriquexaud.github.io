@@ -1,6 +1,7 @@
 // Hero illustration: an axonometric "exploded view" of three layers of a system
 // (interface, processes, data), drawn like a technical blueprint.
-// Plates move apart as the page scrolls (--explode, set by main.js).
+// As the page scrolls the plates draw closer and settle at a fixed distance
+// (--approach, 0 → 1, set by main.js).
 
 import { html } from '../lib/html.mjs';
 
@@ -9,7 +10,8 @@ const A = 170; // half width of a plate
 const B = 98; // half height (isometric ratio)
 const T = 8; // plate thickness
 const TOPS = [30, 136, 242];
-const EXPLODE = [-30, 0, 30];
+const SPAN = TOPS[2] - TOPS[0];
+const APPROACH = [26, 0, -26]; // how far each plate travels towards the middle one
 
 const f = (n) => Math.round(n * 10) / 10;
 
@@ -130,11 +132,12 @@ export function blueprint(layers) {
   return html`<div class="blueprint" data-blueprint aria-hidden="true">
   <svg class="bp" viewBox="0 0 640 480" focusable="false">
     <g class="bp-guides">
-      <path class="bp-connector" d="M${CX + A} ${TOPS[0] + B} V${TOPS[2] + B} M${CX} ${TOPS[0] + 2 * B} V${TOPS[2] + 2 * B}"/>
+      <path class="bp-connector" style="--k:${Math.round((2000 * APPROACH[0]) / SPAN) / 1000}; --cy:${TOPS[1] + B}px" d="M${CX + A} ${TOPS[0] + B} V${TOPS[2] + B}"/>
+      <path class="bp-connector" style="--k:${Math.round((2000 * APPROACH[0]) / SPAN) / 1000}; --cy:${TOPS[1] + 2 * B}px" d="M${CX} ${TOPS[0] + 2 * B} V${TOPS[2] + 2 * B}"/>
       ${cross(CX + A + 24, 14)}
     </g>
     ${order.map(
-      (i) => html`<g class="bp-layer" style="--shift:${EXPLODE[i]}px; --i:${i}">
+      (i) => html`<g class="bp-layer" style="--shift:${APPROACH[i]}px; --i:${i}">
       ${plate(TOPS[i])}
       ${layerContent[i](TOPS[i])}
       ${label(TOPS[i], String(i + 1).padStart(2, '0'), layers[i])}
