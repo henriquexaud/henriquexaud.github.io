@@ -27,9 +27,9 @@
   --fg-2: #a3a6ad;
   --fg-3: #80848d;
 
-  --accent: #c8f169;
-  --accent-hover: #d6f78c;
-  --accent-ink: #0b0d06;
+  --accent: #009b3b;
+  --accent-hover: #0db04b;
+  --accent-ink: #04140a;
   --warn: #f5a524;
 
   --font: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -263,6 +263,7 @@ p {
 .button-primary {
   background: var(--accent);
   color: var(--accent-ink);
+  font-weight: 600;
 }
 
 .button-primary:hover {
@@ -729,7 +730,7 @@ p {
   height: 22px;
   margin-top: 2px;
   border-radius: 50%;
-  background: rgb(200 241 105 / 0.12);
+  background: rgb(0 155 59 / 0.16);
   color: var(--accent);
 }
 
