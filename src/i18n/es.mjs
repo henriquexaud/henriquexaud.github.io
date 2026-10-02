@@ -37,7 +37,7 @@ export default {
     eyebrow: 'Estudio de software',
     title: 'Diseñamos y construimos software',
     titleMuted: 'que resuelve problemas reales.',
-    lead: 'Sistemas, tiendas online y aplicaciones a medida para empresas que quieren crecer con menos esfuerzo.',
+    lead: 'Partimos de la rutina de tu empresa para crear sistemas, tiendas online y aplicaciones que simplifican la operación.',
     primary: 'Iniciar un proyecto',
     layers: ['Interfaz', 'Procesos', 'Datos'],
     secondary: 'Ver soluciones',
