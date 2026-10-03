@@ -41,19 +41,40 @@ export default {
     primary: 'Start a project',
     layers: ['Interface', 'Processes', 'Data'],
     secondary: 'See solutions',
+    scroll: 'Scroll to assemble the system',
+  },
+
+  // Words between asterisks are highlighted. The text lights up word by word on scroll.
+  manifesto: {
+    eyebrow: 'How we think',
+    text: 'Good technology doesn’t call attention to itself. It *organizes the operation*, *connects the people doing the work* and holds up on the busiest day of the year, without anyone having to think about it.',
+  },
+
+  anatomy: {
+    eyebrow: 'Anatomy of a system',
+    title: 'Three layers. One piece.',
+    figure: 'Fig. 01 — A system in layers',
+    steps: [
+      { name: 'Interface', title: 'What people touch.', text: 'Clear screens for the people who serve, sell and decide. If your team needs a manual to use it, the interface isn’t ready yet.' },
+      { name: 'Processes', title: 'The rules of your business.', text: 'Orders, approvals, inventory and deadlines following the way your company works, with the repetitive work automated.' },
+      { name: 'Data', title: 'The truth of the operation.', text: 'A single source, secure and yours, behind reliable reports and better decisions.' },
+      { name: 'System', title: 'Together, one piece.', text: 'When the three layers are designed together, the system stays stable, easy to evolve and ready to grow with you.' },
+    ],
   },
 
   solutions: {
     eyebrow: 'Solutions',
-    title: 'Built for your kind of business.',
+    title: 'Real problems, solved to fit.',
     lead: 'Every company faces a different challenge. We start with yours.',
-    tabsLabel: 'Industries',
+    listLabel: 'Industries',
+    problemLabel: 'Problem',
+    solutionLabel: 'Solution',
     items: {
-      ecommerce: { tab: 'Retail and e-commerce', title: 'One store, selling everywhere.', benefits: ['Your own online store, with fast checkout', 'One inventory for counter, website and marketplaces', 'Abandoned carts turned into sales'] },
-      logistics: { tab: 'Logistics and delivery', title: 'From packed order to the customer’s door.', benefits: ['Every delivery visible on the map', 'Delays spotted before customers complain', 'Digital proof of delivery'] },
-      restaurants: { tab: 'Restaurants', title: 'Every order right, the kitchen in sync.', benefits: ['Digital tickets straight to the kitchen', 'The real cost of every dish', 'Register closed in minutes'] },
-      hospitality: { tab: 'Hotels and inns', title: 'Guests welcomed, rooms always ready.', benefits: ['Direct bookings on your own website', 'Every room’s occupancy on one map', 'Digital check-in and organized housekeeping'] },
-      appointments: { tab: 'Clinics and services', title: 'Patients well cared for.', benefits: ['Online booking, anytime', 'Automatic WhatsApp confirmations', 'Records and history for every patient'] },
+      ecommerce: { tab: 'Retail and e-commerce', problem: 'Different stock counts at the counter, on the website and on marketplaces.', title: 'One store, selling everywhere.', benefits: ['Your own online store, with fast checkout', 'One inventory for counter, website and marketplaces', 'Abandoned carts turned into sales'] },
+      logistics: { tab: 'Logistics and delivery', problem: 'Customers calling to ask where their order is.', title: 'From packed order to the customer’s door.', benefits: ['Every delivery visible on the map', 'Delays spotted before customers complain', 'Digital proof of delivery'] },
+      restaurants: { tab: 'Restaurants', problem: 'Orders written down wrong and a kitchen out of rhythm.', title: 'Every order right, the kitchen in sync.', benefits: ['Digital tickets straight to the kitchen', 'The real cost of every dish', 'Register closed in minutes'] },
+      hospitality: { tab: 'Hotels and inns', problem: 'Bookings scattered across spreadsheets, phone calls and websites.', title: 'Guests welcomed, rooms always ready.', benefits: ['Direct bookings on your own website', 'Every room’s occupancy on one map', 'Digital check-in and organized housekeeping'] },
+      appointments: { tab: 'Clinics and services', problem: 'No-shows, empty slots and confirmations done by hand.', title: 'Patients well cared for.', benefits: ['Online booking, anytime', 'Automatic WhatsApp confirmations', 'Records and history for every patient'] },
     },
   },
 

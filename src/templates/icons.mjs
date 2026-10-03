@@ -1,8 +1,20 @@
 import { raw } from '../lib/html.mjs';
 
-// The Duvalle mark: a "D" built from two parts.
-export const logoMark = (size = 22) =>
-  raw(`<svg class="logo-mark" width="${size}" height="${size}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect class="logo-bar" x="2.5" y="3" width="5" height="18" rx="1.25"/><path class="logo-bowl" d="M10 3h1.5a9 9 0 0 1 0 18H10z"/></svg>`);
+// The Duvalle mark: a "D" built from two parts. The bowl is polished silicon (a nod to the
+// valley in the name); a glint sweeps across it on load and on hover. `id` keeps the
+// gradient ids unique when the mark appears more than once on a page.
+export const BOWL = 'M10 3h1.5a9 9 0 0 1 0 18H10z';
+export const SILICON_STOPS = [
+  [0, '#8f96a1'],
+  [0.26, '#f6f8fb'],
+  [0.46, '#b8bec8'],
+  [0.64, '#6f7681'],
+  [0.84, '#d3d7de'],
+  [1, '#8a909b'],
+];
+
+export const logoMark = (size = 22, id = 'm') =>
+  raw(`<svg class="logo-mark" width="${size}" height="${size}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><defs><linearGradient id="si-${id}" x1="0" y1="0" x2="1" y2="1">${SILICON_STOPS.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join('')}</linearGradient><linearGradient id="gl-${id}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><clipPath id="cl-${id}"><path d="${BOWL}"/></clipPath></defs><rect class="logo-bar" x="2.5" y="3" width="5" height="18" rx="1.25"/><path class="logo-bowl" d="${BOWL}" fill="url(#si-${id})"/><g clip-path="url(#cl-${id})"><path class="logo-glint" d="M4 0h5l-7 24h-5z" fill="url(#gl-${id})"/></g></svg>`);
 
 const icon = (body, cls = 'icon') =>
   raw(`<svg class="${cls}" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">${body}</svg>`);

@@ -1,6 +1,12 @@
 /* Duvalle — main stylesheet
    1. Tokens & font   2. Base   3. Layout   4. Components   5. Sections
-   6. Visuals (.vz)   7. Motion 8. Responsive */
+   6. Visuals (.vz)   7. Motion 8. Responsive
+
+   Two colours carry meaning on the dark page:
+   - green (--accent) is the signal: what is live, active or about to happen;
+   - silicon (--si-*, --metal) is the material: a polished, cool silver used on a few
+     chosen details (the logo, numbers, the blueprint plates) — a nod to the valley in
+     the name. */
 
 /* 1. Tokens & font -------------------------------------------------------- */
 
@@ -14,6 +20,7 @@
 
 :root {
   color-scheme: dark;
+  interpolate-size: allow-keywords;
 
   --bg: #09090b;
   --surface: #0f1013;
@@ -32,18 +39,37 @@
   --accent-ink: #04140a;
   --warn: #f5a524;
 
+  /* Silicon: polished metal with a cool cast, from highlight to shadow. */
+  --si-hi: #f5f7fa;
+  --si-1: #d3d8e0;
+  --si-2: #aab1bc;
+  --si-3: #7a818d;
+  --si-4: #4b515b;
+  --metal: linear-gradient(100deg, #6f7682 0%, #b4bbc6 15%, #f4f6f9 26%, #a6adb9 37%, #757c88 49%, #c6ccd5 62%, #f6f8fa 70%, #9ca3af 83%, #6e7581 100%);
+  --metal-bright: linear-gradient(100deg, #9aa1ad 0%, #dfe3e9 14%, #ffffff 25%, #c9ced7 37%, #a3aab6 49%, #e6e9ee 61%, #ffffff 70%, #c2c8d1 83%, #9ea5b1 100%);
+  --metal-edge: linear-gradient(135deg, rgb(255 255 255 / 0.05), rgb(222 227 235 / 0.42) 28%, rgb(255 255 255 / 0.06) 48%, rgb(200 206 216 / 0.24) 72%, rgb(255 255 255 / 0.05));
+
   --font: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
 
   --container: 1200px;
   --gutter: clamp(20px, 5vw, 48px);
   --header-h: 68px;
   --radius: 16px;
   --radius-lg: 24px;
-  --section-y: clamp(80px, 10vw, 136px);
+  --section-y: clamp(96px, 12vw, 168px);
   --panel-pad: clamp(28px, 4.5vw, 64px);
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --grid-minor: rgb(255 255 255 / 0.028);
   --grid-major: rgb(255 255 255 / 0.055);
+}
+
+/* Registered so focus changes on the drawing can ease instead of jumping. */
+@property --lift {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
 }
 
 /* 2. Base ----------------------------------------------------------------- */
@@ -175,17 +201,18 @@ p {
     transform: translateX(-50%);
     border-inline: 1px solid var(--line);
     pointer-events: none;
-    z-index: -1;
+    z-index: -2;
   }
 }
 
 .section {
+  position: relative;
   padding-block: var(--section-y);
 }
 
 .section-head {
-  max-width: 720px;
-  margin-bottom: clamp(48px, 6vw, 80px);
+  max-width: 760px;
+  margin-bottom: clamp(48px, 6vw, 88px);
 }
 
 .eyebrow {
@@ -200,28 +227,88 @@ p {
   color: var(--fg-3);
 }
 
+/* The hero's eyebrow keeps a live green dot; chapters carry their number instead. */
 .eyebrow::before {
   content: '';
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: var(--accent);
+  box-shadow: 0 0 0 0 rgb(0 200 83 / 0.5);
+}
+
+.js .hero-eyebrow::before {
+  animation: live 2.8s var(--ease) 2.4s infinite;
+}
+
+.eyebrow-numbered::before {
+  display: none;
+}
+
+.eyebrow-num {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.eyebrow-rule {
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--si-2), rgb(170 177 188 / 0.15));
+  transform-origin: 0 50%;
+}
+
+.js .eyebrow.reveal .eyebrow-rule {
+  transform: scaleX(0);
+  transition: transform 1s var(--ease-out) 0.25s;
+}
+
+.js .eyebrow.reveal.is-in .eyebrow-rule {
+  transform: none;
 }
 
 .section-title {
-  font-size: clamp(2.1rem, 1.3rem + 2.8vw, 3.6rem);
-  letter-spacing: -0.035em;
-  line-height: 1.05;
+  font-size: clamp(2.2rem, 1.3rem + 3vw, 3.9rem);
+  letter-spacing: -0.04em;
+  line-height: 1.02;
 }
 
 .section-lead {
-  margin-top: 20px;
+  margin-top: 22px;
   font-size: clamp(1.05rem, 1rem + 0.3vw, 1.25rem);
   color: var(--fg-2);
   max-width: 46ch;
 }
 
 /* 4. Components ----------------------------------------------------------- */
+
+/* Silicon text: a polished-metal gradient clipped to the letters. */
+.metal {
+  color: var(--si-2);
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .metal {
+    background-image: var(--metal);
+    background-size: 240% 100%;
+    background-position: 32% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+}
+
+/* Where supported, light slides across the metal as it moves through the viewport. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .metal:not(.hero-title-muted) {
+      animation: sheen linear both;
+      animation-timeline: view();
+    }
+  }
+}
 
 .icon {
   flex: none;
@@ -230,6 +317,7 @@ p {
 }
 
 .button {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -245,7 +333,7 @@ p {
     background-color 0.2s var(--ease),
     border-color 0.2s var(--ease),
     color 0.2s var(--ease),
-    transform 0.2s var(--ease);
+    transform 0.45s var(--ease-out);
 }
 
 .button:active {
@@ -279,6 +367,34 @@ p {
 
 .button-light:hover {
   background: #fff;
+}
+
+/* Brushed silicon, with a highlight that crosses it on hover. */
+.button-metal {
+  overflow: hidden;
+  isolation: isolate;
+  color: #0c0d10;
+  font-weight: 600;
+  background: linear-gradient(180deg, #f7f8fa 0%, #d9dde3 46%, #bcc2cb 54%, #e4e7ec 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.9),
+    inset 0 -1px 0 rgb(0 0 0 / 0.18),
+    0 0 0 1px rgb(0 0 0 / 0.4),
+    0 8px 20px -10px rgb(0 0 0 / 0.9);
+}
+
+.button-metal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.95) 50%, transparent 65%);
+  transform: translateX(-110%);
+}
+
+.button-metal:hover::after {
+  transform: translateX(110%);
+  transition: transform 0.9s var(--ease-out);
 }
 
 .button-ghost {
@@ -318,7 +434,7 @@ p {
   border-color: var(--accent);
 }
 
-/* Brand */
+/* Brand: the green bar is the signal, the silicon bowl the material. */
 
 .brand {
   display: inline-flex;
@@ -329,12 +445,25 @@ p {
   letter-spacing: -0.02em;
 }
 
+.logo-mark {
+  overflow: visible;
+}
+
 .logo-bar {
   fill: var(--accent);
 }
 
-.logo-bowl {
-  fill: var(--fg);
+.logo-glint {
+  mix-blend-mode: soft-light;
+}
+
+.js .logo-glint {
+  animation: glint 1.8s var(--ease-out) 1.6s backwards;
+}
+
+.brand:hover .logo-glint {
+  transform: translateX(24px);
+  transition: transform 0.9s var(--ease-out);
 }
 
 /* Language menu */
@@ -477,7 +606,7 @@ p {
 }
 
 .site-header.is-scrolled {
-  background: rgb(9 9 11 / 0.8);
+  background: rgb(9 9 11 / 0.78);
   border-bottom-color: var(--line);
   -webkit-backdrop-filter: saturate(160%) blur(14px);
   backdrop-filter: saturate(160%) blur(14px);
@@ -506,6 +635,7 @@ p {
 }
 
 .nav-link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   height: 36px;
@@ -516,9 +646,26 @@ p {
   transition: color 0.2s var(--ease);
 }
 
+/* A silicon underline marks the chapter being read. */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 4px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--si-1), transparent);
+  transform: scaleX(0);
+  transition: transform 0.5s var(--ease-out);
+}
+
 .nav-link:hover,
 .nav-link.is-active {
   color: var(--fg);
+}
+
+.nav-link.is-active::after {
+  transform: none;
 }
 
 .header-actions {
@@ -575,16 +722,108 @@ p {
   transform: rotate(-45deg);
 }
 
+/* Scroll progress, along the bottom edge of the header: a silicon filament. */
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgb(75 81 91 / 0), var(--si-2) 70%, var(--si-hi));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+/* Registration marks in card corners */
+
+.marks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.marks i {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--line-3), var(--line-3)) center / 1px 100% no-repeat,
+    linear-gradient(var(--line-3), var(--line-3)) center / 100% 1px no-repeat;
+}
+
+.marks i:nth-child(1) { top: 14px; left: 14px; }
+.marks i:nth-child(2) { top: 14px; right: 14px; }
+.marks i:nth-child(3) { bottom: 14px; left: 14px; }
+.marks i:nth-child(4) { bottom: 14px; right: 14px; }
+
+/* Soft light that follows the pointer on cards (set by main.js). */
+[data-spotlight] {
+  position: relative;
+}
+
+[data-spotlight]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(214 220 230 / 0.05), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+
+[data-spotlight]:hover::after {
+  opacity: 1;
+}
+
+/* Fine grain over the whole page for texture. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Back to top */
+
+.back-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg-2);
+  transition: color 0.2s var(--ease);
+}
+
+.back-to-top:hover {
+  color: var(--fg);
+}
+
+.back-to-top .icon-up {
+  transition: transform 0.25s var(--ease);
+}
+
+.back-to-top:hover .icon-up {
+  transform: translateY(-3px);
+}
+
 /* 5. Sections ------------------------------------------------------------- */
 
-/* Hero */
+/* Hero: the prologue */
 
+/* No isolation here: the grid sits in the page's back layer, under the travelling drawing. */
 .hero {
   position: relative;
-  isolation: isolate;
   overflow-x: clip;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - var(--header-h));
   padding-top: clamp(96px, 16vw, 200px);
-  padding-bottom: clamp(48px, 8vw, 96px);
+  padding-bottom: clamp(112px, 12vw, 168px);
 }
 
 /* Drafting-table grid behind the hero, fading out from the drawing. */
@@ -605,13 +844,32 @@ p {
   mask-image: radial-gradient(ellipse 75% 70% at 70% 25%, #000 25%, transparent 80%);
 }
 
+.js .hero::before {
+  animation: grid-in 2.2s var(--ease-out) both;
+}
+
 .hero-inner {
   position: relative;
 }
 
-.hero-inner > :not(.blueprint) {
+.hero-content {
   position: relative;
   z-index: 1;
+}
+
+/* A construction line is drawn first; the content then settles on it. */
+.hero-guide {
+  position: absolute;
+  top: -36px;
+  left: 0;
+  width: min(100%, 720px);
+  height: 1px;
+  background: linear-gradient(90deg, var(--si-3), rgb(122 129 141 / 0.1) 70%, transparent);
+  transform-origin: 0 50%;
+}
+
+.js .hero-guide {
+  animation: guide 1.6s var(--ease-out) 0.1s both;
 }
 
 .hero-eyebrow {
@@ -626,8 +884,22 @@ p {
   max-width: 16ch;
 }
 
+/* The second line is silicon: it arrives last, with light sliding across it. */
 .hero-title-muted {
   color: var(--fg-3);
+}
+
+.js .hero-title-muted {
+  opacity: 0;
+  background-position: 100% 0;
+  transition:
+    opacity 1.2s var(--ease) 0.75s,
+    background-position 2.6s var(--ease-out) 0.75s;
+}
+
+.js .hero-title.is-in .hero-title-muted {
+  opacity: 1;
+  background-position: 30% 0;
 }
 
 .hero-lead {
@@ -645,17 +917,99 @@ p {
   margin-top: 48px;
 }
 
-/* Blueprint drawing (hero) */
+/* Scroll cue: a drop of silicon running down a hairline. It waits at the bottom of the
+   first screen (wide screens only) and leaves as soon as the journey starts. */
+.scroll-cue {
+  display: none;
+}
 
-.blueprint {
+@media (min-width: 960px) and (min-height: 620px) {
+  .js .scroll-cue {
+    position: fixed;
+    right: max(var(--gutter), calc((100vw - var(--container)) / 2));
+    bottom: clamp(16px, 3vh, 32px);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    white-space: nowrap;
+    transition: opacity 0.5s var(--ease);
+    animation: fade-in 1s var(--ease) 2s backwards;
+  }
+
+  .js .scroll-cue.is-gone {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.scroll-cue-line {
+  position: relative;
+  order: 1;
+  width: 1px;
+  height: 40px;
+  overflow: hidden;
+  background: var(--line-2);
+}
+
+.scroll-cue-line::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -40%;
+  width: 1px;
+  height: 40%;
+  background: linear-gradient(transparent, var(--si-hi));
+  animation: drip 2.2s var(--ease) infinite;
+}
+
+/* Blueprint drawing ----------------------------------------------------------
+   One drawing travels through the page. Without JavaScript (or with reduced motion)
+   it rests in its slots: in the hero and, as a copy, in the anatomy chapter. */
+
+.hero-slot {
   position: absolute;
   /* Sits high, right under the header, so it frames the title instead of competing with it. */
   top: calc(-1 * clamp(96px, 16vw, 200px) + clamp(24px, 4vw, 56px));
   right: 0;
   z-index: 0;
   width: min(50%, 600px);
+  aspect-ratio: 4 / 3;
+  pointer-events: none;
+  --stage-o: 0.72;
+}
+
+.hero-slot .bp {
+  opacity: 0.72;
+}
+
+.blueprint {
+  width: 100%;
+}
+
+.stage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  /* Wider than any slot, so the drawing is only ever scaled down and stays crisp. */
+  width: 720px;
+  transform-origin: 0 0;
   pointer-events: none;
   will-change: transform, opacity;
+}
+
+.stage.is-front {
+  z-index: 5;
+}
+
+.has-stage .anatomy-slot .blueprint {
+  display: none;
 }
 
 .bp {
@@ -663,12 +1017,13 @@ p {
   height: auto;
   overflow: visible;
   font-family: var(--font);
-  /* Kept in the background so the title leads. */
-  opacity: 0.72;
 }
 
 .bp-layer {
-  transform: translateY(calc(var(--approach, 0) * var(--shift)));
+  transform: translateY(calc(var(--approach, 0) * var(--shift) + var(--lift)));
+  transition:
+    --lift 0.8s var(--ease-out),
+    opacity 0.6s var(--ease);
 }
 
 /* Connectors shorten with the plates, around their midpoint. */
@@ -677,9 +1032,25 @@ p {
   transform: scaleY(calc(1 - var(--approach, 0) * var(--k, 0)));
 }
 
-.bp-plate { fill: rgb(15 16 19 / 0.92); stroke: rgb(255 255 255 / 0.22); stroke-width: 1; }
-.bp-side { fill: #121418; stroke: rgb(255 255 255 / 0.1); stroke-width: 1; }
-.bp-side-dark { fill: #0c0d10; }
+.bp-tag {
+  opacity: var(--lab, 1);
+}
+
+.bp-guides {
+  transition: opacity 0.6s var(--ease);
+}
+
+.bp-glow {
+  opacity: var(--merge, 0);
+}
+
+.bp-wafer {
+  opacity: calc(var(--merge, 0) * 0.85);
+  pointer-events: none;
+}
+
+.bp-plate { fill: rgb(15 16 19 / 0.92); stroke: rgb(214 220 230 / 0.26); stroke-width: 1; transition: stroke 0.8s var(--ease); }
+.bp-side { stroke: rgb(255 255 255 / 0.1); stroke-width: 0.6; }
 .bp-line { fill: none; stroke: rgb(255 255 255 / 0.2); stroke-width: 1; }
 .bp-hatch { fill: none; stroke: rgb(255 255 255 / 0.1); stroke-width: 1; }
 .bp-hatch-lit { fill: none; stroke: var(--accent); stroke-width: 1.5; filter: drop-shadow(0 0 3px rgb(0 200 83 / 0.6)); }
@@ -688,15 +1059,66 @@ p {
 .bp-cross { fill: none; stroke: rgb(255 255 255 / 0.28); stroke-width: 1; }
 .bp-wire { fill: none; stroke: rgb(255 255 255 / 0.16); stroke-width: 1; }
 .bp-wire-lit { fill: none; stroke: var(--accent); stroke-width: 1.5; }
-.bp-mod { fill: #16181d; stroke: rgb(255 255 255 / 0.26); stroke-width: 1; }
+.bp-mod { fill: #16181d; stroke: rgb(214 220 230 / 0.3); stroke-width: 1; }
 .bp-mod-lit { fill: #13261b; stroke: rgb(0 200 83 / 0.7); stroke-width: 1; }
 .bp-mod-hub { fill: var(--accent); stroke: #5ef09a; stroke-width: 1; }
-.bp-mod-side { fill: #101215; stroke: rgb(255 255 255 / 0.12); stroke-width: 1; }
-.bp-mod-side-dark { fill: #0b0c0f; }
+.bp-mod-side { fill: #2a2e35; stroke: rgb(255 255 255 / 0.12); stroke-width: 1; }
+.bp-mod-side-dark { fill: #15171b; }
 .bp-leader { fill: none; stroke: rgb(255 255 255 / 0.25); stroke-width: 1; }
-.bp-dot { fill: var(--fg-2); }
+.bp-dot { fill: var(--si-1); }
 .bp-index { fill: var(--accent); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; }
-.bp-label { fill: var(--fg-2); font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+.bp-label { fill: var(--si-1); font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* Signals that run through a layer while it is being explained. */
+.bp-pulse {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s var(--ease);
+}
+
+.bp-pulse-line {
+  fill: none;
+  stroke: #8dffbd;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 0.14 0.86;
+  stroke-dashoffset: 1;
+  animation: bp-flow 2.6s linear infinite paused;
+  animation-delay: calc(var(--o, 0) * -1s);
+}
+
+.bp-pulse-fill {
+  fill: rgb(0 200 83 / 0.4);
+  animation: bp-breathe 2.6s ease-in-out infinite paused;
+}
+
+/* Focus: one layer lifts and comes alive, the others step back. */
+.blueprint[data-focus] .bp-layer {
+  opacity: 0.26;
+}
+
+.blueprint[data-focus] .bp-guides {
+  opacity: 0.35;
+}
+
+.blueprint[data-focus='0'] .bp-layer[data-layer='0'],
+.blueprint[data-focus='1'] .bp-layer[data-layer='1'],
+.blueprint[data-focus='2'] .bp-layer[data-layer='2'] {
+  opacity: 1;
+  --lift: -18px;
+}
+
+.blueprint[data-focus='0'] .bp-layer[data-layer='0'] .bp-pulse,
+.blueprint[data-focus='1'] .bp-layer[data-layer='1'] .bp-pulse,
+.blueprint[data-focus='2'] .bp-layer[data-layer='2'] .bp-pulse {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+/* Merged: the stack becomes one silicon piece. */
+.blueprint.is-merged .bp-plate {
+  stroke: rgb(236 240 246 / 0.6);
+}
 
 /* The drawing traces itself once on load. */
 .js .bp-draw {
@@ -731,102 +1153,325 @@ p {
   animation-delay: calc(1.1s + var(--i, 0) * 0.15s);
 }
 
-/* Solutions */
+/* Manifesto: how we think */
 
-.solution-tabs {
-  display: none;
-  gap: 6px;
-  margin-bottom: 24px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  scroll-snap-type: x proximity;
+.manifesto {
+  padding-block: clamp(120px, 16vw, 240px);
 }
 
-.solution-tabs::-webkit-scrollbar {
-  display: none;
+.manifesto-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: center;
 }
 
-.js .solution-tabs {
+.manifesto-text {
+  font-size: clamp(1.85rem, 1rem + 2.9vw, 3.7rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.manifesto-text em {
+  font-style: normal;
+}
+
+/* Highlights in a brighter polish, so they read as lit, not as dimmed words. */
+.manifesto-text em.metal {
+  color: var(--si-hi);
+  background-image: var(--metal-bright);
+}
+
+.js .manifesto-text .sw,
+.js .manifesto-text em {
+  opacity: 0.14;
+  transition: opacity 0.5s var(--ease);
+}
+
+.js .manifesto-text em .sw,
+.js .manifesto-text .is-lit {
+  opacity: 1;
+}
+
+.manifesto-slot {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  --stage-o: 0.55;
+}
+
+/* Anatomy: the drawing stays pinned while the layers are explained */
+
+.anatomy {
+  padding-bottom: 0;
+}
+
+.anatomy-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: clamp(40px, 6vw, 96px);
+  --ap: 1;
+}
+
+.js .anatomy-grid {
+  --ap: 0;
+}
+
+.anatomy-figure {
+  position: sticky;
+  top: var(--header-h);
+  align-self: start;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  height: calc(100svh - var(--header-h));
+  margin: 0;
 }
 
-/* On wide screens all segments stay visible, wrapping onto a second row if needed. */
-@media (min-width: 960px) {
-  .solution-tabs {
-    flex-wrap: wrap;
-    overflow: visible;
-  }
+.anatomy-slot {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  --stage-o: 1;
 }
 
-.solution-tab {
-  flex: none;
-  height: 44px;
-  padding: 0 16px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  font-size: 14.5px;
+.anatomy-caption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: var(--fg-3);
+}
+
+.anatomy-caption::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--si-3);
+}
+
+/* A silicon rail fills as the explanation advances. */
+.anatomy-steps {
+  position: relative;
+  padding-left: clamp(28px, 3vw, 44px);
+}
+
+.anatomy-steps::before,
+.anatomy-steps::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--line-2);
+}
+
+.anatomy-steps::after {
+  background: linear-gradient(180deg, var(--si-4), var(--si-1) 60%, var(--si-hi));
+  transform: scaleY(var(--ap));
+  transform-origin: 50% 0;
+}
+
+.anatomy-step {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 78svh;
+  transition: opacity 0.7s var(--ease);
+}
+
+.js .anatomy-step {
+  opacity: 0.22;
+}
+
+.js .anatomy-step.is-active {
+  opacity: 1;
+}
+
+.anatomy-name {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--fg-2);
-  scroll-snap-align: start;
-  transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background-color 0.2s var(--ease);
 }
 
-.solution-tab:hover {
-  color: var(--fg);
-  border-color: var(--line-2);
+.anatomy-index {
+  font-family: var(--mono);
+  font-size: 12.5px;
 }
 
-.solution-tab[aria-selected='true'] {
-  color: var(--bg);
-  background: var(--fg);
-  border-color: var(--fg);
+.anatomy-title {
+  font-size: clamp(1.9rem, 1.2rem + 2.2vw, 3.1rem);
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  margin-bottom: 18px;
 }
 
-.solution-panel {
+.anatomy-text {
+  max-width: 42ch;
+  color: var(--fg-2);
+  font-size: clamp(1.02rem, 0.98rem + 0.25vw, 1.15rem);
+}
+
+.anatomy-step-final {
+  min-height: 70svh;
+}
+
+.anatomy-step-final .anatomy-title {
+  color: var(--si-1);
+}
+
+/* Solutions: cases that stack like cards */
+
+#solutions {
+  padding-top: clamp(72px, 9vw, 128px);
+}
+
+.cases {
+  display: grid;
+  gap: 24px;
+}
+
+.case-card {
   position: relative;
   display: grid;
-  gap: clamp(40px, 5vw, 72px);
+  gap: clamp(36px, 4.5vw, 72px);
   align-items: center;
   padding: var(--panel-pad);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--surface);
+  overflow: hidden;
+  transform-origin: 50% 0;
+  transform: scale(calc(1 - var(--cover, 0) * 0.05));
 }
 
-.solution-panel + .solution-panel {
-  margin-top: 24px;
+/* Covered cards sink into the dark. */
+.case-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #050506;
+  opacity: calc(var(--cover, 0) * 0.65);
+  pointer-events: none;
 }
 
-.js .solution-panel + .solution-panel {
-  margin-top: 0;
+.case-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 28px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
 }
 
-.solution-panel[hidden],
-.js .solution-panel[data-inactive] {
-  display: none;
+.case-total {
+  color: var(--fg-3);
 }
 
-.solution-panel.is-entering {
-  animation: panel-in 0.5s var(--ease);
-}
-
-/* Without JS the tabs are hidden, so each panel shows its own label. */
-.solution-kicker {
-  margin-bottom: 16px;
+.case-tab {
+  margin-left: 12px;
+  padding-left: 14px;
+  border-left: 1px solid var(--line-2);
+  font-family: var(--font);
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  color: var(--fg-2);
+}
+
+.case-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--fg-3);
 }
 
-.js .solution-kicker {
-  display: none;
+.case-label::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--warn);
 }
 
-.solution-title {
+.case-label-solution {
+  margin-bottom: 12px;
+}
+
+.case-label-solution::before {
+  background: var(--accent);
+}
+
+.case-problem {
+  margin-bottom: 30px;
+}
+
+.case-problem .case-label {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+/* The problem is struck through, in silicon, as the card arrives. */
+.case-problem-text {
+  font-size: clamp(1.02rem, 0.98rem + 0.3vw, 1.2rem);
+  color: var(--fg-3);
+  background: linear-gradient(var(--si-2), var(--si-2)) 0 60% / 100% 1px no-repeat;
+}
+
+.js .case-problem-text {
+  color: var(--fg-2);
+  background-size: 0% 1px;
+  transition:
+    background-size 1.1s var(--ease-out) 0.5s,
+    color 0.8s var(--ease) 0.7s;
+}
+
+.js .case.is-in .case-problem-text {
+  color: var(--fg-3);
+  background-size: 100% 1px;
+}
+
+.case-title {
   font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.6rem);
-  letter-spacing: -0.03em;
-  line-height: 1.08;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+}
+
+.js .case-title,
+.js .case-label-solution,
+.js .case .benefits li {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.8s var(--ease),
+    transform 1s var(--ease-out);
+}
+
+.js .case-label-solution { transition-delay: 0.95s; }
+.js .case-title { transition-delay: 1.05s; }
+.js .case .benefits li { transition-delay: calc(1.25s + var(--j, 0) * 0.1s); }
+
+.js .case.is-in .case-title,
+.js .case.is-in .case-label-solution,
+.js .case.is-in .benefits li {
+  opacity: 1;
+  transform: none;
 }
 
 .benefits {
@@ -866,132 +1511,144 @@ p {
   box-shadow: 0 40px 80px -40px rgb(0 0 0 / 0.9);
 }
 
-/* Services: three fronts of work (build, connect, evolve) */
+/* Services: three verbs, filled with silicon as they scroll into place (--fill) */
 
-.pillars {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+.services {
+  border-top: 1px solid var(--line-2);
 }
 
-.pillar {
+.service {
+  --fill: 1;
   position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(24px, 4vw, 72px);
+  align-items: start;
+  padding-block: clamp(36px, 4.5vw, 64px);
+  border-bottom: 1px solid var(--line-2);
+}
+
+.js .service {
+  --fill: 0;
+}
+
+.service-head {
   display: flex;
-  flex-direction: column;
-  padding: clamp(28px, 3vw, 40px);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  overflow: hidden;
-  transition: border-color 0.3s var(--ease);
+  align-items: flex-start;
+  gap: clamp(14px, 2vw, 28px);
+  min-width: 0;
 }
 
-/* Accent line that draws across the top edge on hover. */
-.pillar::before {
-  content: '';
+.service-num {
+  padding-top: 0.9em;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--fg-3);
+}
+
+.service-verb {
+  position: relative;
+  /* Room for the last letter's overhang, which the tight tracking pushes past the box. */
+  padding-right: 0.12em;
+  font-size: clamp(3rem, 0.9rem + 7.4vw, 8.75rem);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+  white-space: nowrap;
+  transition: transform 0.8s var(--ease-out);
+}
+
+.service-verb-outline {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px rgb(214 220 230 / 0.22);
+}
+
+.service-verb-fill {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-  transform: scaleX(0);
-  transform-origin: 0 50%;
-  transition: transform 0.6s var(--ease);
+  inset: 0;
+  padding-bottom: 0.08em;
+  clip-path: inset(-0.1em calc((1 - var(--fill)) * (100% + 0.2em) - 0.1em) -0.1em -0.1em);
 }
 
-.pillar:hover {
-  border-color: var(--line-2);
+.service:hover .service-verb {
+  transform: translateX(14px);
 }
 
-.pillar:hover::before {
-  transform: scaleX(1);
+.service-body {
+  padding-top: clamp(4px, 1vw, 16px);
 }
 
-.pillar-top {
-  margin-bottom: clamp(32px, 4vw, 48px);
-}
-
-.pillar-icon {
+.service-icon {
   display: inline-grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  border: 1px solid var(--line-2);
+  width: 52px;
+  height: 52px;
+  margin-bottom: 22px;
+  border: 1px solid transparent;
+  border-radius: 15px;
   background:
-    linear-gradient(var(--grid-major) 1px, transparent 1px) 0 0 / 8px 8px,
-    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px) 0 0 / 8px 8px,
-    var(--surface-3);
-  color: var(--accent);
+    linear-gradient(var(--grid-major) 1px, transparent 1px) 0 0 / 8px 8px padding-box,
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px) 0 0 / 8px 8px padding-box,
+    linear-gradient(var(--surface-3), var(--surface-3)) padding-box,
+    var(--metal-edge) border-box;
+  color: var(--si-1);
 }
 
-.pillar-kicker {
-  margin-bottom: 10px;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.pillar-title {
+.service-title {
   font-size: clamp(1.3rem, 1.15rem + 0.5vw, 1.55rem);
   letter-spacing: -0.025em;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
-.pillar-text {
+.service-text {
   color: var(--fg-2);
-  margin-bottom: 28px;
+  margin-bottom: 22px;
+  max-width: 44ch;
 }
 
-.pillar-points {
-  display: grid;
-  gap: 12px;
-  margin-top: auto;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
+.service-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.pillar-points li {
-  position: relative;
-  padding-left: 22px;
-  font-size: 15.5px;
+.service-points li {
+  padding: 6px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-size: 14px;
+  color: var(--fg-2);
 }
 
-.pillar-points li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.72em;
-  width: 10px;
-  height: 1px;
-  background: var(--accent);
-}
-
-/* Why Duvalle: light items, no boxes, so it doesn't compete with the service cards. */
+/* Why Duvalle: four principles that tip into place. */
 
 .value-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(32px, 4vw, 56px);
+  gap: clamp(16px, 2vw, 24px);
+  perspective: 1400px;
 }
 
 .value {
-  padding-top: 28px;
-  border-top: 1px solid var(--line-2);
+  padding: clamp(24px, 2.4vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.025), transparent 60%);
 }
 
 .value-icon {
   display: inline-grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
-  margin-bottom: 24px;
-  border-radius: 12px;
-  background: var(--surface-3);
-  color: var(--accent);
+  width: 46px;
+  height: 46px;
+  margin-bottom: clamp(32px, 4vw, 56px);
+  border: 1px solid transparent;
+  border-radius: 13px;
+  background:
+    linear-gradient(var(--surface-3), var(--surface-3)) padding-box,
+    var(--metal-edge) border-box;
+  color: var(--si-1);
 }
 
 .value-title {
@@ -1005,18 +1662,23 @@ p {
   font-size: 16px;
 }
 
-/* Process: one line across the steps that fills as the section scrolls into view (--p). */
+/* Process: one line across the steps that fills as the section scrolls into view (--p),
+   with a silicon bead travelling at its tip. */
+
+.process-track {
+  --p: 1;
+  position: relative;
+}
+
+.js .process-track {
+  --p: 0;
+}
 
 .process {
-  --p: 1;
   position: relative;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(32px, 4vw, 56px);
-}
-
-.js .process {
-  --p: 0;
 }
 
 .process::before,
@@ -1031,9 +1693,27 @@ p {
 }
 
 .process::after {
-  background: linear-gradient(90deg, var(--accent), rgb(0 200 83 / 0.4));
+  background: linear-gradient(90deg, var(--si-4), var(--si-1));
   transform: scaleX(var(--p));
   transform-origin: 0 50%;
+}
+
+.process-head {
+  position: absolute;
+  top: -1px;
+  left: calc(var(--p) * 100%);
+  z-index: 2;
+  width: 11px;
+  height: 11px;
+  margin-left: -5.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, var(--si-1) 35%, var(--si-3) 75%, var(--si-4));
+  box-shadow: 0 0 0 4px var(--bg), 0 0 22px rgb(214 220 230 / 0.45);
+  display: none;
+}
+
+.js .process-head {
+  display: block;
 }
 
 .process-step {
@@ -1062,15 +1742,9 @@ p {
 .process-index {
   display: block;
   margin-bottom: 20px;
-  font-size: 14px;
+  font-family: var(--mono);
+  font-size: 13px;
   font-weight: 500;
-  font-variant-numeric: tabular-nums;
-  color: var(--fg-3);
-  transition: color 0.4s var(--ease);
-}
-
-.process-step.is-active .process-index {
-  color: var(--accent);
 }
 
 .process-title {
@@ -1109,14 +1783,24 @@ p {
   background: var(--surface);
 }
 
+/* A polished silicon ring around the initials. */
 .founder-avatar {
+  flex: none;
+  width: 54px;
+  height: 54px;
+  padding: 1.5px;
+  border-radius: 50%;
+  background: conic-gradient(from 200deg, #6f7681, #f5f7fa, #a3aab5, #5c626c, #d6dae1, #8b92a0, #6f7681);
+}
+
+.founder-avatar > span {
   display: grid;
   place-items: center;
-  flex: none;
-  width: 52px;
-  height: 52px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   background: var(--surface-3);
+  color: var(--si-1);
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -1182,6 +1866,7 @@ p {
   letter-spacing: -0.01em;
   cursor: pointer;
   list-style: none;
+  transition: color 0.2s var(--ease);
 }
 
 .faq-item summary::-webkit-details-marker {
@@ -1190,16 +1875,16 @@ p {
 
 .faq-item .icon-plus {
   color: var(--fg-3);
-  transition: transform 0.3s var(--ease), color 0.2s var(--ease);
+  transition: transform 0.4s var(--ease-out), color 0.2s var(--ease);
 }
 
 .faq-item summary:hover .icon-plus,
 .faq-item[open] .icon-plus {
-  color: var(--accent);
+  color: var(--si-1);
 }
 
 .faq-item[open] .icon-plus {
-  transform: rotate(45deg);
+  transform: rotate(135deg);
 }
 
 .faq-item p {
@@ -1208,25 +1893,41 @@ p {
   color: var(--fg-2);
 }
 
-.faq-item[open] p {
-  animation: fade-up 0.35s var(--ease);
+/* Answers open smoothly where the browser can animate to "auto". */
+@supports selector(::details-content) {
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 0.5s var(--ease-out),
+      content-visibility 0.5s allow-discrete;
+  }
+
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
 }
 
-/* Contact */
+.faq-item[open] p {
+  animation: fade-up 0.5s var(--ease);
+}
+
+/* Contact: the finale */
 
 .contact {
-  padding-block: calc(var(--section-y) * 0.5);
+  padding-block: calc(var(--section-y) * 0.5) var(--section-y);
 }
 
 .contact-card {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: clamp(56px, 9vw, 128px) clamp(24px, 6vw, 80px);
-  border: 1px solid var(--line);
+  padding: clamp(56px, 8vw, 112px) clamp(24px, 6vw, 80px);
+  border: 1px solid transparent;
   border-radius: 32px;
-  background: var(--surface);
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    var(--metal-edge) border-box;
   text-align: center;
   overflow: hidden;
   isolation: isolate;
@@ -1238,14 +1939,28 @@ p {
   inset: 0;
   z-index: -1;
   background-image:
+    radial-gradient(ellipse 40% 30% at 50% 22%, rgb(0 200 83 / 0.07), transparent 70%),
     linear-gradient(var(--grid-major) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
     linear-gradient(var(--grid-minor) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
-  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  background-size: auto, 120px 120px, 120px 120px, 24px 24px, 24px 24px;
   background-position: center;
   -webkit-mask-image: radial-gradient(ellipse at center, #000, transparent 72%);
   mask-image: radial-gradient(ellipse at center, #000, transparent 72%);
+}
+
+/* Room for the drawing, which comes back closed into one piece. */
+.contact-slot {
+  display: none;
+  width: clamp(170px, 22vw, 250px);
+  aspect-ratio: 4 / 3;
+  margin: -8px auto 24px;
+  --stage-o: 1;
+}
+
+.has-stage .contact-slot {
+  display: block;
 }
 
 .contact-title {
@@ -1269,11 +1984,13 @@ p {
   margin-top: 44px;
 }
 
-/* Footer */
+/* Footer, signed with the name in silicon */
 
 .site-footer {
-  padding: clamp(64px, 8vw, 96px) 0 40px;
+  position: relative;
+  padding-top: clamp(48px, 6vw, 80px);
   font-size: 15px;
+  overflow: hidden;
 }
 
 .footer-inner {
@@ -1315,90 +2032,103 @@ p {
   font-size: 14px;
 }
 
-/* Registration marks in card corners */
-
-.marks {
-  position: absolute;
-  inset: 0;
+.wordmark {
+  --wm: 1;
+  display: flex;
+  justify-content: center;
+  height: clamp(4.2rem, 19vw, 17.5rem);
+  margin-top: clamp(24px, 4vw, 56px);
+  overflow: hidden;
   pointer-events: none;
+  user-select: none;
 }
 
-.marks i {
-  position: absolute;
-  width: 11px;
-  height: 11px;
-  pointer-events: none;
-  background:
-    linear-gradient(var(--line-3), var(--line-3)) center / 1px 100% no-repeat,
-    linear-gradient(var(--line-3), var(--line-3)) center / 100% 1px no-repeat;
+.wordmark-text {
+  font-size: clamp(5.4rem, 25vw, 23rem);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.075em;
+  padding-right: 0.075em;
+  transform: translateY(calc((1 - var(--wm)) * 55%));
+  will-change: transform;
 }
 
-.marks i:nth-child(1) { top: 14px; left: 14px; }
-.marks i:nth-child(2) { top: 14px; right: 14px; }
-.marks i:nth-child(3) { bottom: 14px; left: 14px; }
-.marks i:nth-child(4) { bottom: 14px; right: 14px; }
-
-/* Soft light that follows the pointer on cards (set by main.js). */
-[data-spotlight]::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(255 255 255 / 0.045), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.4s var(--ease);
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .wordmark-text {
+    background-image: linear-gradient(180deg, rgb(9 9 11 / 0) 0%, rgb(9 9 11 / 0.1) 30%, rgb(9 9 11 / 0.38) 55%, rgb(9 9 11 / 0.76) 80%, rgb(9 9 11 / 0.95) 100%), var(--metal);
+    background-size: 100% 100%, 200% 100%;
+  }
 }
 
-[data-spotlight]:hover::after {
-  opacity: 1;
+/* Chapter indicator, in the right margin on wide screens (built by main.js). */
+
+.hud {
+  display: none;
 }
 
-/* Scroll progress, along the bottom edge of the header. */
-.scroll-progress {
-  position: absolute;
-  left: 0;
-  bottom: -1px;
-  width: 100%;
+@media (min-width: 1360px) and (min-height: 640px) {
+  .hud {
+    position: fixed;
+    top: 50%;
+    right: calc((100vw - var(--container) - 2 * var(--gutter)) / 4 - 14px);
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    width: 28px;
+    transform: translateY(-50%);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s var(--ease);
+  }
+
+  .hud.is-visible {
+    opacity: 1;
+  }
+}
+
+.hud-num {
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+}
+
+.hud-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+.hud-label.is-swapping {
+  animation: hud-swap 0.6s var(--ease-out);
+}
+
+.hud-ticks {
+  display: grid;
+  gap: 7px;
+}
+
+.hud-ticks i {
+  display: block;
+  width: 8px;
   height: 1px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: 0 50%;
-  opacity: 0.8;
-  pointer-events: none;
+  margin-inline: auto;
+  background: var(--line-3);
+  transition: width 0.5s var(--ease-out), background-color 0.5s var(--ease);
 }
 
-/* Fine grain over the whole page for texture. */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+.hud-ticks i.is-done {
+  background: var(--si-3);
 }
 
-/* Back to top */
-
-.back-to-top {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--fg-2);
-  transition: color 0.2s var(--ease);
-}
-
-.back-to-top:hover {
-  color: var(--fg);
-}
-
-.back-to-top .icon-up {
-  transition: transform 0.25s var(--ease);
-}
-
-.back-to-top:hover .icon-up {
-  transform: translateY(-3px);
+.hud-ticks i.is-active {
+  width: 18px;
+  background: var(--si-hi);
 }
 
 /* 404 */
@@ -1415,9 +2145,10 @@ body::after {
 }
 
 .not-found-code {
+  font-family: var(--mono);
   font-size: 14px;
   font-weight: 500;
-  color: var(--accent);
+  color: var(--si-2);
 }
 
 .not-found-list li {
@@ -1574,10 +2305,10 @@ body::after {
 
 .js .reveal {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(22px);
   transition:
-    opacity 0.9s var(--ease),
-    transform 0.9s var(--ease);
+    opacity 1s var(--ease),
+    transform 1.2s var(--ease-out);
   transition-delay: calc(var(--d, 0) * 80ms);
 }
 
@@ -1586,9 +2317,34 @@ body::after {
   transform: none;
 }
 
-.js .hero .reveal:nth-child(2) { transition-delay: 90ms; }
-.js .hero .reveal:nth-child(3) { transition-delay: 180ms; }
-.js .hero .reveal:nth-child(4) { transition-delay: 270ms; }
+/* Cards tip forward into place, like panels being set on a table. */
+.js .reveal-tilt {
+  transform: translateY(48px) rotateX(-24deg);
+  transform-origin: 50% 0;
+}
+
+/* Headings rise word by word from behind a mask. */
+.split .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.1em 0 0.14em;
+  margin: -0.1em 0 -0.14em;
+}
+
+.split .w > span {
+  display: inline-block;
+}
+
+.js .split .w > span {
+  transform: translateY(112%);
+  transition: transform 1.15s var(--ease-out);
+  transition-delay: calc(var(--wi, 0) * 55ms + 60ms);
+}
+
+.js .split.is-in .w > span {
+  transform: none;
+}
 
 @keyframes seq-in {
   from { opacity: 0; transform: scale(0.92); }
@@ -1609,6 +2365,7 @@ body::after {
 }
 
 @keyframes fade-in {
+  from { opacity: 0; }
   to { opacity: 1; }
 }
 
@@ -1632,9 +2389,50 @@ body::after {
   to { opacity: 1; transform: none; }
 }
 
-@keyframes panel-in {
-  from { opacity: 0; transform: translateY(8px); }
+@keyframes sheen {
+  from { background-position: 92% 0; }
+  to { background-position: 8% 0; }
+}
+
+@keyframes glint {
+  from { transform: translateX(0); }
+  to { transform: translateX(24px); }
+}
+
+@keyframes guide {
+  from { transform: scaleX(0); opacity: 0; }
+  30% { opacity: 1; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+
+@keyframes grid-in {
+  from { opacity: 0; transform: scale(1.04); }
   to { opacity: 1; transform: none; }
+}
+
+@keyframes drip {
+  from { top: -40%; }
+  to { top: 100%; }
+}
+
+@keyframes live {
+  0% { box-shadow: 0 0 0 0 rgb(0 200 83 / 0.5); }
+  70%, 100% { box-shadow: 0 0 0 8px rgb(0 200 83 / 0); }
+}
+
+@keyframes bp-flow {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes bp-breathe {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 1; }
+}
+
+@keyframes hud-swap {
+  from { opacity: 0; transform: rotate(180deg) translateY(-10px); }
+  to { opacity: 1; transform: rotate(180deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1656,30 +2454,64 @@ body::after {
     stroke-dashoffset: 0;
   }
 
-  .js .process {
+  .js .process-track,
+  .js .anatomy-grid {
     --p: 1;
+    --ap: 1;
   }
 
-  .js .reveal {
+  .js .service {
+    --fill: 1;
+  }
+
+  .js .reveal,
+  .js .reveal-tilt,
+  .js .split .w > span,
+  .js .hero-title-muted,
+  .js .case-title,
+  .js .case-label-solution,
+  .js .case .benefits li {
     opacity: 1;
     transform: none;
+  }
+
+  .js .manifesto-text .sw,
+  .js .manifesto-text em {
+    opacity: 1;
+  }
+
+  .scroll-cue-line::after {
+    display: none;
   }
 }
 
 /* 8. Responsive ----------------------------------------------------------- */
 
 @media (min-width: 1000px) {
-  .solution-panel {
+  .case-card {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   }
 }
 
-@media (max-width: 1099px) {
-  .blueprint {
-    width: min(48%, 480px);
+/* Where there is room, each case stops near the top and the next one slides over it. */
+@media (min-width: 1000px) and (min-height: 760px) {
+  .cases {
+    gap: 14vh;
   }
 
-  .bp {
+  .case {
+    position: sticky;
+    top: calc(var(--header-h) + 20px + var(--i) * 14px);
+  }
+}
+
+@media (max-width: 1099px) {
+  .hero-slot {
+    width: min(48%, 480px);
+    --stage-o: 0.6;
+  }
+
+  .hero-slot .bp {
     opacity: 0.6;
   }
 
@@ -1704,9 +2536,15 @@ body::after {
   }
 
   .process::after {
-    background: linear-gradient(180deg, var(--accent), rgb(0 200 83 / 0.4));
+    background: linear-gradient(180deg, var(--si-4), var(--si-1));
     transform: scaleY(var(--p));
     transform-origin: 50% 0;
+  }
+
+  .process-head {
+    top: calc(4px + var(--p) * (100% - 8px));
+    left: 4px;
+    margin-top: -5.5px;
   }
 
   .process-step {
@@ -1777,6 +2615,10 @@ body::after {
     color: var(--fg);
   }
 
+  .nav-link::after {
+    display: none;
+  }
+
   .nav-mobile-extra {
     display: flex;
     align-items: center;
@@ -1794,7 +2636,66 @@ body::after {
     overflow: hidden;
   }
 
-  .pillars {
+  .manifesto-inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .manifesto-slot {
+    order: -1;
+    width: min(64%, 340px);
+    margin: 0 auto 16px;
+    --stage-o: 0.5;
+  }
+
+  /* The drawing stays pinned at the top; the steps slide over it as glass cards. */
+  .anatomy-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .anatomy-figure {
+    z-index: 0;
+    height: auto;
+    padding-block: 8px 12px;
+    align-items: center;
+  }
+
+  .anatomy-slot {
+    width: min(100%, 50svh, 440px);
+  }
+
+  .anatomy-caption {
+    display: none;
+  }
+
+  .anatomy-steps {
+    position: relative;
+    z-index: 1;
+    padding-left: 0;
+    padding-top: 6svh;
+  }
+
+  .anatomy-steps::before,
+  .anatomy-steps::after {
+    display: none;
+  }
+
+  .anatomy-step {
+    min-height: 0;
+    margin-bottom: 34svh;
+    padding: 24px;
+    border: 1px solid var(--line-2);
+    border-radius: 20px;
+    background: rgb(12 13 16 / 0.82);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .anatomy-step:last-child {
+    margin-bottom: 8svh;
+  }
+
+  .services .service {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -1817,16 +2718,31 @@ body::after {
     display: none;
   }
 
+  .hero {
+    padding-top: 12px;
+    padding-bottom: 120px;
+  }
+
+  /* On phones the drawing opens the page, above the title. */
+  .hero-slot {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: min(100%, 400px);
+    margin: 0 auto 4px;
+    --stage-o: 0.85;
+  }
+
+  .hero-slot .bp {
+    opacity: 0.85;
+  }
+
+  .hero-guide {
+    display: none;
+  }
+
   .hero-actions .button {
     flex: 1 1 auto;
-  }
-
-  .value-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .blueprint {
-    display: none;
   }
 
   .hero::before {
@@ -1834,11 +2750,14 @@ body::after {
     mask-image: radial-gradient(ellipse 90% 60% at 60% 20%, #000 20%, transparent 80%);
   }
 
+  .value-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .value {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     column-gap: 18px;
-    padding-top: 24px;
   }
 
   .value-icon {
@@ -1846,6 +2765,9 @@ body::after {
     margin-bottom: 0;
   }
 
+  .case-meta {
+    flex-wrap: wrap;
+  }
 
   .founder {
     flex-wrap: wrap;
@@ -1861,8 +2783,8 @@ body::after {
     border-radius: var(--radius-lg);
   }
 
-  .solution-panel {
-    padding: 28px 24px;
+  .case-card {
+    padding: 28px 22px;
   }
 
   .contact-actions .button {
@@ -1877,5 +2799,4 @@ body::after {
     flex-direction: column;
     align-items: flex-start;
   }
-
 }

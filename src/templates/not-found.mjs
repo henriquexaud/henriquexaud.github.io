@@ -26,7 +26,7 @@ export function renderNotFound(ctx) {
 </head>
 <body>
 <main class="not-found">
-  <a class="brand" href="/">${logoMark(22)}<span class="brand-name">${site.name}</span></a>
+  <a class="brand" href="/">${logoMark(22, 'nf')}<span class="brand-name">${site.name}</span></a>
   <p class="not-found-code">404</p>
   <ul class="not-found-list">
     ${ctx.all.map((t) => {

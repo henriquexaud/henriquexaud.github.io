@@ -9,6 +9,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { site, locales } from './config.mjs';
 import { escape } from './lib/html.mjs';
+import { BOWL, SILICON_STOPS } from './templates/icons.mjs';
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE || 'playwright');
 
@@ -16,11 +17,14 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const img = join(root, 'assets/img');
 const fontUrl = (file) => pathToFileURL(join(root, 'assets/fonts', file)).href;
 
-const mark = (size, bar = '#00c853', bowl = '#ededef') =>
-  `<svg width="${size}" height="${size}" viewBox="0 0 24 24"><rect x="2.5" y="3" width="5" height="18" rx="1.25" fill="${bar}"/><path d="M10 3h1.5a9 9 0 0 1 0 18H10z" fill="${bowl}"/></svg>`;
+// The mark: a green bar and a bowl of polished silicon (same gradient as the site's logo).
+const silicon = (id) =>
+  `<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">${SILICON_STOPS.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join('')}</linearGradient>`;
+const markBody = (id) => `<rect x="2.5" y="3" width="5" height="18" rx="1.25" fill="#00c853"/><path d="${BOWL}" fill="url(#${id})"/>`;
+const mark = (size, id = 'si') => `<svg width="${size}" height="${size}" viewBox="0 0 24 24"><defs>${silicon(id)}</defs>${markBody(id)}</svg>`;
 
 // Favicon: the mark on a dark rounded tile.
-const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#09090b"/><g transform="translate(5 5) scale(0.9166)"><rect x="2.5" y="3" width="5" height="18" rx="1.25" fill="#00c853"/><path d="M10 3h1.5a9 9 0 0 1 0 18H10z" fill="#ededef"/></g></svg>\n`;
+const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs>${silicon('si')}</defs><rect width="32" height="32" rx="7" fill="#09090b"/><g transform="translate(5 5) scale(0.9166)">${markBody('si')}</g></svg>\n`;
 writeFileSync(join(img, 'favicon.svg'), faviconSvg);
 
 const fonts = `
@@ -74,7 +78,7 @@ for (const code of locales) {
     <div style="position:absolute;left:0;right:0;bottom:120px;border-top:1px solid rgb(255 255 255/.08)"></div>
     <div style="position:absolute;left:112px;top:44px;display:flex;align-items:center;gap:14px;font-size:30px;font-weight:600;letter-spacing:-.02em">${mark(32)}${site.name}</div>
     <div style="position:absolute;right:112px;top:56px;font-size:17px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#a3a6ad;display:flex;align-items:center;gap:12px"><span style="width:8px;height:8px;border-radius:50%;background:#00c853"></span>${escape(t.hero.eyebrow)}</div>
-    <div style="position:absolute;left:112px;right:112px;top:168px;font-size:76px;font-weight:600;line-height:1;letter-spacing:-.045em">${escape(t.hero.title)} <span style="color:#80848d">${escape(t.hero.titleMuted)}</span></div>
+    <div style="position:absolute;left:112px;right:112px;top:168px;font-size:76px;font-weight:600;line-height:1;letter-spacing:-.045em">${escape(t.hero.title)} <span style="background:linear-gradient(100deg,#6f7682 0%,#b4bbc6 15%,#f4f6f9 26%,#a6adb9 37%,#757c88 49%,#c6ccd5 62%,#f6f8fa 70%,#9ca3af 83%,#6e7581 100%) 32% 0/240% 100%;-webkit-background-clip:text;background-clip:text;color:transparent">${escape(t.hero.titleMuted)}</span></div>
     <div style="position:absolute;left:112px;right:112px;bottom:46px;display:flex;justify-content:space-between;font-size:18px;color:#80848d">
       <span>${escape(values)}</span><span>${site.url.replace('https://', '')}</span>
     </div>

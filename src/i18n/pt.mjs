@@ -41,19 +41,40 @@ export default {
     primary: 'Iniciar um projeto',
     layers: ['Interface', 'Processos', 'Dados'],
     secondary: 'Ver soluções',
+    scroll: 'Role para montar o sistema',
+  },
+
+  // Words between asterisks are highlighted. The text lights up word by word on scroll.
+  manifesto: {
+    eyebrow: 'Como pensamos',
+    text: 'Tecnologia boa não chama atenção para si. Ela *organiza a operação*, *conecta quem trabalha* e aguenta o dia mais movimentado do ano, sem que ninguém precise pensar nela.',
+  },
+
+  anatomy: {
+    eyebrow: 'Anatomia de um sistema',
+    title: 'Três camadas. Uma peça só.',
+    figure: 'Fig. 01 — Sistema em camadas',
+    steps: [
+      { name: 'Interface', title: 'O que as pessoas tocam.', text: 'Telas claras para quem atende, vende e decide. Se a equipe precisa de um manual para usar, a interface ainda não está pronta.' },
+      { name: 'Processos', title: 'As regras do seu negócio.', text: 'Pedidos, aprovações, estoque e prazos seguindo o jeito que a sua empresa trabalha, com o trabalho repetitivo automatizado.' },
+      { name: 'Dados', title: 'A verdade da operação.', text: 'Uma fonte única, segura e sua, de onde saem relatórios confiáveis e decisões melhores.' },
+      { name: 'Sistema', title: 'Juntas, uma peça só.', text: 'Quando as três camadas são pensadas juntas, o sistema fica estável, simples de evoluir e pronto para crescer com você.' },
+    ],
   },
 
   solutions: {
     eyebrow: 'Soluções',
-    title: 'Para o seu tipo de negócio.',
+    title: 'Problemas reais, resolvidos sob medida.',
     lead: 'Cada empresa tem um desafio diferente. Começamos pelo seu.',
-    tabsLabel: 'Segmentos',
+    listLabel: 'Segmentos',
+    problemLabel: 'Problema',
+    solutionLabel: 'Solução',
     items: {
-      ecommerce: { tab: 'Lojas e e-commerce', title: 'Uma só loja, vendendo em todo lugar.', benefits: ['Sua própria loja virtual, com Pix e cartão', 'Um só estoque para balcão, site e marketplaces', 'Carrinhos abandonados viram vendas'] },
-      logistics: { tab: 'Logística e entregas', title: 'Do pedido pronto à porta do cliente.', benefits: ['Cada entrega visível no mapa', 'Atrasos identificados antes da reclamação', 'Comprovante digital de entrega'] },
-      restaurants: { tab: 'Restaurantes', title: 'Pedido certo, cozinha no ritmo.', benefits: ['Comanda digital direto na cozinha', 'Custo real de cada prato', 'Caixa fechado em minutos'] },
-      hospitality: { tab: 'Hotéis e pousadas', title: 'Hóspedes bem recebidos, quartos sempre prontos.', benefits: ['Reservas diretas pelo seu site', 'Ocupação de todos os quartos em um mapa', 'Check-in digital e limpeza organizada'] },
-      appointments: { tab: 'Clínicas e serviços', title: 'Pacientes bem atendidos.', benefits: ['Agendamento online, a qualquer hora', 'Confirmação automática por WhatsApp', 'Prontuário e histórico de cada paciente'] },
+      ecommerce: { tab: 'Lojas e e-commerce', problem: 'Estoque diferente no balcão, no site e no marketplace.', title: 'Uma só loja, vendendo em todo lugar.', benefits: ['Sua própria loja virtual, com Pix e cartão', 'Um só estoque para balcão, site e marketplaces', 'Carrinhos abandonados viram vendas'] },
+      logistics: { tab: 'Logística e entregas', problem: 'Cliente ligando para saber onde está o pedido.', title: 'Do pedido pronto à porta do cliente.', benefits: ['Cada entrega visível no mapa', 'Atrasos identificados antes da reclamação', 'Comprovante digital de entrega'] },
+      restaurants: { tab: 'Restaurantes', problem: 'Pedido anotado errado e cozinha sem ritmo.', title: 'Pedido certo, cozinha no ritmo.', benefits: ['Comanda digital direto na cozinha', 'Custo real de cada prato', 'Caixa fechado em minutos'] },
+      hospitality: { tab: 'Hotéis e pousadas', problem: 'Reservas espalhadas entre planilha, telefone e sites.', title: 'Hóspedes bem recebidos, quartos sempre prontos.', benefits: ['Reservas diretas pelo seu site', 'Ocupação de todos os quartos em um mapa', 'Check-in digital e limpeza organizada'] },
+      appointments: { tab: 'Clínicas e serviços', problem: 'Faltas, horários vagos e confirmações feitas à mão.', title: 'Pacientes bem atendidos.', benefits: ['Agendamento online, a qualquer hora', 'Confirmação automática por WhatsApp', 'Prontuário e histórico de cada paciente'] },
     },
   },
 

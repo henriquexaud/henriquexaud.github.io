@@ -41,19 +41,40 @@ export default {
     primary: 'Iniciar un proyecto',
     layers: ['Interfaz', 'Procesos', 'Datos'],
     secondary: 'Ver soluciones',
+    scroll: 'Desplázate para armar el sistema',
+  },
+
+  // Words between asterisks are highlighted. The text lights up word by word on scroll.
+  manifesto: {
+    eyebrow: 'Cómo pensamos',
+    text: 'La buena tecnología no llama la atención sobre sí misma. *Organiza la operación*, *conecta a quienes trabajan* y aguanta el día de más movimiento del año, sin que nadie tenga que pensar en ella.',
+  },
+
+  anatomy: {
+    eyebrow: 'Anatomía de un sistema',
+    title: 'Tres capas. Una sola pieza.',
+    figure: 'Fig. 01 — Sistema en capas',
+    steps: [
+      { name: 'Interfaz', title: 'Lo que las personas tocan.', text: 'Pantallas claras para quien atiende, vende y decide. Si el equipo necesita un manual para usarla, la interfaz todavía no está lista.' },
+      { name: 'Procesos', title: 'Las reglas de tu negocio.', text: 'Pedidos, aprobaciones, inventario y plazos siguiendo la forma en que trabaja tu empresa, con las tareas repetitivas automatizadas.' },
+      { name: 'Datos', title: 'La verdad de la operación.', text: 'Una fuente única, segura y tuya, de donde salen informes confiables y mejores decisiones.' },
+      { name: 'Sistema', title: 'Juntas, una sola pieza.', text: 'Cuando las tres capas se piensan juntas, el sistema es estable, fácil de evolucionar y está listo para crecer contigo.' },
+    ],
   },
 
   solutions: {
     eyebrow: 'Soluciones',
-    title: 'Para tu tipo de negocio.',
+    title: 'Problemas reales, resueltos a medida.',
     lead: 'Cada empresa tiene un desafío distinto. Empezamos por el tuyo.',
-    tabsLabel: 'Sectores',
+    listLabel: 'Sectores',
+    problemLabel: 'Problema',
+    solutionLabel: 'Solución',
     items: {
-      ecommerce: { tab: 'Tiendas y e-commerce', title: 'Una sola tienda, vendiendo en todas partes.', benefits: ['Tu propia tienda online, con pago en pocos clics', 'Inventario único para tienda, web y marketplaces', 'Carritos abandonados convertidos en ventas'] },
-      logistics: { tab: 'Logística y entregas', title: 'Del pedido listo a la puerta del cliente.', benefits: ['Cada entrega visible en el mapa', 'Retrasos detectados antes del reclamo', 'Comprobante digital de entrega'] },
-      restaurants: { tab: 'Restaurantes', title: 'Pedido correcto, cocina a buen ritmo.', benefits: ['Comanda digital directo a la cocina', 'El costo real de cada plato', 'Caja cerrada en minutos'] },
-      hospitality: { tab: 'Hoteles y posadas', title: 'Huéspedes bien recibidos, habitaciones siempre listas.', benefits: ['Reservas directas en tu propia web', 'Ocupación de todas las habitaciones en un mapa', 'Check-in digital y limpieza organizada'] },
-      appointments: { tab: 'Clínicas y servicios', title: 'Pacientes bien atendidos.', benefits: ['Reservas online, a cualquier hora', 'Confirmación automática por WhatsApp', 'Historial clínico de cada paciente'] },
+      ecommerce: { tab: 'Tiendas y e-commerce', problem: 'Stock distinto en el mostrador, en la web y en los marketplaces.', title: 'Una sola tienda, vendiendo en todas partes.', benefits: ['Tu propia tienda online, con pago en pocos clics', 'Inventario único para tienda, web y marketplaces', 'Carritos abandonados convertidos en ventas'] },
+      logistics: { tab: 'Logística y entregas', problem: 'Clientes llamando para saber dónde está su pedido.', title: 'Del pedido listo a la puerta del cliente.', benefits: ['Cada entrega visible en el mapa', 'Retrasos detectados antes del reclamo', 'Comprobante digital de entrega'] },
+      restaurants: { tab: 'Restaurantes', problem: 'Pedidos mal anotados y una cocina sin ritmo.', title: 'Pedido correcto, cocina a buen ritmo.', benefits: ['Comanda digital directo a la cocina', 'El costo real de cada plato', 'Caja cerrada en minutos'] },
+      hospitality: { tab: 'Hoteles y posadas', problem: 'Reservas repartidas entre planillas, llamadas y sitios web.', title: 'Huéspedes bien recibidos, habitaciones siempre listas.', benefits: ['Reservas directas en tu propia web', 'Ocupación de todas las habitaciones en un mapa', 'Check-in digital y limpieza organizada'] },
+      appointments: { tab: 'Clínicas y servicios', problem: 'Inasistencias, horarios vacíos y confirmaciones a mano.', title: 'Pacientes bien atendidos.', benefits: ['Reservas online, a cualquier hora', 'Confirmación automática por WhatsApp', 'Historial clínico de cada paciente'] },
     },
   },
 
