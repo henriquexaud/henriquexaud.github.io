@@ -8,7 +8,7 @@ Site da Duvalle, estúdio de engenharia de software: uma página única, estáti
 
 ## Conceito
 
-A página é contada como uma jornada em capítulos numerados (01 a 09): como pensamos, a anatomia de um sistema, problemas reais, serviços, princípios, processo, sobre, dúvidas e contato.
+A página é contada como uma jornada em capítulos numerados (01 a 08): como pensamos, a anatomia de um sistema, problemas reais, serviços, princípios, processo, dúvidas e contato.
 
 - **Um desenho que viaja.** As três camadas do hero (interface, processos, dados) são o fio da narrativa: fecham ao rolar na abertura e somem com o hero, reaparecem na anatomia para serem desmontadas camada por camada e fechadas numa peça só, e voltam fechadas no contato. O desenho fica num palco fixo (`.stage`) e só troca de lugar enquanto está invisível (`data-slot="hero|anatomy|contact"`); a linha do tempo está em `buildTimeline()`.
 - **Duas cores com papel.** Verde é o sinal (o que está ativo); silício é o material: um prata polido usado em detalhes escolhidos (o arco do logo, os números dos capítulos, as bordas das placas, os verbos dos serviços, a assinatura no rodapé). É uma referência ao "vale" do nome. Os tons ficam em `--si-*` e `--metal`, no topo do `main.css`.
@@ -18,7 +18,7 @@ A página é contada como uma jornada em capítulos numerados (01 a 09): como pe
 
 ```
 src/
-  config.mjs           URL do site, contatos, idiomas e ordem das soluções
+  config.mjs           URL do site, endereço do formulário, idiomas e ordem das soluções
   i18n/pt.mjs          todo o texto do site, um arquivo por idioma
   i18n/en.mjs
   i18n/es.mjs
@@ -28,6 +28,7 @@ src/
   templates/visuals.mjs  as interfaces ilustrativas em SVG de cada solução
   build.mjs            gera index.html, en/, es/, 404.html, sitemap e manifest
   images.mjs           gera favicons e imagens de compartilhamento (Open Graph)
+tools/contact-form.gs  recebe o formulário (Google Apps Script)
 assets/                CSS, JS, fontes e imagens
 index.html, en/, es/   gerados: não edite à mão
 ```
@@ -42,7 +43,7 @@ npm run serve    # http://localhost:8080
 ```
 
 - **Texto:** edite `src/i18n/<idioma>.mjs` e rode `npm run build`. O build falha se faltar alguma chave em algum idioma.
-- **Contato e disponibilidade:** `src/config.mjs`. Ali ficam o WhatsApp, o LinkedIn, um e-mail opcional e o indicador “aberta para novos projetos”.
+- **Formulário de contato:** os botões de contato abrem uma janela com e-mail e uma mensagem já pronta. As mensagens vão para um Google Apps Script (`tools/contact-form.gs`), que guarda cada uma numa planilha do Google, responde automaticamente para quem escreveu e avisa você. O passo a passo de instalação está no topo do arquivo; no fim, cole a URL do script em `formEndpoint`, em `src/config.mjs`, e rode `npm run build`. O texto da resposta automática fica no próprio script.
 - **Imagens de compartilhamento e ícones:** rode `npm install` e depois `npm run images` (usa Playwright). Isso só é necessário quando o título do hero ou a marca mudarem. Para usar um Playwright já instalado em outro lugar: `PLAYWRIGHT_MODULE=/caminho/para/playwright/index.mjs npm run images`.
 
 ## Novo idioma

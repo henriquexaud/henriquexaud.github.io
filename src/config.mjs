@@ -8,17 +8,14 @@ export const site = {
 };
 
 export const contact = {
-  whatsapp: '5512981324077',
-  // Optional: set an address (e.g. 'contato@duvalle.com.br') to show an e-mail link.
-  email: null,
-  linkedin: 'https://www.linkedin.com/in/henrique-xaud/',
-  github: 'https://github.com/henriquexaud',
+  // Where the contact form sends its messages: the URL of the Google Apps Script web app
+  // described in tools/contact-form.gs (it saves each message in a Google Sheet and sends
+  // the automatic reply). Ends in /exec. While it is null the form can't send.
+  formEndpoint: null,
 };
 
 export const founder = {
   name: 'Henrique Xaud',
-  linkedin: contact.linkedin,
-  github: contact.github,
 };
 
 // The first locale is the default one and is served from the site root.

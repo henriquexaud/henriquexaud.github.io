@@ -309,7 +309,6 @@
       return across ? (dot.left + dot.width / 2 - line.left) / line.width : (dot.top + dot.height / 2 - line.top - 4) / (line.height - 8);
     });
   };
-  const wordmark = $('[data-wordmark]');
   const narrow = window.matchMedia('(max-width: 959px)');
   let activeStep = -2;
 
@@ -333,7 +332,6 @@
     const listRect = anatomyList?.getBoundingClientRect();
     const fillRects = fills.map((row) => row.getBoundingClientRect());
     const processTop = processEl?.getBoundingClientRect().top;
-    const wordmarkRect = wordmark?.getBoundingClientRect();
     const stageState = measureStage(ys, heroH);
 
     // Write ---------------------------------------------------------------
@@ -408,12 +406,6 @@
       const p = still ? 1 : clamp((vh * 0.8 - processTop) / (vh * 0.45));
       setVar(processEl, '--p', p.toFixed(3));
       processSteps.forEach((step, i) => step.classList.toggle('is-active', p > 0 && p >= (processStops[i] ?? 1) - 0.005));
-    }
-
-    // Footer: the name rises into place as the page ends.
-    if (wordmark && wordmarkRect) {
-      const p = still ? 1 : clamp((vh - wordmarkRect.top) / wordmarkRect.height);
-      setVar(wordmark, '--wm', easeOut(p).toFixed(3));
     }
 
     renderHud(y, vh);
@@ -606,6 +598,83 @@
       inView = true;
       arrive(panels[current]);
     }
+  }
+
+  // Contact form ---------------------------------------------------------------------
+  // Every "contact" button opens the form in a small window. Sending posts the e-mail and
+  // the message to the endpoint in the form's action (a Google Apps Script web app that
+  // stores the message and sends the automatic reply), then shows a confirmation.
+  const dialog = $('[data-contact]');
+  if (dialog?.showModal) {
+    const form = $('[data-contact-form]', dialog);
+    const body = $('[data-contact-body]', dialog);
+    const done = $('[data-contact-done]', dialog);
+    const error = $('[data-contact-error]', dialog);
+    const send = $('.contact-send', form);
+    const sendLabel = $('span', send);
+    let opener = null;
+
+    const open = (event) => {
+      event?.preventDefault();
+      setMenu(false);
+      opener = document.activeElement;
+      dialog.showModal();
+      document.body.classList.add('dialog-open');
+      const email = form.elements.email;
+      (email.value ? form.elements.message : email).focus();
+    };
+    const close = () => dialog.open && dialog.close();
+
+    $$('[data-contact-open]').forEach((link) => link.addEventListener('click', open));
+    $('[data-contact-close]', dialog).addEventListener('click', (event) => {
+      event.preventDefault();
+      close();
+    });
+    dialog.addEventListener('click', (event) => event.target === dialog && close());
+    dialog.addEventListener('close', () => {
+      document.body.classList.remove('dialog-open');
+      // After a successful send, the next opening starts with a fresh form.
+      if (!done.hidden) {
+        done.hidden = true;
+        body.hidden = false;
+        form.elements.email.value = '';
+        form.elements.message.value = form.elements.message.defaultValue;
+      }
+      opener?.focus?.();
+    });
+    if (location.hash === '#contact-form') open();
+
+    const busy = (on) => {
+      send.setAttribute('aria-busy', String(on));
+      sendLabel.textContent = on ? send.dataset.labelBusy : send.dataset.label;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      error.hidden = true;
+      if (!form.reportValidity()) return;
+      const data = Object.fromEntries(new FormData(form));
+      data.page = location.href;
+      if (data.website) return; // a bot filled the hidden field
+      if (!form.getAttribute('action')) {
+        error.hidden = false;
+        return;
+      }
+      busy(true);
+      try {
+        // text/plain keeps this a "simple" request, which Apps Script accepts cross-origin.
+        const response = await fetch(form.action, { method: 'POST', body: JSON.stringify(data) });
+        const result = await response.json().catch(() => ({ ok: response.ok }));
+        if (!result.ok) throw new Error(result.error || 'not sent');
+        body.hidden = true;
+        done.hidden = false;
+        $('.contact-dialog-title', done).focus();
+      } catch {
+        error.hidden = false;
+      } finally {
+        busy(false);
+      }
+    });
   }
 
   // Active section in the navigation ---------------------------------------------

@@ -28,7 +28,6 @@ export default {
     solutions: 'Soluções',
     services: 'Serviços',
     process: 'Como funciona',
-    about: 'Sobre',
     faq: 'Dúvidas',
     cta: 'Fale conosco',
   },
@@ -111,12 +110,6 @@ export default {
     ],
   },
 
-  about: {
-    eyebrow: 'Sobre',
-    title: 'Um estúdio pequeno por escolha.',
-    text: 'A Duvalle é um estúdio independente fundado por Henrique Xaud. Cada projeto tem um responsável do início ao fim e, quando necessário, especialistas de confiança completam o time.',
-    founderRole: 'Fundador',
-  },
 
   faq: {
     eyebrow: 'Dúvidas',
@@ -134,9 +127,21 @@ export default {
     eyebrow: 'Contato',
     title: 'Vamos conversar sobre o seu projeto?',
     lead: 'A primeira conversa é sem compromisso.',
-    whatsapp: 'Conversar no WhatsApp',
-    whatsappMessage: 'Olá! Vim pelo site da Duvalle e quero conversar sobre um projeto.',
-    linkedin: 'LinkedIn',
+    cta: 'Escrever mensagem',
+    form: {
+      title: 'Fale com a Duvalle.',
+      lead: 'Deixe seu e-mail e envie. A mensagem já está pronta, mas fique à vontade para contar mais.',
+      emailLabel: 'Seu e-mail',
+      emailPlaceholder: 'voce@empresa.com.br',
+      messageLabel: 'Mensagem',
+      defaultMessage: 'Olá! Vim pelo site da Duvalle e quero conversar sobre um projeto.',
+      send: 'Enviar',
+      sending: 'Enviando…',
+      successTitle: 'Mensagem enviada.',
+      successText: 'Mandamos uma confirmação para o seu e-mail e respondemos em breve.',
+      error: 'Não foi possível enviar agora. Confira o e-mail e tente de novo em instantes.',
+      close: 'Fechar',
+    },
   },
 
   footer: {

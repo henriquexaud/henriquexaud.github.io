@@ -5,12 +5,11 @@ import { visual } from './visuals.mjs';
 import { blueprint } from './blueprint.mjs';
 
 const pad = (n) => String(n).padStart(2, '0');
-const whatsappUrl = (message) => `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(message)}`;
 
-const NAV = ['solutions', 'services', 'process', 'about', 'faq'];
+const NAV = ['solutions', 'services', 'process', 'faq'];
 
 // The page reads as a sequence of chapters; each one is numbered in its eyebrow.
-const CHAPTERS = ['manifesto', 'anatomy', 'solutions', 'services', 'why', 'process', 'about', 'faq', 'contact'];
+const CHAPTERS = ['manifesto', 'anatomy', 'solutions', 'services', 'why', 'process', 'faq', 'contact'];
 const chapter = (id) => CHAPTERS.indexOf(id) + 1;
 
 // Registration marks drawn in the corners of a card, like on a technical drawing.
@@ -30,10 +29,6 @@ function words(text, from = 0) {
 function scrubText(text) {
   const tokens = (segment) => segment.split(/(\s+)/).map((token) => (/^\s+$/.test(token) ? ' ' : token ? html`<span class="sw">${token}</span>` : ''));
   return text.split('*').map((segment, i) => (i % 2 ? html`<em class="metal">${tokens(segment)}</em>` : tokens(segment)));
-}
-
-function externalLink(href, label, t, cls = '', icon = '') {
-  return html`<a class="${cls}" href="${href}" target="_blank" rel="noopener noreferrer">${icon}<span>${label}</span><span class="visually-hidden"> (${t.ui.external})</span></a>`;
 }
 
 function eyebrow(id, text, cls = '') {
@@ -67,11 +62,9 @@ function head(t, ctx) {
         description: t.meta.description,
         slogan: `${t.hero.title} ${t.hero.titleMuted}`,
         foundingDate: String(site.foundingYear),
-        founder: { '@type': 'Person', name: founder.name, sameAs: [founder.linkedin] },
+        founder: { '@type': 'Person', name: founder.name },
         areaServed: 'BR',
         knowsLanguage: all.map((l) => l.htmlLang),
-        telephone: `+${contact.whatsapp}`,
-        sameAs: [contact.linkedin],
         hasOfferCatalog: {
           '@type': 'OfferCatalog',
           name: t.services.title,
@@ -147,12 +140,12 @@ function siteHeader(t, all) {
       </ul>
       <div class="nav-mobile-extra">
         ${languageSwitch(t, all, 'lang-mobile lang-up')}
-        <a class="button button-primary" href="#contact">${t.nav.cta}${icons.arrowRight}</a>
+        <a class="button button-primary" href="#contact-form" data-contact-open>${t.nav.cta}${icons.arrowRight}</a>
       </div>
     </nav>
     <div class="header-actions">
       ${languageSwitch(t, all, 'lang-desktop')}
-      <a class="button button-small button-metal header-cta" href="#contact" data-magnetic>${t.nav.cta}</a>
+      <a class="button button-small button-metal header-cta" href="#contact-form" data-contact-open data-magnetic>${t.nav.cta}</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" data-menu-toggle data-label-open="${t.ui.menu}" data-label-close="${t.ui.closeMenu}">
         <span class="menu-toggle-icon" aria-hidden="true"><span></span><span></span></span>
         <span class="visually-hidden" data-menu-label>${t.ui.menu}</span>
@@ -174,7 +167,7 @@ function hero(t) {
       <h1 class="hero-title split" id="hero-title">${words(t.hero.title)}<span class="hero-title-muted metal">${t.hero.titleMuted}</span></h1>
       <p class="hero-lead reveal" style="--d:${titleWords + 2}">${t.hero.lead}</p>
       <div class="hero-actions reveal" style="--d:${titleWords + 3}">
-        <a class="button button-primary button-large" href="#contact" data-magnetic>${t.hero.primary}${icons.arrowRight}</a>
+        <a class="button button-primary button-large" href="#contact-form" data-contact-open data-magnetic>${t.hero.primary}${icons.arrowRight}</a>
         <a class="button button-ghost button-large" href="#solutions">${t.hero.secondary}</a>
       </div>
     </div>
@@ -322,27 +315,6 @@ function process(t) {
 </section>`;
 }
 
-function about(t) {
-  const a = t.about;
-  return html`<section class="section" id="about" aria-labelledby="about-title" ${chapterAttrs('about', a.eyebrow)}>
-  <div class="container about">
-    <div class="about-copy">
-      ${eyebrow('about', a.eyebrow, 'reveal')}
-      <h2 class="section-title split" id="about-title">${words(a.title)}</h2>
-      <p class="about-text reveal" style="--d:3">${a.text}</p>
-    </div>
-    <div class="founder reveal" style="--d:4" data-spotlight>
-      <span class="founder-avatar" aria-hidden="true"><span>HX</span></span>
-      <div class="founder-info">
-        <p class="founder-name">${founder.name}</p>
-        <p class="founder-role">${a.founderRole}, ${site.name}</p>
-      </div>
-      ${externalLink(founder.linkedin, 'LinkedIn', t, 'founder-link', icons.linkedin)}
-    </div>
-  </div>
-</section>`;
-}
-
 function faq(t) {
   const f = t.faq;
   return html`<section class="section" id="faq" aria-labelledby="faq-title" ${chapterAttrs('faq', f.eyebrow)}>
@@ -370,13 +342,48 @@ function contactSection(t) {
       <h2 class="contact-title split" id="contact-title">${words(c.title)}</h2>
       <p class="contact-lead reveal" style="--d:4">${c.lead}</p>
       <div class="contact-actions reveal" style="--d:5">
-        ${externalLink(whatsappUrl(c.whatsappMessage), c.whatsapp, t, 'button button-primary button-large', icons.whatsapp)}
-        ${externalLink(contact.linkedin, c.linkedin, t, 'button button-ghost button-large', icons.linkedin)}
-        ${contact.email ? html`<a class="button button-ghost button-large" href="mailto:${contact.email}">${icons.mail}<span>${contact.email}</span></a>` : ''}
+        <a class="button button-primary button-large" href="#contact-form" data-contact-open data-magnetic>${icons.mail}<span>${c.cta}</span></a>
       </div>
     </div>
   </div>
 </section>`;
+}
+
+// The contact form: a small window over the page. One e-mail field and a message that
+// already says the essential, so sending can be a single click. Submissions go to
+// contact.formEndpoint (see tools/contact-form.gs). Without JavaScript the window opens
+// as an anchor target and the form posts directly.
+function contactDialog(t) {
+  const f = t.contact.form;
+  return html`<dialog class="contact-dialog" id="contact-form" aria-labelledby="contact-form-title" data-contact>
+  <div class="contact-dialog-panel">
+    <a class="contact-close" href="#contact" data-contact-close aria-label="${f.close}">${icons.plus}</a>
+    <div class="contact-dialog-body" data-contact-body>
+      <p class="eyebrow">${t.contact.eyebrow}</p>
+      <h2 class="contact-dialog-title" id="contact-form-title">${f.title}</h2>
+      <p class="contact-dialog-lead">${f.lead}</p>
+      <form class="contact-form" method="post" action="${contact.formEndpoint || ''}" data-contact-form>
+        <input type="hidden" name="lang" value="${t.code}">
+        <div class="contact-trap" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <label class="field">
+          <span class="field-label">${f.emailLabel}</span>
+          <input class="field-input" type="email" name="email" required autocomplete="email" inputmode="email" placeholder="${f.emailPlaceholder}">
+        </label>
+        <label class="field">
+          <span class="field-label">${f.messageLabel}</span>
+          <textarea class="field-input" name="message" rows="4" required>${f.defaultMessage}</textarea>
+        </label>
+        <p class="contact-error" role="alert" data-contact-error hidden>${f.error}</p>
+        <button class="button button-primary button-large contact-send" type="submit" data-label="${f.send}" data-label-busy="${f.sending}"><span>${f.send}</span>${icons.arrowRight}</button>
+      </form>
+    </div>
+    <div class="contact-done" data-contact-done hidden>
+      <span class="contact-done-mark" aria-hidden="true">${icons.check}</span>
+      <h2 class="contact-dialog-title" tabindex="-1">${f.successTitle}</h2>
+      <p class="contact-dialog-lead">${f.successText}</p>
+    </div>
+  </div>
+</dialog>`;
 }
 
 function siteFooter(t, year) {
@@ -394,7 +401,6 @@ function siteFooter(t, year) {
       <a class="back-to-top" href="#top">${t.ui.backToTop}${icons.arrowUp}</a>
     </div>
   </div>
-  <div class="wordmark" aria-hidden="true" data-wordmark><span class="wordmark-text metal">${site.name}</span></div>
 </footer>`;
 }
 
@@ -413,11 +419,11 @@ ${solutions(t)}
 ${services(t)}
 ${why(t)}
 ${process(t)}
-${about(t)}
 ${faq(t)}
 ${contactSection(t)}
 </main>
 ${siteFooter(t, ctx.year)}
+${contactDialog(t)}
 </body>
 </html>
 `;

@@ -28,7 +28,6 @@ export default {
     solutions: 'Solutions',
     services: 'Services',
     process: 'How it works',
-    about: 'About',
     faq: 'FAQ',
     cta: 'Contact us',
   },
@@ -111,12 +110,6 @@ export default {
     ],
   },
 
-  about: {
-    eyebrow: 'About',
-    title: 'A small studio, by choice.',
-    text: 'Duvalle is an independent studio founded by Henrique Xaud. Every project has one person accountable from start to finish and, when needed, trusted specialists complete the team.',
-    founderRole: 'Founder',
-  },
 
   faq: {
     eyebrow: 'FAQ',
@@ -134,9 +127,21 @@ export default {
     eyebrow: 'Contact',
     title: 'Shall we talk about your project?',
     lead: 'The first conversation comes with no strings attached.',
-    whatsapp: 'Chat on WhatsApp',
-    whatsappMessage: 'Hi! I found Duvalle’s website and would like to talk about a project.',
-    linkedin: 'LinkedIn',
+    cta: 'Write a message',
+    form: {
+      title: 'Talk to Duvalle.',
+      lead: 'Leave your e-mail and send. The message is ready, but feel free to tell us more.',
+      emailLabel: 'Your e-mail',
+      emailPlaceholder: 'you@company.com',
+      messageLabel: 'Message',
+      defaultMessage: 'Hi! I found Duvalle’s website and would like to talk about a project.',
+      send: 'Send',
+      sending: 'Sending…',
+      successTitle: 'Message sent.',
+      successText: 'We sent a confirmation to your e-mail and will reply soon.',
+      error: 'We couldn’t send it right now. Check your e-mail address and try again in a moment.',
+      close: 'Close',
+    },
   },
 
   footer: {
