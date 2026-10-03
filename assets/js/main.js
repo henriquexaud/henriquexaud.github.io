@@ -1,9 +1,10 @@
 // Duvalle — progressive enhancements. The page is fully usable without this file.
 //
-// The page is told as a journey. One drawing (the three layers of a system) travels
-// through it: it assembles in the hero, waits beside the manifesto, is taken apart in the
-// anatomy chapter, closes into one piece, and comes back closed for the finale. Everything
-// scroll-linked runs in one rAF loop that reads layout first and writes styles after.
+// The page is told as a journey around one drawing (the three layers of a system): it
+// assembles in the hero and fades away as the page moves on, reappears in the anatomy
+// chapter to be taken apart and closed into one piece, and comes back closed for the
+// finale. Everything scroll-linked runs in one rAF loop that reads layout first and
+// writes styles after.
 (() => {
   const root = document.documentElement;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -83,8 +84,7 @@
     el.classList.add('is-in');
     if (el.matches('[data-visual]')) restartSvg(el.querySelector('svg.vz'));
   };
-  const revealTargets = $$('.reveal, .split, [data-visual]');
-  const cases = $$('.case');
+  const revealTargets = $$('.reveal, .split, [data-visual]:not(.case [data-visual])');
   if ('IntersectionObserver' in window) {
     const observe = (targets, options) => {
       const observer = new IntersectionObserver((entries) => {
@@ -97,10 +97,8 @@
       targets.forEach((el) => observer.observe(el));
     };
     observe(revealTargets, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-    // A case "arrives" (its problem is struck through) once it is well into view.
-    observe(cases, { rootMargin: '0px 0px -20% 0px', threshold: 0.2 });
   } else {
-    [...revealTargets, ...cases].forEach(reveal);
+    revealTargets.forEach(reveal);
   }
 
   // The travelling drawing ---------------------------------------------------------
@@ -110,7 +108,6 @@
   const drawing = $('[data-slot="hero"] [data-blueprint]');
   const slots = {
     hero: $('[data-slot="hero"]'),
-    manifesto: $('[data-slot="manifesto"]'),
     anatomy: $('[data-slot="anatomy"]'),
     contact: $('[data-slot="contact"]'),
   };
@@ -171,11 +168,16 @@
     const contactAt = Math.min(max, centerOf(contactCard));
     const heroH = heroEl.offsetHeight;
 
+    // The drawing only changes place while it is invisible: it never crosses the page.
+    const appearAt = stuckAt - vh * 0.15;
     const frames = [
       { y: 0, slot: 'hero', a: 0, o: 1, lab: 1, merge: 0, par: 1 },
       { y: heroH * 0.35, slot: 'hero', a: 1, o: 1, lab: 1, merge: 0, par: 1, ease: easeOut },
-      { y: centerOf(slots.manifesto), slot: 'manifesto', a: 1, o: 1, lab: 0, merge: 0, par: 0 },
-      { y: stuckAt, slot: 'anatomy', a: -0.3, o: 1, lab: 1, merge: 0, par: 0 },
+      // Trails the text and fades as the hero leaves, as in the opening it always had.
+      { y: heroH * 0.85, slot: 'hero', a: 1, o: 0, lab: 1, merge: 0, par: 1, ease: (t) => t },
+      // Reappears where it matters again: closed, opening up as the anatomy begins.
+      { y: appearAt - vh * 0.45, slot: 'anatomy', a: 1, o: 0, lab: 0, merge: 0, par: 0 },
+      { y: appearAt, slot: 'anatomy', a: -0.3, o: 1, lab: 1, merge: 0, par: 0, ease: easeOut },
       { y: mergeAt - vh * 0.36, slot: 'anatomy', a: -0.3, o: 1, lab: 1, merge: 0, par: 0 },
       { y: mergeAt, slot: 'anatomy', a: MERGED, o: 1, lab: 0, merge: 1, par: 0 },
       { y: unstuckAt, slot: 'anatomy', a: MERGED, o: 1, lab: 0, merge: 1, par: 0 },
@@ -187,8 +189,9 @@
       if (i) frame.y = Math.max(frame.y, frames[i - 1].y + 1);
       frame.so = stageOpacity(slots[frame.slot]);
     });
+    const hidden = frames[8];
     timeline = frames;
-    frontFrom = frames[7].y;
+    frontFrom = hidden.y;
   };
 
   const set = (el, cache, key, value, apply) => {
@@ -293,13 +296,26 @@
   const fills = $$('[data-fill]');
   const processEl = $('[data-process]');
   const processSteps = processEl ? $$('.process-step', processEl) : [];
+  const processLine = processEl?.querySelector('.process');
+  // Where each dot sits along the line (0 → 1), so it lights the moment the line reaches it.
+  let processStops = [];
+  const measureProcess = () => {
+    if (!processLine) return;
+    const line = processLine.getBoundingClientRect();
+    // Same breakpoint as the CSS: the line runs across on wide screens, down otherwise.
+    const across = window.matchMedia('(min-width: 1100px)').matches;
+    processStops = processSteps.map((step) => {
+      const dot = step.querySelector('.process-node').getBoundingClientRect();
+      return across ? (dot.left + dot.width / 2 - line.left) / line.width : (dot.top + dot.height / 2 - line.top - 4) / (line.height - 8);
+    });
+  };
   const wordmark = $('[data-wordmark]');
-  const stacking = window.matchMedia('(min-width: 1000px) and (min-height: 760px)');
   const narrow = window.matchMedia('(max-width: 959px)');
   let activeStep = -2;
 
   const layout = () => {
     buildTimeline();
+    measureProcess();
     chapterTops = chapters.map(pageTop);
     activeChapter = -1;
   };
@@ -315,7 +331,6 @@
     const scrubRect = scrub?.getBoundingClientRect();
     const stepRects = anatomySteps.map((step) => step.getBoundingClientRect());
     const listRect = anatomyList?.getBoundingClientRect();
-    const caseRects = stacking.matches ? cases.map((c) => c.getBoundingClientRect()) : null;
     const fillRects = fills.map((row) => row.getBoundingClientRect());
     const processTop = processEl?.getBoundingClientRect().top;
     const wordmarkRect = wordmark?.getBoundingClientRect();
@@ -382,16 +397,6 @@
       }
     }
 
-    // Solutions: a covered card sinks back as the next one slides over it.
-    cases.forEach((c, i) => {
-      let cover = 0;
-      if (caseRects && !still && i < cases.length - 1) {
-        const rect = caseRects[i];
-        cover = clamp(1 - (caseRects[i + 1].top - rect.top) / rect.height);
-      }
-      setVar(c, '--cover', cover.toFixed(3));
-    });
-
     // Services: silicon fills each verb as its row scrolls into place.
     fills.forEach((row, i) => {
       const fill = still ? 1 : clamp((vh * 0.92 - fillRects[i].top) / (vh * 0.42));
@@ -402,7 +407,7 @@
     if (processEl) {
       const p = still ? 1 : clamp((vh * 0.8 - processTop) / (vh * 0.45));
       setVar(processEl, '--p', p.toFixed(3));
-      processSteps.forEach((step, i) => step.classList.toggle('is-active', p > 0 && p >= i / Math.max(1, processSteps.length - 1) - 0.02));
+      processSteps.forEach((step, i) => step.classList.toggle('is-active', p > 0 && p >= (processStops[i] ?? 1) - 0.005));
     }
 
     // Footer: the name rises into place as the page ends.
@@ -486,6 +491,121 @@
       });
       button.addEventListener('pointerleave', () => (button.style.transform = ''));
     });
+  }
+
+  // Solutions: a menu on top of a track that slides sideways ---------------------------
+  // The menu moves the track; swiping the track moves the menu. Only the open case is
+  // interactive, and its illustration replays every time it comes into place.
+  const tabsRoot = $('[data-tabs]');
+  if (tabsRoot) {
+    const tabList = $('[role="tablist"]', tabsRoot);
+    const tabs = $$('[role="tab"]', tabsRoot);
+    const track = $('[data-track]', tabsRoot);
+    const panels = $$('.case', track);
+    const bar = $('.solution-tabs-bar', tabsRoot);
+    const behavior = () => (reducedMotion.matches ? 'auto' : 'smooth');
+    const step = () => (panels[1] ? panels[1].offsetLeft - panels[0].offsetLeft : track.clientWidth);
+    let current = -1;
+    let inView = false;
+    let locked = false;
+    let unlock = 0;
+
+    const moveBar = () => {
+      const tab = tabs[current];
+      if (!tab || !bar) return;
+      bar.style.setProperty('--bar-x', `${tab.offsetLeft}px`);
+      bar.style.setProperty('--bar-w', `${tab.offsetWidth}px`);
+    };
+
+    const arrive = (panel) => {
+      if (!inView || !panel || panel.classList.contains('is-in')) return;
+      panel.classList.add('is-in');
+      const figure = panel.querySelector('[data-visual]');
+      figure?.classList.add('is-in');
+      restartSvg(figure?.querySelector('svg.vz'));
+    };
+
+    const setCurrent = (index, { focus = false } = {}) => {
+      index = Math.min(panels.length - 1, Math.max(0, index));
+      if (index === current) return;
+      current = index;
+      tabs.forEach((tab, i) => {
+        tab.setAttribute('aria-selected', String(i === index));
+        tab.tabIndex = i === index ? 0 : -1;
+      });
+      panels.forEach((panel, i) => {
+        const open = i === index;
+        panel.classList.toggle('is-current', open);
+        panel.inert = !open;
+        if (!open) {
+          panel.classList.remove('is-in');
+          panel.querySelector('[data-visual]')?.classList.remove('is-in');
+        }
+      });
+      arrive(panels[index]);
+      moveBar();
+      const tab = tabs[index];
+      tabList.scrollTo({ left: tab.offsetLeft - tabList.clientWidth / 2 + tab.offsetWidth / 2, behavior: behavior() });
+      if (focus) tab.focus({ preventScroll: true });
+    };
+
+    const goTo = (index, options) => {
+      setCurrent(index, options);
+      locked = true;
+      track.scrollTo({ left: current * step(), behavior: behavior() });
+    };
+
+    track.addEventListener(
+      'scroll',
+      () => {
+        clearTimeout(unlock);
+        if (locked) {
+          unlock = setTimeout(() => (locked = false), 140);
+          return;
+        }
+        setCurrent(Math.round(track.scrollLeft / step()));
+      },
+      { passive: true },
+    );
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => goTo(i));
+      tab.addEventListener('keydown', (event) => {
+        const keys = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 };
+        if (!(event.key in keys)) return;
+        event.preventDefault();
+        goTo((keys[event.key] + tabs.length) % tabs.length, { focus: true });
+      });
+    });
+
+    window.addEventListener(
+      'resize',
+      () => {
+        track.scrollLeft = current * step();
+        moveBar();
+      },
+      { passive: true },
+    );
+
+    setCurrent(0);
+    // The first case "arrives" (problem struck through, art playing) once it is in view.
+    const arriveObserver =
+      'IntersectionObserver' in window
+        ? new IntersectionObserver(
+            (entries) => {
+              if (!entries.some((entry) => entry.isIntersecting)) return;
+              inView = true;
+              arrive(panels[current]);
+              arriveObserver.disconnect();
+            },
+            { rootMargin: '0px 0px -15% 0px', threshold: 0.25 },
+          )
+        : null;
+    if (arriveObserver) arriveObserver.observe(track);
+    else {
+      inView = true;
+      arrive(panels[current]);
+    }
   }
 
   // Active section in the navigation ---------------------------------------------

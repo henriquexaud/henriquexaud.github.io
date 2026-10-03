@@ -46,7 +46,8 @@
   --si-3: #7a818d;
   --si-4: #4b515b;
   --metal: linear-gradient(100deg, #6f7682 0%, #b4bbc6 15%, #f4f6f9 26%, #a6adb9 37%, #757c88 49%, #c6ccd5 62%, #f6f8fa 70%, #9ca3af 83%, #6e7581 100%);
-  --metal-bright: linear-gradient(100deg, #9aa1ad 0%, #dfe3e9 14%, #ffffff 25%, #c9ced7 37%, #a3aab6 49%, #e6e9ee 61%, #ffffff 70%, #c2c8d1 83%, #9ea5b1 100%);
+  /* Softer polish for words inside running text: silver throughout, never paper-white. */
+  --metal-bright: linear-gradient(100deg, #9ba2ae 0%, #cfd4dc 22%, #a9b0bc 45%, #d6dbe2 68%, #a1a8b4 100%);
   --metal-edge: linear-gradient(135deg, rgb(255 255 255 / 0.05), rgb(222 227 235 / 0.42) 28%, rgb(255 255 255 / 0.06) 48%, rgb(200 206 216 / 0.24) 72%, rgb(255 255 255 / 0.05));
 
   --font: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -1159,11 +1160,8 @@ body::after {
   padding-block: clamp(120px, 16vw, 240px);
 }
 
-.manifesto-inner {
-  display: grid;
-  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
-  gap: clamp(32px, 5vw, 80px);
-  align-items: center;
+.manifesto-copy {
+  max-width: 980px;
 }
 
 .manifesto-text {
@@ -1179,8 +1177,10 @@ body::after {
 
 /* Highlights in a brighter polish, so they read as lit, not as dimmed words. */
 .manifesto-text em.metal {
-  color: var(--si-hi);
+  color: var(--si-1);
   background-image: var(--metal-bright);
+  background-size: 100% 100%;
+  animation: none;
 }
 
 .js .manifesto-text .sw,
@@ -1192,12 +1192,6 @@ body::after {
 .js .manifesto-text em .sw,
 .js .manifesto-text .is-lit {
   opacity: 1;
-}
-
-.manifesto-slot {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  --stage-o: 0.55;
 }
 
 /* Anatomy: the drawing stays pinned while the layers are explained */
@@ -1329,15 +1323,125 @@ body::after {
   color: var(--si-1);
 }
 
-/* Solutions: cases that stack like cards */
+/* Solutions: a menu and a track of cases that slides sideways */
 
 #solutions {
   padding-top: clamp(72px, 9vw, 128px);
 }
 
+/* Without JavaScript the cases stack; with it they sit side by side in a track that
+   slides sideways, driven by the menu above or by swiping. */
 .cases {
   display: grid;
   gap: 24px;
+}
+
+.solution-tabs {
+  position: relative;
+  display: none;
+  gap: 4px;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+}
+
+.solution-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.js .solution-tabs {
+  display: flex;
+}
+
+/* A silicon rail under the menu; its bright segment slides to the open case. */
+.solution-tabs::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--line-2);
+}
+
+.solution-tabs-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: var(--bar-w, 0);
+  height: 1px;
+  background: linear-gradient(90deg, var(--si-3), var(--si-hi), var(--si-3));
+  transform: translateX(var(--bar-x, 0));
+  transition:
+    transform 0.6s var(--ease-out),
+    width 0.6s var(--ease-out);
+}
+
+.solution-tab {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 14.5px;
+  color: var(--fg-3);
+  scroll-snap-align: start;
+  transition: color 0.25s var(--ease), background-color 0.25s var(--ease);
+}
+
+.solution-tab-num {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--fg-3);
+  transition: color 0.25s var(--ease);
+}
+
+.solution-tab:hover {
+  color: var(--fg);
+}
+
+.solution-tab[aria-selected='true'] {
+  color: var(--fg);
+  background: rgb(255 255 255 / 0.05);
+}
+
+.solution-tab[aria-selected='true'] .solution-tab-num {
+  color: var(--si-1);
+}
+
+.js .cases {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.js .cases::-webkit-scrollbar {
+  display: none;
+}
+
+.js .case {
+  flex: 0 0 100%;
+  min-width: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  transition: opacity 0.6s var(--ease);
+}
+
+/* The neighbours dim while they slide past. */
+.js .case:not(.is-current) {
+  opacity: 0.35;
+}
+
+/* The menu already names the case. */
+.js .case-tab {
+  display: none;
 }
 
 .case-card {
@@ -1350,19 +1454,7 @@ body::after {
   border-radius: var(--radius-lg);
   background: var(--surface);
   overflow: hidden;
-  transform-origin: 50% 0;
-  transform: scale(calc(1 - var(--cover, 0) * 0.05));
-}
-
-/* Covered cards sink into the dark. */
-.case-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: #050506;
-  opacity: calc(var(--cover, 0) * 0.65);
-  pointer-events: none;
+  height: 100%;
 }
 
 .case-meta {
@@ -2493,15 +2585,10 @@ body::after {
   }
 }
 
-/* Where there is room, each case stops near the top and the next one slides over it. */
-@media (min-width: 1000px) and (min-height: 760px) {
-  .cases {
-    gap: 14vh;
-  }
-
-  .case {
-    position: sticky;
-    top: calc(var(--header-h) + 20px + var(--i) * 14px);
+/* Stacked on narrow screens: content starts at the top even when a neighbour is taller. */
+@media (max-width: 999px) {
+  .case-card {
+    align-content: start;
   }
 }
 
@@ -2634,17 +2721,6 @@ body::after {
 
   body.menu-open {
     overflow: hidden;
-  }
-
-  .manifesto-inner {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .manifesto-slot {
-    order: -1;
-    width: min(64%, 340px);
-    margin: 0 auto 16px;
-    --stage-o: 0.5;
   }
 
   /* The drawing stays pinned at the top; the steps slide over it as glass cards. */

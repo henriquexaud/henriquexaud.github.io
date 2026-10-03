@@ -10,7 +10,7 @@ Site da Duvalle, estúdio de engenharia de software: uma página única, estáti
 
 A página é contada como uma jornada em capítulos numerados (01 a 09): como pensamos, a anatomia de um sistema, problemas reais, serviços, princípios, processo, sobre, dúvidas e contato.
 
-- **Um desenho que viaja.** As três camadas do hero (interface, processos, dados) são o fio da narrativa: fecham ao rolar na abertura, esperam ao lado do manifesto, são desmontadas camada por camada na anatomia, fecham numa peça só e voltam fechadas no contato. O desenho fica num palco fixo (`.stage`) e o `main.js` o leva de um "slot" a outro (`data-slot="hero|manifesto|anatomy|contact"`); a linha do tempo está em `buildTimeline()`.
+- **Um desenho que viaja.** As três camadas do hero (interface, processos, dados) são o fio da narrativa: fecham ao rolar na abertura e somem com o hero, reaparecem na anatomia para serem desmontadas camada por camada e fechadas numa peça só, e voltam fechadas no contato. O desenho fica num palco fixo (`.stage`) e só troca de lugar enquanto está invisível (`data-slot="hero|anatomy|contact"`); a linha do tempo está em `buildTimeline()`.
 - **Duas cores com papel.** Verde é o sinal (o que está ativo); silício é o material: um prata polido usado em detalhes escolhidos (o arco do logo, os números dos capítulos, as bordas das placas, os verbos dos serviços, a assinatura no rodapé). É uma referência ao "vale" do nome. Os tons ficam em `--si-*` e `--metal`, no topo do `main.css`.
 - **Sem JavaScript ou com movimento reduzido**, tudo continua legível: o desenho fica parado no hero e uma cópia estática aparece na anatomia, os textos aparecem inteiros e nada se move com a rolagem.
 

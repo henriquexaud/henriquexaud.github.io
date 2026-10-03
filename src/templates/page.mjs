@@ -193,7 +193,6 @@ function manifesto(t) {
       <h2 class="visually-hidden" id="manifesto-title">${m.eyebrow}</h2>
       <p class="manifesto-text" data-scrub>${scrubText(m.text)}</p>
     </div>
-    <div class="manifesto-slot" data-slot="manifesto" aria-hidden="true"></div>
   </div>
 </section>`;
 }
@@ -222,35 +221,41 @@ function anatomy(t) {
 </section>`;
 }
 
-// Solutions: each case is a card that slides over the previous one. The problem is struck
-// through as the card arrives, and the solution takes its place.
+// Solutions: a menu on top and the cases side by side in a track that slides sideways
+// (swipe, trackpad or the menu). Without JavaScript the cases simply stack.
 function solutions(t) {
   const s = t.solutions;
   const total = pad(solutionKeys.length);
   return html`<section class="section" id="solutions" aria-labelledby="solutions-title" ${chapterAttrs('solutions', s.eyebrow)}>
   <div class="container">
     ${sectionHead('solutions', s.eyebrow, s.title, s.lead)}
-    <ol class="cases" aria-label="${s.listLabel}" data-cases>
-      ${solutionKeys.map((key, i) => {
-        const item = s.items[key];
-        return html`<li class="case" id="case-${key}" style="--i:${i}">
-        <article class="case-card" aria-labelledby="case-${key}-title">
-          <div class="case-copy">
-            <p class="case-meta"><span class="case-num metal">${pad(i + 1)}</span><span class="case-total">/ ${total}</span><span class="case-tab">${item.tab}</span></p>
-            <p class="case-problem"><span class="case-label">${s.problemLabel}</span><span class="case-problem-text">${item.problem}</span></p>
-            <p class="case-label case-label-solution">${s.solutionLabel}</p>
-            <h3 class="case-title" id="case-${key}-title">${item.title}</h3>
-            <ul class="benefits">
-              ${item.benefits.map((b, j) => html`<li style="--j:${j}"><span class="benefit-mark">${icons.check}</span><span>${b}</span></li>`)}
-            </ul>
+    <div class="solutions" data-tabs>
+      <div class="solution-tabs" role="tablist" aria-label="${s.listLabel}">
+        ${solutionKeys.map((key, i) => html`<button class="solution-tab" type="button" role="tab" id="tab-${key}" aria-controls="case-${key}" aria-selected="${i === 0 ? 'true' : 'false'}" tabindex="${i === 0 ? '0' : '-1'}"><span class="solution-tab-num" aria-hidden="true">${pad(i + 1)}</span>${s.items[key].tab}</button>`)}
+        <span class="solution-tabs-bar" aria-hidden="true"></span>
+      </div>
+      <div class="cases" data-track>
+        ${solutionKeys.map((key, i) => {
+          const item = s.items[key];
+          return html`<article class="case" id="case-${key}" role="tabpanel" aria-labelledby="tab-${key}">
+          <div class="case-card">
+            <div class="case-copy">
+              <p class="case-meta"><span class="case-num metal">${pad(i + 1)}</span><span class="case-total">/ ${total}</span><span class="case-tab">${item.tab}</span></p>
+              <p class="case-problem"><span class="case-label">${s.problemLabel}</span><span class="case-problem-text">${item.problem}</span></p>
+              <p class="case-label case-label-solution">${s.solutionLabel}</p>
+              <h3 class="case-title">${item.title}</h3>
+              <ul class="benefits">
+                ${item.benefits.map((b, j) => html`<li style="--j:${j}"><span class="benefit-mark">${icons.check}</span><span>${b}</span></li>`)}
+              </ul>
+            </div>
+            <figure class="solution-visual" data-visual>
+              ${visual(key, t.visuals[key], `${item.tab}: ${item.title}`)}
+            </figure>
           </div>
-          <figure class="solution-visual" data-visual>
-            ${visual(key, t.visuals[key], `${item.tab}: ${item.title}`)}
-          </figure>
-        </article>
-      </li>`;
-      })}
-    </ol>
+        </article>`;
+        })}
+      </div>
+    </div>
   </div>
 </section>`;
 }
