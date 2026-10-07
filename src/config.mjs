@@ -2,14 +2,14 @@
 // Copy lives in src/i18n/<locale>.mjs.
 
 export const site = {
-  name: 'Duvalle',
+  name: 'DuaTech',
   url: 'https://henriquexaud.github.io',
   foundingYear: 2021,
 };
 
 export const contact = {
   whatsapp: '5512981324077',
-  // Optional: set an address (e.g. 'contato@duvalle.com.br') to show an e-mail link.
+  // Optional: set an address (e.g. 'contato@duatech.com.br') to show an e-mail link.
   email: null,
   linkedin: 'https://www.linkedin.com/in/henrique-xaud/',
   github: 'https://github.com/henriquexaud',

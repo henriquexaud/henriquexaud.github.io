@@ -1,7 +1,7 @@
 {
-  "name": "duvalle-site",
+  "name": "duatech-site",
   "private": true,
-  "description": "Duvalle website: static, multilingual, generated from src/ into the repository root.",
+  "description": "DuaTech website: static, multilingual, generated from src/ into the repository root.",
   "type": "module",
   "scripts": {
     "build": "node src/build.mjs",

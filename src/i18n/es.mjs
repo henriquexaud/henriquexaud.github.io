@@ -9,7 +9,7 @@ export default {
   path: '/es/',
 
   meta: {
-    title: 'Duvalle — Estudio de software para empresas',
+    title: 'DuaTech — Estudio de software para empresas',
     description:
       'Entendemos cómo funciona tu empresa y construimos el sistema que le faltaba: confiable, hecho para durar y con atención directa de quien lo desarrolla.',
   },
@@ -69,7 +69,7 @@ export default {
   },
 
   why: {
-    eyebrow: 'Por qué Duvalle',
+    eyebrow: 'Por qué DuaTech',
     title: 'Tecnología a favor de tu negocio.',
     items: [
       { icon: 'fit', title: 'A medida', text: 'El sistema sigue tu proceso, y no al revés.' },
@@ -93,7 +93,7 @@ export default {
   about: {
     eyebrow: 'Nosotros',
     title: 'Un estudio pequeño por elección.',
-    text: 'Duvalle es un estudio independiente fundado por Henrique Xaud. Cada proyecto tiene un responsable de principio a fin y, cuando hace falta, especialistas de confianza completan el equipo.',
+    text: 'DuaTech es un estudio independiente fundado por Henrique Xaud. Cada proyecto tiene un responsable de principio a fin y, cuando hace falta, especialistas de confianza completan el equipo.',
     founderRole: 'Fundador',
   },
 
@@ -114,7 +114,7 @@ export default {
     title: '¿Hablamos de tu proyecto?',
     lead: 'La primera conversación es sin compromiso.',
     whatsapp: 'Conversar por WhatsApp',
-    whatsappMessage: '¡Hola! Vi el sitio de Duvalle y quiero hablar sobre un proyecto.',
+    whatsappMessage: '¡Hola! Vi el sitio de DuaTech y quiero hablar sobre un proyecto.',
     linkedin: 'LinkedIn',
   },
 
