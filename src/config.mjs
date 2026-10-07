@@ -8,7 +8,6 @@ export const site = {
 };
 
 export const contact = {
-  whatsapp: '5512981324077',
   // Optional: set an address (e.g. 'contato@duatech.com.br') to show an e-mail link.
   email: null,
   linkedin: 'https://www.linkedin.com/in/henrique-xaud/',

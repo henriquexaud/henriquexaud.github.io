@@ -113,9 +113,7 @@ export default {
     eyebrow: 'Contacto',
     title: '¿Hablamos de tu proyecto?',
     lead: 'La primera conversación es sin compromiso.',
-    whatsapp: 'Conversar por WhatsApp',
-    whatsappMessage: '¡Hola! Vi el sitio de DuaTech y quiero hablar sobre un proyecto.',
-    linkedin: 'LinkedIn',
+    linkedin: 'Conversar por LinkedIn',
   },
 
   footer: {

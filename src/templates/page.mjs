@@ -5,7 +5,6 @@ import { visual } from './visuals.mjs';
 import { blueprint } from './blueprint.mjs';
 
 const pad = (n) => String(n).padStart(2, '0');
-const whatsappUrl = (message) => `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(message)}`;
 
 const NAV = ['solutions', 'services', 'process', 'about', 'faq'];
 
@@ -43,7 +42,6 @@ function head(t, ctx) {
         founder: { '@type': 'Person', name: founder.name, sameAs: [founder.linkedin] },
         areaServed: 'BR',
         knowsLanguage: all.map((l) => l.htmlLang),
-        telephone: `+${contact.whatsapp}`,
         sameAs: [contact.linkedin],
         hasOfferCatalog: {
           '@type': 'OfferCatalog',
@@ -280,8 +278,7 @@ function contactSection(t) {
       <h2 class="contact-title" id="contact-title">${c.title}</h2>
       <p class="contact-lead">${c.lead}</p>
       <div class="contact-actions">
-        ${externalLink(whatsappUrl(c.whatsappMessage), c.whatsapp, t, 'button button-primary button-large', icons.whatsapp)}
-        ${externalLink(contact.linkedin, c.linkedin, t, 'button button-ghost button-large', icons.linkedin)}
+        ${externalLink(contact.linkedin, c.linkedin, t, 'button button-primary button-large', icons.linkedin)}
         ${contact.email ? html`<a class="button button-ghost button-large" href="mailto:${contact.email}">${icons.mail}<span>${contact.email}</span></a>` : ''}
       </div>
     </div>
