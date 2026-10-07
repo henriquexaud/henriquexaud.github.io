@@ -32,7 +32,7 @@ npm run serve    # http://localhost:8080
 ```
 
 - **Texto:** edite `src/i18n/<idioma>.mjs` e rode `npm run build`. O build falha se faltar alguma chave em algum idioma.
-- **Contato e disponibilidade:** `src/config.mjs`. Ali ficam o WhatsApp, o LinkedIn, um e-mail opcional e o indicador “aberta para novos projetos”.
+- **Contato e disponibilidade:** `src/config.mjs`. Ali ficam o LinkedIn, um e-mail opcional e o indicador “aberta para novos projetos”.
 - **Imagens de compartilhamento e ícones:** rode `npm install` e depois `npm run images` (usa Playwright). Isso só é necessário quando o título do hero ou a marca mudarem.
 
 ## Novo idioma
