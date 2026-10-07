@@ -1,4 +1,4 @@
-// Duvalle — progressive enhancements. The page is fully usable without this file.
+// DuaTech — progressive enhancements. The page is fully usable without this file.
 (() => {
   const root = document.documentElement;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');

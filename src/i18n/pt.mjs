@@ -9,7 +9,7 @@ export default {
   path: '/',
 
   meta: {
-    title: 'Duvalle — Estúdio de software para empresas',
+    title: 'DuaTech — Estúdio de software para empresas',
     description:
       'Entendemos como a sua empresa funciona e construímos o sistema que faltava: confiável, feito para durar e com atendimento direto de quem desenvolve.',
   },
@@ -69,7 +69,7 @@ export default {
   },
 
   why: {
-    eyebrow: 'Por que a Duvalle',
+    eyebrow: 'Por que a DuaTech',
     title: 'Tecnologia a favor do seu negócio.',
     items: [
       { icon: 'fit', title: 'Sob medida', text: 'O sistema segue o seu processo, e não o contrário.' },
@@ -93,7 +93,7 @@ export default {
   about: {
     eyebrow: 'Sobre',
     title: 'Um estúdio pequeno por escolha.',
-    text: 'A Duvalle é um estúdio independente fundado por Henrique Xaud. Cada projeto tem um responsável do início ao fim e, quando necessário, especialistas de confiança completam o time.',
+    text: 'A DuaTech é um estúdio independente fundado por Henrique Xaud. Cada projeto tem um responsável do início ao fim e, quando necessário, especialistas de confiança completam o time.',
     founderRole: 'Fundador',
   },
 
@@ -114,7 +114,7 @@ export default {
     title: 'Vamos conversar sobre o seu projeto?',
     lead: 'A primeira conversa é sem compromisso.',
     whatsapp: 'Conversar no WhatsApp',
-    whatsappMessage: 'Olá! Vim pelo site da Duvalle e quero conversar sobre um projeto.',
+    whatsappMessage: 'Olá! Vim pelo site da DuaTech e quero conversar sobre um projeto.',
     linkedin: 'LinkedIn',
   },
 

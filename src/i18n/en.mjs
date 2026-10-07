@@ -9,7 +9,7 @@ export default {
   path: '/en/',
 
   meta: {
-    title: 'Duvalle — Software studio for businesses',
+    title: 'DuaTech — Software studio for businesses',
     description:
       'We learn how your company works and build the system it’s been missing: reliable, built to last, with direct access to the people who build it.',
   },
@@ -69,7 +69,7 @@ export default {
   },
 
   why: {
-    eyebrow: 'Why Duvalle',
+    eyebrow: 'Why DuaTech',
     title: 'Technology that works for your business.',
     items: [
       { icon: 'fit', title: 'Tailor-made', text: 'The system follows your process, not the other way around.' },
@@ -93,7 +93,7 @@ export default {
   about: {
     eyebrow: 'About',
     title: 'A small studio, by choice.',
-    text: 'Duvalle is an independent studio founded by Henrique Xaud. Every project has one person accountable from start to finish and, when needed, trusted specialists complete the team.',
+    text: 'DuaTech is an independent studio founded by Henrique Xaud. Every project has one person accountable from start to finish and, when needed, trusted specialists complete the team.',
     founderRole: 'Founder',
   },
 
@@ -114,7 +114,7 @@ export default {
     title: 'Shall we talk about your project?',
     lead: 'The first conversation comes with no strings attached.',
     whatsapp: 'Chat on WhatsApp',
-    whatsappMessage: 'Hi! I found Duvalle’s website and would like to talk about a project.',
+    whatsappMessage: 'Hi! I found DuaTech’s website and would like to talk about a project.',
     linkedin: 'LinkedIn',
   },
 
